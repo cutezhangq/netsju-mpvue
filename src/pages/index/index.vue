@@ -16,6 +16,7 @@
       </div>
     </div>
     <p>这是二手交易的首页</p>
+    <p>我做了一些修改</p>
     <form class="form-container">
       <input type="text" class="form-control" :value="motto" placeholder="v-model" />
       <input type="text" class="form-control" v-model="motto" placeholder="v-model" />
