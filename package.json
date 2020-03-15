@@ -2,7 +2,7 @@
   "name": "netsju-mpvue",
   "version": "1.0.0",
   "mpvueTemplateProjectVersion": "0.1.0",
-  "description": "",
+  "description": ">",
   "author": "zq <164025309@qq.com>",
   "private": true,
   "scripts": {
@@ -24,7 +24,11 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
-    "mpvue": "^2.0.0"
+    "@vant/weapp": "^1.0.7",
+    "miniprogram-sm-crypto": "^0.1.0",
+    "mpvue": "^2.0.0",
+    "vant-weapp": "^0.5.27",
+    "weui-miniprogram": "^0.2.2"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
@@ -100,5 +104,11 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/zhuangzhoudekun/netsju-mpvue.git"
+  },
+  "license": "ISC"
 }

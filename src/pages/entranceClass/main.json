@@ -1,7 +1,4 @@
 {
   "navigationBarTitleText": "选择分类",
-  "navigationBarBackgroundColor":"#FFD800",
-  "usingComponents": {
-    "van-button": "/static/vant/button/index"
-  }
+  "navigationBarBackgroundColor":"#FFD800"
 }

@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import App from './App'
-// import Vant from 'vant'
-// import 'vant/lib/index.css'
-// Vue.use(vant)
-
+// 阿里图标库
+import '../static/iconfont/iconfont.css'
 
 //  关闭Vue开发中的一些提示
 Vue.config.productionTip = false

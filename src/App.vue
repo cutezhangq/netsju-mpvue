@@ -31,6 +31,7 @@ export default {
 </script>
 
 <style>
+
 .container {
   height: 100%;
   display: flex;
