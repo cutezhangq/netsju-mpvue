@@ -1,12 +1,43 @@
 {
   "pages": [
     "pages/entranceClass/main",
-    "pages/usedMarket/index/main" 
+    "pages/usedMarket/index/main" ,
+    "pages/usedMarket/news/main",
+    "pages/usedMarket/goods/main",
+    "pages/usedMarket/person/main" 
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle":"white",
+    "navigationBarBackgroundColor":"#FFD800"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/usedMarket/index/main",
+        "iconPath": "static/images/ic_menu_choice_nor.png",
+        "selectedIconPath":"static/images/ic_menu_choice_pressed.png",
+        "text": "首页"
+      },
+      {
+        "pagePath":  "pages/usedMarket/news/main",
+        "iconPath": "static/images/ic_menu_topic_nor.png",
+        "selectedIconPath": "static/images/ic_menu_topic_pressed.png",
+        "text": "消息"
+      },
+      {
+        "pagePath":"pages/usedMarket/goods/main",
+        "iconPath": "static/images/ic_menu_shoping_nor.png",
+        "selectedIconPath":"static/images/ic_menu_shoping_pressed.png",
+        "text": "商品"
+      },
+      {
+        "pagePath":"pages/usedMarket/person/main",
+        "iconPath":"static/images/ic_menu_me_nor.png",
+        "selectedIconPath": "static/images/ic_menu_me_pressed.png",
+        "text": "我的"
+      }
+    ]
   }
 }

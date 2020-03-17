@@ -38,12 +38,11 @@
   export default {
     data() {
       return {
-      
       }
     },
     methods:{
       goUsedMarket(){
-        wx.navigateTo({
+        wx.switchTab({
           url: '/pages/usedMarket/index/main'
         })
       },
