@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "二手市场",
   "navigationBarTextStyle":"white",
-  "navigationBarBackgroundColor":"#FFD800"
+  "navigationBarBackgroundColor":"#FFD800",
+  "backgroundColor": "#eee",
+  "backgroundTextStyle": "light"
 }

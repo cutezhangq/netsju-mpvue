@@ -52,5 +52,5 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "./style.stylus";
+  @import "./style.styl";
 </style>

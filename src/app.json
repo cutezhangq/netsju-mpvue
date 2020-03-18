@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/usedMarket/index/main" ,
     "pages/entranceClass/main",
-   
+    "pages/usedMarket/index/main" ,
+
     "pages/usedMarket/news/main",
     "pages/usedMarket/goods/main",
     "pages/usedMarket/person/main" 
@@ -11,9 +11,14 @@
     "backgroundTextStyle": "light",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle":"white",
-    "navigationBarBackgroundColor":"#FFD800"
+    "navigationBarBackgroundColor":"#FFD800",
+    "backgroundColor": "#eeeeee"
   },
   "tabBar": {
+    "backgroundColor": "#fafafa",
+    "borderStyle": "white",
+    "selectedColor": "#b4282d",
+    "color": "#666",
     "list": [
       {
         "pagePath": "pages/usedMarket/index/main",
