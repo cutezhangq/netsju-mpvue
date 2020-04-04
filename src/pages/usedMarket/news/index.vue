@@ -23,7 +23,7 @@
       </div>
       <!-- 广告 -->
       <div class="advertise">
-        <img src="../../../../static/images/news_person/advertise/operation_enter.png">
+        <img :src="img_advertise">
       </div>
       <!-- 消息列表 -->
       <div>
@@ -79,10 +79,12 @@
 </template>
 
 <script>
+import { img_API,advertise } from "../../../api/api";
   export default {
-
     data() {
-      return {}
+      return {
+        img_advertise:img_API+advertise+"/operation_enter.png"
+      }
     },
 
     created() {}

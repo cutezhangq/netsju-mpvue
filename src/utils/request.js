@@ -5,6 +5,7 @@ function request(){
     title: "加载中" //数据请求前loading
   });
   return new Promise((resolve,reject)=>{
+    console.log('===========')
     wx.request({
       url:url,
       method: method,
@@ -12,11 +13,11 @@ function request(){
       header: {
         "content-type": "application/json" 
       },
-      success: function(res) {
+      success: (res) => { 
         wx.hideLoading();
         resolve(res.data);
       },
-      fail: function(error) {
+      fail:(error) => { 
         wx.hideLoading();
         reject(false);
       },

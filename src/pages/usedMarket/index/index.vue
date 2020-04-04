@@ -119,7 +119,7 @@ export default {
     }
   },
   mounted() {
-    this.getBrandList();
+    //this.getBrandList();
   },
   methods: {
     toSearch() {
@@ -129,7 +129,7 @@ export default {
     },
     //请求brandList
     async getBrandList(){
-      const data = await get("/index/index");
+      const data = await get(API+"/index/index");
       this.brandList = data.brandList;
       console.log(this.brandList)
     }
