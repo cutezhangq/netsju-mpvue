@@ -3,37 +3,45 @@
   height: 100%;
   background-color:#f8f8f8;
 
-  .header{
+  .top{
     width: 100%;
     height: 200rpx;
     background-color: #FFD800;
     border-radius: 0 0 10% 10%;
     overflow: hidden;
-    img{
-      width: 150rpx;
-      height: 150rpx;
-      float: left;
-      margin: 0 30rpx;
-      border-radius: 5px};
-
-    .headerContent{
-      float: left;
-      h4{
-        font-weight: bold;
-        font-size: 40rpx;
+    .userinfo{
+      width:90%;
+      overflow: hidden;
+      padding-left:20px;
+      .user_avatar{
+        overflow: hidden;
+        display: block;
+        float:left;
+        width: 170rpx;
+        height:170rpx;
+        border-radius: 8%;}
       }
-      p{
-        font-size: 32rpx;
-        padding: 5rpx;
-      }
-      span{
-        font-size: 26rpx;
-        border-radius: 10px;
-        background: white;
-        padding: 5rpx 30rpx;
-      }
-    }
-  
+      .user_name{
+        font-size: 17px;
+        margin:20px 0 0 5px;
+        padding:5rpx;
+        float:left;
+        .span{
+          display:block;
+          font-size: 26rpx;
+          border-radius: 10px;
+          background: white;
+          margin-top:15px;
+          padding: 5rpx 30rpx;
+          }
+        }
+      .btn{
+        width:150rpx;
+        height:70rpx;
+        line-height: 70rpx;
+        float:right;
+        font-size: 17px;
+        overflow hidden}    
 }
 
 .fans{
@@ -49,7 +57,7 @@
     text-align: center;
     line-height: 120rpx;
     padding: 0 10%;
-    font-size: 36rpx;
+    font-size: 34rpx;
   }
   .none{
     border: none;}
@@ -62,37 +70,7 @@
     width:95%;
     height:220rpx;
     border-radius:20px;
-  }
-}
-
-.part1{
-  width: 90%;
-  margin: 20rpx auto;
-  border-radius: 20px;
-  background-color: white;
-  padding: 20rpx 0 30rpx 30rpx;}
-  h2{
-      font-size: 34rpx;
-      font-weight: bold;}
-
-  .sell{  
-    display:flex;
-    margin-top: 20rpx;
-    justify-content:space-around;
-    align-items:center;
-    flex-wrap:wrap;}
-
-    .sellThings{
-      display:inline-block;
-      font-size: 14px;
-      color:grey;
-      align-self: center;
-      text-align: center;
-      flex:0 0 25%;
-      img{
-        width:70rpx;
-        height:70rpx;
-      }
     }
+  }
 }
    

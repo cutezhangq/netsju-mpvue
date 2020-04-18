@@ -29,7 +29,7 @@
     </div> -->
     <div class="channel">
       <div>
-        <i class="iconfont icon-netsju-fuzhuang1"></i>
+        <a href="/pages/usedMarket/index/categorylist/main"><i class="iconfont icon-netsju-fuzhuang1"></i> </a>
         <p>服装</p>
       </div>
       <div>
@@ -72,33 +72,28 @@
 </template>
 
 <script>
-// import tabBar from '@/components/tabBar'
-
+import { API } from "../../../api/api";
+import { get } from "../../../utils/request";
 export default {
-  onShow() {
-  },
-  // components: {
-  //   tabBar
-  // },
-
   data () {
     return {
       //轮播图
       banner: [
         {
-          image_url:"/static/images/carousel/carousel01.jpg"
+          image_url:"/static/images/index/carousel01.jpg"
         },
          {
-          image_url:"/static/images/carousel/carousel02.jpg"
+          image_url:"/static/images/index/carousel02.jpg"
         },
          {
-          image_url:"/static/images/carousel/carousel03.jpg"
+          image_url:"/static/images/index/carousel03.jpg"
         },
          {
-          image_url:"/static/images/carousel/carousel04.jpg"
+          image_url:"/static/images/index/carousel04.jpg"
         },
       ], 
-     channel: [
+      //分类icon
+      channel: [
        {
          icon_url:"#",
          name:"服装"
@@ -120,70 +115,28 @@ export default {
          name:"全部分类"
        },
      ],
+      brandList:[]
     }
   },
-
-  created () {
+  mounted() {
+    //this.getBrandList();
   },
   methods: {
-    // 获取信息
-    toMappage() {
-      var _this = this;
-      // 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
-      wx.getSetting({
-        success(res) {
-          //如果没有同意授权,打开设置
-          if (!res.authSetting["scope.userLocation"]) {
-            wx.openSetting({
-              success: res => {
-                _this.getCityName();
-              }
-            });
-          } else {
-            // wx.navigateTo({
-            //   url: "/pages/mappage/main"
-            // });
-          }
-        }
-      });
-    },
-    //定位城市
-    getCityName() {
-      var _this = this;
-      var myAmapFun = new amapFile.AMapWX({
-        key: "e545e7f79a643f23aef187add14e4548"
-      });
-      myAmapFun.getRegeo({
-        success: function (data) {
-          //成功回调
-          console.log(data);
-          // data[0].regeocodeData.formatted_address
-          // _this.cityName = data[0].regeocodeData.formatted_address;
-          _this.update({ cityName: data[0].regeocodeData.formatted_address });
-        },
-        fail: function (info) {
-          //失败回调
-          console.log(info);
-          //如果用户拒绝授权
-          // 默认为北京
-          _this.cityName = "南京市";
-          _this.update({ cityName: "南京市" });
-        }
-      });
-    },
     toSearch() {
-      // wx.navigateTo({
-      //   url: "/pages/search/main"
-      // });
+      wx.navigateTo({
+        url: "/pages/usedMarket/index/search/main"
+      });
     },
-
+    //请求brandList
+    async getBrandList(){
+      const data = await get(API+"/index/index");
+      this.brandList = data.brandList;
+      console.log(this.brandList)
+    }
   }
 }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
 @import "./style.styl"
-  .search{
-    background: $mainCorlor;
-  }
 </style>
