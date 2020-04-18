@@ -26,12 +26,13 @@
         <img :src="img_advertise">
       </div>
       <!-- 消息列表 -->
-      <div>
+      <div class="news">
+
         <div class="newsList">
           <img class="imgFl" src="../../../../static/images/news_person/avater/1.png">
           <div class="newsContent">
             <div class="text">
-              <h2><strong>syj1138962153</strong></h2>
+              <h2>syj1138962153</h2>
               <p>[呲牙][呲牙]</p>
               <span>1天前</span>
             </div>
@@ -42,7 +43,7 @@
           <img class="imgFl" src="../../../../static/images/news_person/avater/2.png">
           <div class="newsContent">
             <div class="text">
-              <h2><strong>生如夏花</strong></h2>
+              <h2>生如夏花</h2>
               <p>你有一条新消息</p>
               <span>1天前</span>
             </div>
@@ -53,7 +54,7 @@
           <img class="imgFl" src="../../../../static/images/news_person/avater/3.png">
           <div class="newsContent">
             <div class="text">
-              <h2><strong>幸福树168</strong></h2>
+              <h2>幸福树168</h2>
               <p>你有一条新消息</p>
               <span>2天前</span>
             </div>
@@ -64,13 +65,14 @@
           <img class="imgFl" src="../../../../static/images/news_person/avater/4.png">
           <div class="newsContent">
             <div class="text">
-              <h2><strong>sin520</strong></h2>
+              <h2>sin520</h2>
               <p>是呀，他这个对话框有的会多一些</p>
               <span>2天前</span>
             </div>
             <img src="../../../../static/images/news_person/goods/4.png">
           </div>
         </div>
+        
       </div>
 
 

@@ -29,7 +29,7 @@
     </div> -->
     <div class="channel">
       <div>
-        <i class="iconfont icon-netsju-fuzhuang1"></i>
+        <a href="/pages/usedMarket/index/categorylist/main"><i class="iconfont icon-netsju-fuzhuang1"></i> </a>
         <p>服装</p>
       </div>
       <div>

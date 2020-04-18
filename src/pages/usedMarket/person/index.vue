@@ -1,14 +1,23 @@
 <template>
   <div class="back">
+
   <!-- 头像昵称 -->
-  <div class="header">
-    <img :src="img_userAvatar">
-    <div class="headerContent">
-      <h4>t_147952436838413_0</h4>
-      <p>昵称：未设置</p>
-      <span> 个人主页> </span>
+  <div class="top">
+    <div class="userinfo">
+      <div class="user_avatar"> 
+        <open-data type="userAvatarUrl" v-if="getInfo"></open-data> 
+      </div>
+
+      <div class="user_name">
+        <span>昵称：</span><span v-if="notGetInfo">未设置</span>
+        <open-data type="userNickName" v-if="getInfo"></open-data> 
+        <span class="span">个人中心 ></span>   
+      </div>
+
+      <button class="btn" wx:if="canIUse" open-type="getUserInfo" @getuserinfo="bindGetUserInfo" v-if="notGetInfo">登录</button>
     </div>
   </div>
+
   <!-- 赞/粉丝/关注模块 -->
   <div class="fans">
     <p>0超赞</p>
@@ -19,97 +28,59 @@
   <div class="advertise"> 
     <img :src="img_advertise">
   </div>
-  <!-- 卖在闲鱼 -->
-  <div class="part"> 
-    <h2>卖在闲鱼</h2>
-    <div class="sell">
-      <div class="sellThings" v-for="(item, index) in sellThings" :key="index">
-        <img :src="item.img_sellThing">
-        <p>我发布的{{item.num}}</p>
-      </div>
-    </div>
 
-  </div>
-  <!-- 买在闲鱼 -->
-  <div class="part"> 
-    <h2>买在闲鱼</h2>
-    <div class="sell">
-      <div class="sellThings">
-        <img src="../../../../static/images/news_person/small_icon/buy_1.PNG">
-        <p>我买到的0</p>
-      </div>
-      <div class="sellThings">
-        <img src="../../../../static/images/news_person/small_icon/buy_2.PNG">
-        <p>我收藏的0</p>
-      </div>
-      <div class="sellThings">
-        <img src="../../../../static/images/news_person/small_icon/buy_3.PNG">
-        <p>我租到的</p>
-      </div>
-    </div>
-    
-  </div>
-  <!-- 玩在闲鱼 -->
-  <div class="part"> 
-    <h2>玩在闲鱼</h2>
-    <div class="sell">
-      <div class="sellThings">
-        <img src="../../../../static/images/news_person/small_icon/play_1.PNG">
-        <p>闲鱼币</p>
-      </div>
-      <div class="sellThings">
-        <img src="../../../../static/images/news_person/small_icon/play_2.PNG">
-        <p>我的鱼塘</p>
-      </div>
-      <div class="sellThings">
-        <img src="../../../../static/images/news_person/small_icon/play_3.PNG">
-        <p>我的帖子</p>
-      </div>
-      <div class="sellThings">
-        <img src="../../../../static/images/news_person/small_icon/play_4.PNG">
-        <p>边逛边赚钱</p>
-      </div>
-      <div class="sellThings">
-        <img src="../../../../static/images/news_person/small_icon/play_5.PNG">
-        <p>天天赚钱</p>
-      </div>
-      <div class="sellThings">
-        <img src="../../../../static/images/news_person/small_icon/play_6.PNG">
-        <p>百币夺宝</p>
-      </div>
-      <div class="sellThings">
-        <img src="../../../../static/images/news_person/small_icon/play_7.PNG">
-        <p>参与的免费送</p>
-      </div>
-      <div class="sellThings">
-        <img src="">
-        <p></p>
-      </div>
-    </div>
-
-</div>
+  <person_xy></person_xy>
 
   </div>
 </template>
 
 <script>
-import { img_API,avater,advertise,small_icon } from "../../../api/api";
+import { img_API,avater,advertise} from "../../../api/api";
+import person_xy from "@/components/person_xy";
 export default {
+  components: {
+    person_xy,
+  },
   data () {
     return {
+      getInfo:false,
+      notGetInfo:true,
       img_userAvatar:img_API+avater+"/default_user_avatar.png",
       img_advertise:img_API+advertise+"/advertise.png",
-      sellThings:[
-        {
-          img_sellThing:img_API+small_icon+"/sell_1.PNG",
-          num:2
-        },
-        {
-          img_sellThing:img_API+small_icon+"/sell_2.PNG",
-          num:8
-        }
-      ],
-
+    }
+  },
+  mounted(){
+    //判断用户是否授权登录过
+  //   try {
+  //   var value = wx.getStorageSync('userinfo')
+  //   if (value) {
+  //     getInfo=true
+  //     notGetInfo=false
+  //   }else{
+  //     getInfo=false
+  //     notGetInfo=true
+  //   }
+  //   } catch (e){
+  // }
+  },
+  methods:{
+    //获取用户登录信息
+    bindGetUserInfo(){
+      wx.getUserInfo({
+      success: userInfo => {
+        console.log('登录成功',userInfo)
+        this.loginSuccess(userInfo)
+        this.getInfo=true
+        this.notGetInfo=false       
+      },
+      fail:err =>{
+        console.log('登录失败',err)
+      }
+      });
+    },
+    //登录成功后获取缓存信息
+    loginSuccess(userInfo){
+      wx.setStorageSync('userinfo',userInfo)
     }
   }
 }
