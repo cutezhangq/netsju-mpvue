@@ -40,19 +40,19 @@ import { img_API,small_icon } from "../api/api";
 export default {
   data () {
     return {
-        sellThings:[
-        {
-          img_sellThing:img_API+small_icon+"/sell_1.PNG",
-          todo:"我发布的",
-          num:2
-        },
-        {
-          img_sellThing:img_API+small_icon+"/sell_2.PNG",
-          todo:"我卖出的",
-          num:0
-        }
+      sellThings:[
+          {
+            img_sellThing:img_API+small_icon+"/sell_1.PNG",
+            todo:"我发布的",
+            num:2
+          },
+          {
+            img_sellThing:img_API+small_icon+"/sell_2.PNG",
+            todo:"我卖出的",
+            num:0
+          }
       ],
-        buyThings:[
+      buyThings:[
         {
           img_sellThing:img_API+small_icon+"/play_1.PNG",
           todo:"我买到的",
@@ -69,7 +69,7 @@ export default {
           num:0
         }
       ],
-        playThings:[
+      playThings:[
         {
           img_sellThing:img_API+small_icon+"/play_1.PNG",
           todo:"闲鱼币"

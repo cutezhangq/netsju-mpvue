@@ -29,17 +29,17 @@
     <img :src="img_advertise">
   </div>
 
-  <person_xy></person_xy>
+  <personModel></personModel>
 
   </div>
 </template>
 
 <script>
 import { img_API,avater,advertise} from "../../../api/api";
-import person_xy from "@/components/person_xy";
+import personModel from "@/components/personModel";
 export default {
   components: {
-    person_xy,
+    personModel,
   },
   data () {
     return {

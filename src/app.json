@@ -1,13 +1,15 @@
 {
   "pages": [
-    "pages/entranceClass/main",
     "pages/usedMarket/index/main" ,
+    "pages/entranceClass/main",
+    
     "pages/usedMarket/news/main",
     "pages/usedMarket/goods/main",
     "pages/usedMarket/person/main",
     "pages/usedMarket/index/search/main",
     "pages/usedMarket/index/categorylist/main",
     "pages/usedMarket/index/allCategory/main"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
