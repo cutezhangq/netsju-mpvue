@@ -13,7 +13,7 @@
     <!-- 轮播 -->
     <div class="listContainer">
       <swiper class="swiper" indicator-dots indicator-color="#EDEDED" indicator-active-color="#FFD800" autoplay="true" interval="3000" circular="true" duration="500">
-         <block v-for="(item, index) in banner " :key="index">
+         <block v-for="(item, index) in banner" :key="index">
            <swiper-item>
             <img style="width:100%;" :src="item.image_url" alt="">
           </swiper-item>
@@ -28,23 +28,23 @@
       </div>
     </div> -->
     <div class="channel">
-      <div>
-        <a href="/pages/usedMarket/index/categorylist/main"><i class="iconfont icon-netsju-fuzhuang1"></i> </a>
+      <div @click="toCategoryList(0)">
+        <i class="iconfont icon-netsju-fuzhuang1"></i>
         <p>服装</p>
       </div>
-      <div>
+      <div @click="toCategoryList(1)">
         <i class="iconfont icon-netsju-yinshi"></i>
         <p>食品</p>
       </div>
-      <div>
+      <div @click="toCategoryList(2)">
         <i class="iconfont icon-netsju-erji1"></i>
         <p>配件</p>
       </div>
-      <div>
+      <div @click="toCategoryList(3)">
         <i class="iconfont icon-netsju-ziyuan"></i>
         <p>书籍</p>
       </div>
-      <div>
+      <div @click="toAllCategory">
         <i class="iconfont icon-netsju-quanbufenlei"></i>
         <p>全部分类</p>
       </div>
@@ -64,15 +64,12 @@
         </div>
       </div>
     </div>
-
-
-
      <!-- <tabBar></tabBar> -->
   </div>
 </template>
 
 <script>
-import { API } from "../../../api/api";
+import { API,SH_API } from "../../../api/api";
 import { get } from "../../../utils/request";
 export default {
   data () {
@@ -113,25 +110,66 @@ export default {
        {
          icon_url:"#",
          name:"全部分类"
-       },
-     ],
+       }
+       ],
+      
+
+      category:[],
+      //品牌直供
       brandList:[]
     }
   },
-  mounted() {
+  beforeMount() {
     //this.getBrandList();
+    this.sh_categorycontroller();
+    this.sh_indeximg();
   },
   methods: {
+    //跳转---search页面
     toSearch() {
       wx.navigateTo({
         url: "/pages/usedMarket/index/search/main"
       });
     },
-    //请求brandList
+    //跳转---categorylist页面
+    toCategoryList(category_index){
+       wx.navigateTo({
+        url: "/pages/usedMarket/index/categorylist/main"+"?categoryIndex="+category_index
+      });
+    },
+
+    //跳转---allcategory页面
+    toAllCategory(){
+      wx.navigateTo({
+        url: "/pages/usedMarket/index/allCategory/main"
+      });
+    },
+    //test
     async getBrandList(){
       const data = await get(API+"/index/index");
       this.brandList = data.brandList;
       console.log(this.brandList)
+    },
+
+    //请求---分类信息
+    sh_categorycontroller(){
+      wx.request({
+        url:SH_API+'/category',
+        success:(res)=>{
+          this.category = res.data
+          //console.log(this.category)
+        }
+      })
+    },
+    //请求---首页商品
+    sh_indeximg(){
+      wx.request({
+        url:API+'/index/index',
+        success:(res)=>{
+          this.brandList = res.data.brandList
+          //console.log(this.brandList)
+        }
+      })
     }
   }
 }

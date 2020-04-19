@@ -6,21 +6,19 @@
     "pages/usedMarket/goods/main",
     "pages/usedMarket/person/main",
     "pages/usedMarket/index/search/main",
-    "pages/usedMarket/index/categorylist/main"
-       
+    "pages/usedMarket/index/categorylist/main",
+    "pages/usedMarket/index/allCategory/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle":"white",
-    "navigationBarBackgroundColor":"#FFD800",
-    "backgroundColor": "#eeeeee"
+    "navigationBarBackgroundColor":"#FFD800"
   },
   "tabBar": {
     "backgroundColor": "#fafafa",
     "borderStyle": "white",
-    "selectedColor": "#b4282d",
-    "color": "#666",
+    "selectedColor": "#f7be05",
     "list": [
       {
         "pagePath": "pages/usedMarket/index/main",
