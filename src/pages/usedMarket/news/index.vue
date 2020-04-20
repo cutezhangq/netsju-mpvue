@@ -1,30 +1,29 @@
 <template>
   <div>
-    <div class="whole_back">
-      <div class="head_back"></div>
-      <!-- icon面板 -->
-      <div class="head">
-        <div class="headContent" v-for="(item,index) in newsicon" :key="index">
-          <img :src="item.icon_img">
-          <p class="icon-font">{{item.icon_title}}</p>
-        </div>
+
+    <div class="head_bg"></div>
+    <!-- icon面板 -->
+    <div class="head">
+      <div class="headContent" v-for="(item,index) in newsicon" :key="index">
+        <img :src="item.icon_img">
+        <p class="icon-font">{{item.icon_title}}</p>
       </div>
-      <!-- 广告 -->
-      <div class="advertise">
-        <img :src="img_advertise">
-      </div>
-      <!-- 消息列表 -->
-      <div class="news">
-        <div class="newsList" v-for="(item,index) in newsList" :key="index">
-          <img class="imgFl" :src="item.img">
-          <div class="newsContent">
-            <div class="text">
-              <h2>{{item.userName}}</h2>
-              <p>{{item.news}}</p>
-              <span>{{item.publishTime}}天前</span>
-            </div>
-            <img :src="item.goods_img">
+    </div>
+    <!-- 广告 -->
+    <div class="advertise">
+      <img :src="img_advertise">
+    </div>
+    <!-- 消息列表 -->
+    <div class="news">
+      <div class="newsList" v-for="(item,index) in newsList" :key="index">
+        <img class="imgFl" :src="item.img">
+        <div class="newsContent">
+          <div class="text">
+            <h2>{{item.userName}}</h2>
+            <p>{{item.news}}</p>
+            <span>{{item.publishTime}}天前</span>
           </div>
+          <img :src="item.goods_img">
         </div>
       </div>
     </div>

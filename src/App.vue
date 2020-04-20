@@ -24,7 +24,8 @@ export default {
 page{
   width: 100%;
   height: 100%;
-  background: #f4f4f4;
+  /* 背景色 */
+  background: #f4f4f4;  
   
 }
 </style>
