@@ -1,7 +1,5 @@
 {
   "navigationBarTitleText": "全部分类",
   "navigationBarTextStyle":"white",
-  "navigationBarBackgroundColor":"#FFD800",
-  "backgroundColor": "#eee",
-  "backgroundTextStyle": "light"
+  "navigationBarBackgroundColor":"#FFD800"
 }

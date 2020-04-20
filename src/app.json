@@ -1,15 +1,14 @@
 {
   "pages": [
-    "pages/usedMarket/index/main" ,
     "pages/entranceClass/main",
-    
+    "pages/usedMarket/index/main" ,
+    "pages/usedMarket/boutique/main",
     "pages/usedMarket/news/main",
-    "pages/usedMarket/goods/main",
+    "pages/usedMarket/sell_goods/main",
     "pages/usedMarket/person/main",
     "pages/usedMarket/index/search/main",
     "pages/usedMarket/index/categorylist/main",
     "pages/usedMarket/index/allCategory/main"
-    
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -29,16 +28,22 @@
         "text": "首页"
       },
       {
+        "pagePath":  "pages/usedMarket/boutique/main",
+        "iconPath": "static/images/ic_menu_topic_nor.png",
+        "selectedIconPath": "static/images/ic_menu_topic_pressed.png",
+        "text": "精品"
+      },
+      {
         "pagePath":  "pages/usedMarket/news/main",
         "iconPath": "static/images/ic_menu_topic_nor.png",
         "selectedIconPath": "static/images/ic_menu_topic_pressed.png",
         "text": "消息"
       },
       {
-        "pagePath":"pages/usedMarket/goods/main",
+        "pagePath":"pages/usedMarket/sell_goods/main",
         "iconPath": "static/images/ic_menu_shoping_nor.png",
         "selectedIconPath":"static/images/ic_menu_shoping_pressed.png",
-        "text": "商品"
+        "text": "卖货"
       },
       {
         "pagePath":"pages/usedMarket/person/main",

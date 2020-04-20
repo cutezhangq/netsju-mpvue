@@ -69,8 +69,8 @@
 </template>
 
 <script>
-import { API,SH_API } from "../../../api/api";
-import { get } from "../../../utils/request";
+import { API,SH_API } from "@/api/api";
+import { get } from "@/utils/request";
 export default {
   data () {
     return {

@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { img_API,avater,advertise} from "../../../api/api";
+import { img_API,avater,advertise} from "@/api/api";
 import personModel from "@/components/personModel";
 export default {
   components: {

@@ -24,6 +24,7 @@
 	"projectname": "netsju-mpvue",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"libVersion": "2.10.4",
 	"condition": {
 		"search": {
 			"current": -1,
