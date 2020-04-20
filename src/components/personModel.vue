@@ -26,7 +26,6 @@
       this.contentModel = this.perModel.content
     }
   }
-
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
