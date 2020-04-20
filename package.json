@@ -28,6 +28,7 @@
     "miniprogram-sm-crypto": "^0.1.0",
     "mpvue": "^2.0.0",
     "vant-weapp": "^0.5.27",
+    "vconsole": "^3.3.4",
     "weui-miniprogram": "^0.2.2"
   },
   "devDependencies": {

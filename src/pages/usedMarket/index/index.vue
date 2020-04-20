@@ -21,12 +21,13 @@
       </swiper>
     </div>
     <!-- 分类 -->
-     <!-- <div class="channel">
+    <!-- <div class="channel">
       <div @click="categoryList(item.id)" v-for="(item, index) in channel" :key="index">
         <img :src="item.icon_url" alt="">
         <p>{{item.name}}</p>
       </div>
-    </div> -->
+    </div>  -->
+    
     <div class="channel">
       <div @click="toCategoryList(0)">
         <i class="iconfont icon-netsju-fuzhuang1"></i>
@@ -44,11 +45,12 @@
         <i class="iconfont icon-netsju-ziyuan"></i>
         <p>书籍</p>
       </div>
-      <div @click="toAllCategory">
+      <div @click="toCategoryList(4)">
         <i class="iconfont icon-netsju-quanbufenlei"></i>
         <p>全部分类</p>
       </div>
     </div>
+    
     <!-- 商品展示 -->
     <div class="brand">
       <div @click="tobrandList" class="head">
@@ -131,18 +133,20 @@ export default {
         url: "/pages/usedMarket/index/search/main"
       });
     },
-    //跳转---categorylist页面
+    //跳转页面
     toCategoryList(category_index){
-       wx.navigateTo({
-        url: "/pages/usedMarket/index/categorylist/main"+"?categoryIndex="+category_index
-      });
-    },
-
-    //跳转---allcategory页面
-    toAllCategory(){
-      wx.navigateTo({
-        url: "/pages/usedMarket/index/allCategory/main"
-      });
+      if(category_index !== 4){
+        //categorylist页面
+        wx.navigateTo({
+          url: "/pages/usedMarket/index/categorylist/main"+"?categoryIndex="+category_index
+        });
+      }else{
+        //allcategory页面
+        wx.navigateTo({
+          url: "/pages/usedMarket/index/allCategory/main"
+        });
+      }
+      
     },
     //test
     async getBrandList(){
