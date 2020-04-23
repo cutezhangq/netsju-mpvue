@@ -151,15 +151,12 @@ export default {
       if(res.mp.detail.userInfo){
         this.userInfo = res.mp.detail.userInfo
         console.log('user',this.userInfo);
-        //调用接口获取登录凭证（code）。
-        //通过凭证进而换取用户登录态信息，包括用户的唯一标识（openid）及本次登录的会话密钥（session_key）等
         wx.login({
           success: (res)=>{
             var that = this;
             let code = res.code
             console.log('code',res.code);
-            //存储code
-            wx.setStorage({key:"code",data:res.code})
+            wx.setStorage({key:"code",data:res.code});  //存储code
             //同步取出code
             // let token = wx.getStorageSync('token')
             let token = get(SH_API+'/login/getOpenId',{user:this.userInfo,code:code});
