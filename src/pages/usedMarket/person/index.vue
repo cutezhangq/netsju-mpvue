@@ -1,17 +1,20 @@
 <template>
   <div>
-    <!-- 头像昵称 -->
     <div class="top">
       <div class="userinfo">
+        <!-- 头像 -->
         <div class="user_avatar"> 
-          <open-data type="userAvatarUrl" v-if="getInfo"></open-data> 
+          <img :src="userInfo.avatarUrl?userInfo.avatarUrl:'/static/images/news_person/avater/personal.png'" alt="">
         </div>
+        <!-- 登陆按钮 -->
+        <button class="btn" open-type="getUserInfo" @getuserinfo="handleGetUserInfo">登录</button>
+      
+        <!-- 用户信息 -->
         <div class="user_name">
-          <span>昵称：</span><span v-if="notGetInfo">未设置</span>
-          <open-data type="userNickName" v-if="getInfo"></open-data> 
+          <span>昵称：{{userInfo.nickName?userInfo.nickName:'未设置'}}</span>
           <span class="span">个人中心 ></span>   
         </div>
-        <button class="btn" wx:if="canIUse" open-type="getUserInfo" @getuserinfo="bindGetUserInfo" v-if="notGetInfo">登录</button>
+
       </div>
     </div>
 
@@ -48,8 +51,7 @@ export default {
   },
   data () {
     return {
-      getInfo:false,
-      notGetInfo:true,
+      userInfo: {},
       //头像
       img_userAvatar:img_API+avater+"/default_user_avatar.png",
       //广告
@@ -125,38 +127,30 @@ export default {
     }
   },
   mounted(){
-    //判断用户是否授权登录过
-  //   try {
-  //   var value = wx.getStorageSync('userinfo')
-  //   if (value) {
-  //     getInfo=true
-  //     notGetInfo=false
-  //   }else{
-  //     getInfo=false
-  //     notGetInfo=true
-  //   }
-  //   } catch (e){
-  // }
+    //一进页面先获取状态（授权了直接拿到，未授权则获取失败）--进入页面执行一次
+    wx.getUserInfo({
+      success:(res)=>{
+        // 更新userInfo的状态数据
+        console.log('获取成功',res)
+        this.userInfo = res.userInfo
+      },
+      fail: () => {
+        console.log('获取失败');
+      }
+    })
   },
   methods:{
-    //获取用户登录信息
-    bindGetUserInfo(){
-      wx.getUserInfo({
-      success: userInfo => {
-        console.log('登录成功',userInfo)
-        this.loginSuccess(userInfo)
-        this.getInfo=true
-        this.notGetInfo=false       
-      },
-      fail:err =>{
-        console.log('登录失败',err)
+    //用户登录处理
+    handleGetUserInfo(res){
+      // console.log(res)
+      //用户授权
+      if(res.mp.detail.userInfo){
+        this.userInfo = res.mp.detail.userInfo
+      }else{
+        console.log('用户没授权')
       }
-      });
-    },
-    //登录成功后获取缓存信息
-    loginSuccess(userInfo){
-      wx.setStorageSync('userinfo',userInfo)
     }
+   
   }
 }
 </script>

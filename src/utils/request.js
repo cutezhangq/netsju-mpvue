@@ -1,18 +1,15 @@
-// 封装请求
+import {SH_API} from '../api/api'
 
-function request(){
+// 封装请求
+function request(url, method, data, header = {}){
   wx.showLoading({
     title: "加载中" //数据请求前loading
   });
   return new Promise((resolve,reject)=>{
-    console.log('===========')
     wx.request({
-      url:url,
-      method: method,
-      data: data,
-      header: {
-        "content-type": "application/json" 
-      },
+      url: SH_API+url,
+      method,
+      data,
       success: (res) => { 
         wx.hideLoading();
         resolve(res.data);
@@ -22,6 +19,7 @@ function request(){
         reject(false);
       },
       complete: function() {
+        console.log('======complete====');
         wx.hideLoading();
       }
     });

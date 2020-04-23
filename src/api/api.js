@@ -1,7 +1,7 @@
 // 全局API
 const API = "http://118.25.222.68:5757/heyushuo";
 
-const SH_API = "http://118.190.160.249:18000/";
+const SH_API = "http://118.190.160.249:18000";
 const img_API = "http://118.190.160.249:18000/images";
 
 export const avater = "/news_person/avater";

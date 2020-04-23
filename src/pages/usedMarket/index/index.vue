@@ -122,9 +122,8 @@ export default {
     }
   },
   beforeMount() {
-    //this.getBrandList();
-    this.sh_categorycontroller();
-    this.sh_indeximg();
+    this.sh_category();
+    this.sh_indexGoods();
   },
   methods: {
     //跳转---search页面
@@ -136,37 +135,27 @@ export default {
     //跳转页面
     toCategoryList(category_index){
       if(category_index !== 4){
-        //categorylist页面
+        //分类列表 页面
         wx.navigateTo({
           url: "/pages/usedMarket/index/categorylist/main"+"?categoryIndex="+category_index
         });
       }else{
-        //allcategory页面
+        //全部分类 页面
         wx.navigateTo({
           url: "/pages/usedMarket/index/allCategory/main"
         });
       }
       
     },
-    //test
-    async getBrandList(){
-      const data = await get(API+"/index/index");
-      this.brandList = data.brandList;
-      console.log(this.brandList)
+    //请求---分类信息
+    async sh_category(){
+      const data = await get("/category",{location:0});
+      this.category = data.data;
+      // console.log(this.category)
     },
 
-    //请求---分类信息
-    sh_categorycontroller(){
-      wx.request({
-        url:SH_API+'/category',
-        success:(res)=>{
-          this.category = res.data
-          //console.log(this.category)
-        }
-      })
-    },
     //请求---首页商品
-    sh_indeximg(){
+    sh_indexGoods(){
       wx.request({
         url:API+'/index/index',
         success:(res)=>{
