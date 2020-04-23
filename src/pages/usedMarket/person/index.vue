@@ -1,17 +1,20 @@
 <template>
   <div>
-    <!-- 头像昵称 -->
     <div class="top">
       <div class="userinfo">
+        <!-- 头像 -->
         <div class="user_avatar"> 
-          <open-data type="userAvatarUrl" v-if="getInfo"></open-data> 
+          <img :src="userInfo.avatarUrl?userInfo.avatarUrl:'/static/images/news_person/avater/personal.png'" alt="">
         </div>
+        <!-- 登陆按钮 -->
+        <button class="btn" open-type="getUserInfo" @getuserinfo="handleGetUserInfo">登录</button>
+      
+        <!-- 用户信息 -->
         <div class="user_name">
-          <span>昵称：</span><span v-if="notGetInfo">未设置</span>
-          <open-data type="userNickName" v-if="getInfo"></open-data> 
+          <span>昵称：{{userInfo.nickName?userInfo.nickName:'未设置'}}</span>
           <span class="span">个人中心 ></span>   
         </div>
-        <button class="btn" wx:if="canIUse" open-type="getUserInfo" @getuserinfo="bindGetUserInfo" v-if="notGetInfo">登录</button>
+
       </div>
     </div>
 
@@ -40,7 +43,8 @@
 </template>
 
 <script>
-import { img_API,avater,advertise,small_icon} from "@/api/api";
+import { get } from "@/utils/request";
+import { SH_API,img_API,avater,advertise,small_icon} from "@/api/api";
 import personModel from "@/components/personModel";
 export default {
   components: {
@@ -48,8 +52,7 @@ export default {
   },
   data () {
     return {
-      getInfo:false,
-      notGetInfo:true,
+      userInfo: {},
       //头像
       img_userAvatar:img_API+avater+"/default_user_avatar.png",
       //广告
@@ -124,39 +127,53 @@ export default {
       }
     }
   },
+  created(){
+    
+  },
   mounted(){
-    //判断用户是否授权登录过
-  //   try {
-  //   var value = wx.getStorageSync('userinfo')
-  //   if (value) {
-  //     getInfo=true
-  //     notGetInfo=false
-  //   }else{
-  //     getInfo=false
-  //     notGetInfo=true
-  //   }
-  //   } catch (e){
-  // }
+    //一进页面先获取状态（授权了直接拿到，未授权则获取失败）--进入页面执行一次
+    wx.getUserInfo({
+      success:(res)=>{
+        // 更新userInfo的状态数据
+        console.log('获取成功',res)      
+        this.userInfo = res.userInfo  
+      },
+      fail: () => {
+        console.log('获取失败');
+      }
+    })
   },
   methods:{
-    //获取用户登录信息
-    bindGetUserInfo(){
-      wx.getUserInfo({
-      success: userInfo => {
-        console.log('登录成功',userInfo)
-        this.loginSuccess(userInfo)
-        this.getInfo=true
-        this.notGetInfo=false       
-      },
-      fail:err =>{
-        console.log('登录失败',err)
+    //用户登录处理
+    handleGetUserInfo(res){
+      // console.log(res)
+      //用户授权
+      if(res.mp.detail.userInfo){
+        this.userInfo = res.mp.detail.userInfo
+        console.log('user',this.userInfo);
+        //调用接口获取登录凭证（code）。
+        //通过凭证进而换取用户登录态信息，包括用户的唯一标识（openid）及本次登录的会话密钥（session_key）等
+        wx.login({
+          success: (res)=>{
+            var that = this;
+            let code = res.code
+            console.log('code',res.code);
+            //存储code
+            wx.setStorage({key:"code",data:res.code})
+            //同步取出code
+            // let token = wx.getStorageSync('token')
+            let token = get(SH_API+'/login/getOpenId',{user:this.userInfo,code:code});
+            // 将自定义登录状态缓存到storage中
+            // wx.setStorageSync('token', token);
+            console.log('token',token)
+          }
+        })
+
+      }else{
+        console.log('用户没授权')
       }
-      });
-    },
-    //登录成功后获取缓存信息
-    loginSuccess(userInfo){
-      wx.setStorageSync('userinfo',userInfo)
     }
+   
   }
 }
 </script>
