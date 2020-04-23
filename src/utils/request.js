@@ -1,4 +1,4 @@
-import {SH_API} from '../api/api'
+import {SH_API,API} from '../api/api'
 
 // 封装请求
 function request(url, method, data, header = {}){
@@ -7,9 +7,13 @@ function request(url, method, data, header = {}){
   });
   return new Promise((resolve,reject)=>{
     wx.request({
-      url: SH_API+url,
+      // url: API + url,
+      url,
       method,
       data,
+      header:{
+        'content-type':'application/json'
+      },
       success: (res) => { 
         wx.hideLoading();
         resolve(res.data);
@@ -19,7 +23,6 @@ function request(url, method, data, header = {}){
         reject(false);
       },
       complete: function() {
-        console.log('======complete====');
         wx.hideLoading();
       }
     });

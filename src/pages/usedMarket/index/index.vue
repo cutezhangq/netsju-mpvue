@@ -66,7 +66,6 @@
         </div>
       </div>
     </div>
-     <!-- <tabBar></tabBar> -->
   </div>
 </template>
 
@@ -122,7 +121,7 @@ export default {
     }
   },
   beforeMount() {
-    this.sh_category();
+   // this.sh_category();
     this.sh_indexGoods();
   },
   methods: {
@@ -149,20 +148,14 @@ export default {
     },
     //请求---分类信息
     async sh_category(){
-      const data = await get("/category",{location:0});
+      const data = await get(SH_API+"/category",{location:0});
       this.category = data.data;
       // console.log(this.category)
     },
-
     //请求---首页商品
-    sh_indexGoods(){
-      wx.request({
-        url:API+'/index/index',
-        success:(res)=>{
-          this.brandList = res.data.brandList
-          //console.log(this.brandList)
-        }
-      })
+    async sh_indexGoods(){
+      const data = await get(API+"/index/index");
+      this.brandList = data.brandList;
     }
   }
 }

@@ -43,7 +43,8 @@
 </template>
 
 <script>
-import { img_API,avater,advertise,small_icon} from "@/api/api";
+import { get } from "@/utils/request";
+import { SH_API,img_API,avater,advertise,small_icon} from "@/api/api";
 import personModel from "@/components/personModel";
 export default {
   components: {
@@ -126,13 +127,16 @@ export default {
       }
     }
   },
+  created(){
+    
+  },
   mounted(){
     //一进页面先获取状态（授权了直接拿到，未授权则获取失败）--进入页面执行一次
     wx.getUserInfo({
       success:(res)=>{
         // 更新userInfo的状态数据
-        console.log('获取成功',res)
-        this.userInfo = res.userInfo
+        console.log('获取成功',res)      
+        this.userInfo = res.userInfo  
       },
       fail: () => {
         console.log('获取失败');
@@ -146,6 +150,25 @@ export default {
       //用户授权
       if(res.mp.detail.userInfo){
         this.userInfo = res.mp.detail.userInfo
+        console.log('user',this.userInfo);
+        //调用接口获取登录凭证（code）。
+        //通过凭证进而换取用户登录态信息，包括用户的唯一标识（openid）及本次登录的会话密钥（session_key）等
+        wx.login({
+          success: (res)=>{
+            var that = this;
+            let code = res.code
+            console.log('code',res.code);
+            //存储code
+            wx.setStorage({key:"code",data:res.code})
+            //同步取出code
+            // let token = wx.getStorageSync('token')
+            let token = get(SH_API+'/login/getOpenId',{user:this.userInfo,code:code});
+            // 将自定义登录状态缓存到storage中
+            // wx.setStorageSync('token', token);
+            console.log('token',token)
+          }
+        })
+
       }else{
         console.log('用户没授权')
       }
