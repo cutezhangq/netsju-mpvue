@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'iconfont';  /* project id 1692114 */
-  src: url('//at.alicdn.com/t/font_1692114_dijkucizlcc.eot');
-  src: url('//at.alicdn.com/t/font_1692114_dijkucizlcc.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1692114_dijkucizlcc.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1692114_dijkucizlcc.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1692114_dijkucizlcc.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1692114_dijkucizlcc.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1692114_u3vwp7wogd.eot');
+  src: url('//at.alicdn.com/t/font_1692114_u3vwp7wogd.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1692114_u3vwp7wogd.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1692114_u3vwp7wogd.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1692114_u3vwp7wogd.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1692114_u3vwp7wogd.svg#iconfont') format('svg');
 }
 .iconfont {
   font-family: "iconfont" !important;
@@ -14,112 +14,3 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-.icon-netsju-fuzhuang:before {
-  content: "\e60b";
-}
-
-.icon-netsju-yinshi:before {
-  content: "\e800";
-}
-
-.icon-netsju-shujidingdan:before {
-  content: "\e63d";
-}
-
-.icon-netsju-peijian:before {
-  content: "\e604";
-}
-
-.icon-netsju-erji:before {
-  content: "\e6bf";
-}
-
-.icon-netsju-yinshipx:before {
-  content: "\e63e";
-}
-
-.icon-netsju-shuji:before {
-  content: "\e600";
-}
-
-.icon-netsju-quanbufenlei:before {
-  content: "\e60d";
-}
-
-.icon-netsju-erji1:before {
-  content: "\e62d";
-}
-
-.icon-netsju-fuzhuang1:before {
-  content: "\e601";
-}
-
-.icon-netsju-ziyuan:before {
-  content: "\e640";
-}
-
-.icon-netsju-jiankangyinshi:before {
-  content: "\e65b";
-}
-
-.icon-netsju-chaxun:before {
-  content: "\e60c";
-}
-
-.icon-netsju-guanyuwomen:before {
-  content: "\e62b";
-}
-
-.icon-netsju-zhaopin:before {
-  content: "\e605";
-}
-
-.icon-netsju-ershoushichang:before {
-  content: "\e608";
-}
-
-.icon-netsju-zhaopin1:before {
-  content: "\e61a";
-}
-
-.icon-netsju-luntan:before {
-  content: "\e606";
-}
-
-.icon-netsju-luntan1:before {
-  content: "\e609";
-}
-
-.icon-netsju-waimai:before {
-  content: "\e742";
-}
-
-.icon-netsju-zhaoren:before {
-  content: "\e607";
-}
-
-.icon-netsju-luntan2:before {
-  content: "\e641";
-}
-
-.icon-netsju-waimai1:before {
-  content: "\e8d1";
-}
-
-.icon-netsju-waimai2:before {
-  content: "\e624";
-}
-
-.icon-netsju-zu:before {
-  content: "\e6c7";
-}
-
-.icon-netsju-luntan3:before {
-  content: "\e622";
-}
-
-.icon-netsju-guanliyuan:before {
-  content: "\e60a";
-}
-

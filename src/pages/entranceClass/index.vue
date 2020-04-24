@@ -2,28 +2,32 @@
   <div class="control">
     <div class="container">
       <div class="grid-item-1" @click="goUsedMarket()">
-        <i class="iconfont icon-netsju-zu usedShop"></i>
+        <!-- <i class="iconfont icon-netsju-zu usedShop"></i> -->
+        <i class="iconfont usedShop">&#xe6c7;</i>
         <i class="web-font">二手市场</i>
         <span class="spanSty">
           <span>000</span>
         </span>
       </div>
       <div class="grid-item-2">
-        <i class="iconfont icon-netsju-waimai takeAway" style="font-size:240%"></i>
+        <!-- <i class="iconfont icon-netsju-waimai takeAway" style="font-size:240%"></i> -->
+        <i class="iconfont takeAway" style="font-size:240%">&#xe742;</i>
         <i class="web-font">外卖代取</i>
         <span class="spanSty">
           <span>333</span>
         </span>
       </div>
       <div class="grid-item-3">
-        <i class="iconfont icon-netsju-zhaopin job"></i>
+        <!-- <i class="iconfont icon-netsju-zhaopin job"></i> -->
+        <i class="iconfont job">&#xe605;</i>
         <i class="web-font">兼职招聘</i>
         <span class="spanSty">
           <span>222</span>
         </span>
       </div>
       <div class="grid-item-4">
-        <i class="iconfont icon-netsju-luntan3 school" style="font-size:179%"></i>
+        <!-- <i class="iconfont icon-netsju-luntan3 school" style="font-size:179%"></i> -->
+         <i class="iconfont school" style="font-size:179%">&#xe622;</i>
         <i class="web-font">校园社区</i>
         <span class="spanSty">
           <span>1111</span>

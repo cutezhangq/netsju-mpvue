@@ -20,35 +20,43 @@
       </swiper>
     </div>
     <!-- 分类 -->
-    <!-- <div class="channel">
-      <div @click="categoryList(item.id)" v-for="(item, index) in channel" :key="index">
-        <img :src="item.icon_url" alt="">
+    <div class="channel">
+      <div @click="categoryList(index)" v-for="(item, index) in category" :key="index">
+        <i class="iconfont">{{item.iconUrl}}</i>
         <p>{{item.name}}</p>
       </div>
-    </div>  -->
+      <div @click="toCategoryList(4)">
+        <i class="iconfont">&#xe60d;</i>
+        <p>全部分类</p>
+      </div>
+    </div> 
     
-    <div class="channel">
+    <!-- <div class="channel">
       <div @click="toCategoryList(0)">
-        <i class="iconfont icon-netsju-fuzhuang1"></i>
+         <i class="iconfont icon-netsju-fuzhuang1"></i> 
+        <i class="iconfont">&#xe601;</i>
         <p>服装</p>
       </div>
       <div @click="toCategoryList(1)">
-        <i class="iconfont icon-netsju-yinshi"></i>
+        <i class="iconfont">&#xe800;</i>
         <p>食品</p>
       </div>
       <div @click="toCategoryList(2)">
-        <i class="iconfont icon-netsju-erji1"></i>
+       
+        <i class="iconfont">&#xe6bf;</i>
         <p>配件</p>
       </div>
       <div @click="toCategoryList(3)">
-        <i class="iconfont icon-netsju-ziyuan"></i>
+       
+        <i class="iconfont">&#xe640;</i>
         <p>书籍</p>
       </div>
       <div @click="toCategoryList(4)">
-        <i class="iconfont icon-netsju-quanbufenlei"></i>
+        
+        <i class="iconfont">&#xe60d;</i>
         <p>全部分类</p>
       </div>
-    </div>
+    </div> -->
     
     <!-- 商品展示 -->
     <div class="brand">
@@ -73,6 +81,7 @@ import { API,SH_API } from "@/api/api";
 import { get } from "@/utils/request";
 import amapFile from "@/utils/amap-wx";
 import { mapState, mapMutations } from "vuex";
+
 export default {
   data () {
     return {
@@ -92,28 +101,28 @@ export default {
         },
       ], 
       //分类icon
-      channel: [
-       {
-         icon_url:"#",
-         name:"服装"
-       },
-       {
-         icon_url:"#",
-         name:"食品"
-       },
-       {
-         icon_url:"#",
-         name:"配件"
-       },
-       {
-         icon_url:"#",
-         name:"书籍"
-       },
-       {
-         icon_url:"#",
-         name:"全部分类"
-       }
-       ],
+      // channel: [
+      //  {
+      //    icon_url:"#",
+      //    name:"服装"
+      //  },
+      //  {
+      //    icon_url:"#",
+      //    name:"食品"
+      //  },
+      //  {
+      //    icon_url:"#",
+      //    name:"配件"
+      //  },
+      //  {
+      //    icon_url:"#",
+      //    name:"书籍"
+      //  },
+      //  {
+      //    icon_url:"#",
+      //    name:"全部分类"
+      //  }
+      //  ],
       
 
       category:[],
@@ -122,12 +131,14 @@ export default {
     }
   },
   beforeMount() {
-   // this.sh_category();
     this.sh_indexGoods();
   },
   computed: {
     ...mapState(["cityName"]),
    
+  },
+  created(){
+     this.sh_category();
   },
   methods: {
     //跳转---search页面
@@ -156,7 +167,6 @@ export default {
     async sh_category(){
       const data = await get(SH_API+"/category",{location:0});
       this.category = data.data;
-      // console.log(this.category)
     },
     //请求---首页商品
     async sh_indexGoods(){
@@ -187,24 +197,18 @@ export default {
       });
     },
     getCityName() {
-      console.log('-----进入getCityName()..-----')
       var _this = this;
       var myAmapFun = new amapFile.AMapWX({
-        key: "e545e7f79a643f23aef187add14e4548"
+        key: "e545e7f79a643f23aef187add14e4548"   //高德key
       });
       myAmapFun.getRegeo({
         success: function (data) {
-          //成功回调
           console.log(data);
-          // data[0].regeocodeData.formatted_address
-          // _this.cityName = data[0].regeocodeData.formatted_address;
           _this.update({ cityName: data[0].regeocodeData.formatted_address });
         },
         fail: function (info) {
-          //失败回调
           console.log(info);
-          //如果用户拒绝授权
-          // 默认为北京
+          //如果用户拒绝授权,默认为南京
           _this.cityName = "南京市";
           _this.update({ cityName: "南京市" });
         }
