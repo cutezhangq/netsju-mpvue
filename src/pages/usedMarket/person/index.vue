@@ -8,7 +8,8 @@
         </div>
         <!-- 登陆按钮 -->
         <button class="btn" open-type="getUserInfo" @getuserinfo="handleGetUserInfo">登录</button>
-      
+        <!-- 授权手机号按钮 -->
+        <!-- <button class="btn" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">授权手机号</button> -->
         <!-- 用户信息 -->
         <div class="user_name">
           <span>昵称：{{userInfo.nickName?userInfo.nickName:'未设置'}}</span>
@@ -160,6 +161,7 @@ export default {
             console.log('code',res.code);
             //存储code
             wx.setStorage({key:"code",data:res.code})
+
             //同步取出code
             // let token = wx.getStorageSync('token')
             let token = get(SH_API+'/login/getOpenId',{user:this.userInfo,code:code});
@@ -170,9 +172,10 @@ export default {
         })
 
       }else{
-        console.log('用户没授权')
+        console.log('用户没授权！')
       }
-    }
+    },
+    
    
   }
 }

@@ -7,7 +7,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="stylus">
+@import "~@/assets/common.styl"
 .container {
   height: 100%;
   display: flex;
@@ -28,7 +29,7 @@ page{
   width: 100%;
   height: 100%;
   /* 背景色 */
-  background: #f4f4f4;  
+  background: $background;  
   
 }
 </style>
