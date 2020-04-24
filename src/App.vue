@@ -5,8 +5,7 @@ export default {
 }
 </script>
 
-<style scoped lang="stylus">
-@import "~@/assets/common.styl"
+<style>
 .container {
   height: 100%;
   display: flex;
@@ -16,6 +15,7 @@ export default {
   padding: 200rpx 0;
   box-sizing: border-box;
 }
+/* this rule will be remove */
 * {
   transition: width 2s;
   -moz-transition: width 2s;
@@ -26,8 +26,7 @@ page{
   width: 100%;
   height: 100%;
   /* 背景色 */
-  background: $background;  
+  background: #f4f4f4;  
   
 }
 </style>
-

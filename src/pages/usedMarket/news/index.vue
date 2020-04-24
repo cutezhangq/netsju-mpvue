@@ -90,5 +90,6 @@ import { img_API,advertise,avater,goods,icon } from "@/api/api";
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+  @import "~@/assets/common.styl";
   @import "./style.styl";
 </style>
