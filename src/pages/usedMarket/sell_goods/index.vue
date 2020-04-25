@@ -27,7 +27,6 @@
         </swiper>
      </div>
 
-
      <!-- 分类小板块 -->
      <div class="discount">
         <div class="discount_item item_1">
