@@ -1,6 +1,5 @@
 <template>
   <div class="index">
-    <!-- 搜索 -->
     <div class="search">
       <!-- 城市位置 -->
       <div @click="toMappage">{{cityName}}</div>
@@ -22,41 +21,14 @@
     <!-- 分类 -->
     <div class="channel">
       <div @click="categoryList(index)" v-for="(item, index) in category" :key="index">
-        <i class="iconfont">{{item.iconUrl}}</i>
+        <img :src="item.iconUrl">
         <p>{{item.name}}</p>
       </div>
       <div @click="toCategoryList(4)">
-        <i class="iconfont">&#xe60d;</i>
-        <p>全部分类</p>
+        <img :src="all_channel.iconUrl">
+        <p>{{all_channel.name}}</p>
       </div>
     </div> 
-    
-    <!-- <div class="channel">
-      <div @click="toCategoryList(0)">
-         <i class="iconfont icon-netsju-fuzhuang1"></i> 
-        <i class="iconfont">&#xe601;</i>
-        <p>服装</p>
-      </div>
-      <div @click="toCategoryList(1)">
-        <i class="iconfont">&#xe800;</i>
-        <p>食品</p>
-      </div>
-      <div @click="toCategoryList(2)">
-       
-        <i class="iconfont">&#xe6bf;</i>
-        <p>配件</p>
-      </div>
-      <div @click="toCategoryList(3)">
-       
-        <i class="iconfont">&#xe640;</i>
-        <p>书籍</p>
-      </div>
-      <div @click="toCategoryList(4)">
-        
-        <i class="iconfont">&#xe60d;</i>
-        <p>全部分类</p>
-      </div>
-    </div> -->
     
     <!-- 商品展示 -->
     <div class="brand">
@@ -69,7 +41,7 @@
             <p>{{item.name}}</p>
             <p>{{item.floor_price}}元起</p>
           </div>
-          <img :src="item.new_pic_url" alt="">
+          <img :src="item.new_pic_url">
         </div>
       </div>
     </div>
@@ -100,45 +72,23 @@ export default {
           image_url:"/static/images/index/carousel04.jpg"
         },
       ], 
-      //分类icon
-      // channel: [
-      //  {
-      //    icon_url:"#",
-      //    name:"服装"
-      //  },
-      //  {
-      //    icon_url:"#",
-      //    name:"食品"
-      //  },
-      //  {
-      //    icon_url:"#",
-      //    name:"配件"
-      //  },
-      //  {
-      //    icon_url:"#",
-      //    name:"书籍"
-      //  },
-      //  {
-      //    icon_url:"#",
-      //    name:"全部分类"
-      //  }
-      //  ],
-      
-
+      //全部分类icon
+      all_channel:{
+        iconUrl:SH_API + "/images/icon/全部分类.png",
+        name:"全部分类"
+      },
       category:[],
       //品牌直供
       brandList:[]
     }
   },
   beforeMount() {
+    this.sh_category();
     this.sh_indexGoods();
   },
   computed: {
     ...mapState(["cityName"]),
    
-  },
-  created(){
-     this.sh_category();
   },
   methods: {
     //跳转---search页面
@@ -219,5 +169,6 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import "./style.styl"
+@import "~@/assets/common.styl";
+@import "./style.styl";
 </style>
