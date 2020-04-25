@@ -13,7 +13,7 @@
     <!-- 轮播 -->
     <div class="listContainer">
       <swiper class="swiper" indicator-dots indicator-color="#EDEDED" indicator-active-color="#FFD800" autoplay="true" interval="3000" circular="true" duration="500">
-         <block v-for="(item, index) in banner " :key="index">
+         <block v-for="(item, index) in banner" :key="index">
            <swiper-item>
             <img style="width:100%;" :src="item.image_url" alt="">
           </swiper-item>
@@ -21,34 +21,36 @@
       </swiper>
     </div>
     <!-- 分类 -->
-     <!-- <div class="channel">
+    <!-- <div class="channel">
       <div @click="categoryList(item.id)" v-for="(item, index) in channel" :key="index">
         <img :src="item.icon_url" alt="">
         <p>{{item.name}}</p>
       </div>
-    </div> -->
+    </div>  -->
+    
     <div class="channel">
-      <div>
-        <a href="/pages/usedMarket/index/categorylist/main"><i class="iconfont icon-netsju-fuzhuang1"></i> </a>
+      <div @click="toCategoryList(0)">
+        <i class="iconfont icon-netsju-fuzhuang1"></i>
         <p>服装</p>
       </div>
-      <div>
+      <div @click="toCategoryList(1)">
         <i class="iconfont icon-netsju-yinshi"></i>
         <p>食品</p>
       </div>
-      <div>
+      <div @click="toCategoryList(2)">
         <i class="iconfont icon-netsju-erji1"></i>
         <p>配件</p>
       </div>
-      <div>
+      <div @click="toCategoryList(3)">
         <i class="iconfont icon-netsju-ziyuan"></i>
         <p>书籍</p>
       </div>
-      <div>
+      <div @click="toCategoryList(4)">
         <i class="iconfont icon-netsju-quanbufenlei"></i>
         <p>全部分类</p>
       </div>
     </div>
+    
     <!-- 商品展示 -->
     <div class="brand">
       <div @click="tobrandList" class="head">
@@ -64,16 +66,12 @@
         </div>
       </div>
     </div>
-
-
-
-     <!-- <tabBar></tabBar> -->
   </div>
 </template>
 
 <script>
-import { API } from "../../../api/api";
-import { get } from "../../../utils/request";
+import { API,SH_API } from "@/api/api";
+import { get } from "@/utils/request";
 export default {
   data () {
     return {
@@ -113,25 +111,51 @@ export default {
        {
          icon_url:"#",
          name:"全部分类"
-       },
-     ],
+       }
+       ],
+      
+
+      category:[],
+      //品牌直供
       brandList:[]
     }
   },
-  mounted() {
-    //this.getBrandList();
+  beforeMount() {
+   // this.sh_category();
+    this.sh_indexGoods();
   },
   methods: {
+    //跳转---search页面
     toSearch() {
       wx.navigateTo({
         url: "/pages/usedMarket/index/search/main"
       });
     },
-    //请求brandList
-    async getBrandList(){
+    //跳转页面
+    toCategoryList(category_index){
+      if(category_index !== 4){
+        //分类列表 页面
+        wx.navigateTo({
+          url: "/pages/usedMarket/index/categorylist/main"+"?categoryIndex="+category_index
+        });
+      }else{
+        //全部分类 页面
+        wx.navigateTo({
+          url: "/pages/usedMarket/index/allCategory/main"
+        });
+      }
+      
+    },
+    //请求---分类信息
+    async sh_category(){
+      const data = await get(SH_API+"/category",{location:0});
+      this.category = data.data;
+      // console.log(this.category)
+    },
+    //请求---首页商品
+    async sh_indexGoods(){
       const data = await get(API+"/index/index");
       this.brandList = data.brandList;
-      console.log(this.brandList)
     }
   }
 }
