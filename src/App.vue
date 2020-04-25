@@ -1,5 +1,4 @@
 <script>
-
 export default {
 
 }
@@ -27,6 +26,5 @@ page{
   height: 100%;
   /* 背景色 */
   background: #f4f4f4;  
-  
 }
 </style>

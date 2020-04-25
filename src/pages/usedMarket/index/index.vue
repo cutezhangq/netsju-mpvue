@@ -112,7 +112,6 @@ export default {
       }
       
     },
-
     //请求---分类信息
     async sh_category(){
       const data = await get(SH_API+"/category",{location:0});
