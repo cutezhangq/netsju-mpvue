@@ -12,7 +12,7 @@ function request(url, method, data, header = {}){
       method,
       data,
       header:{
-        'content-type':'application/json'
+        'content-type':'application/json; charset=utf-8'
       },
       success: (res) => { 
         wx.hideLoading();
