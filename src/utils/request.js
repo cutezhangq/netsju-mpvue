@@ -1,5 +1,17 @@
 import {SH_API,API} from '../api/api'
 
+function getAccessToken() {
+  //取出code
+  let accessToken = wx.getStorageSync('token');
+  console.log('取出token',accessToken);
+  let firstOpen = true;
+  if (accessToken != null && !firstOpen) {
+    return "Bearer " + accessToken;
+  }else{
+    return "";
+  }
+}
+
 // 封装请求
 function request(url, method, data, header = {}){
   wx.showLoading({
@@ -12,7 +24,8 @@ function request(url, method, data, header = {}){
       method,
       data,
       header:{
-        'content-type':'application/json; charset=utf-8'
+        'content-type':'application/json; charset=utf-8',
+        'Authorization': getAccessToken(),
       },
       success: (res) => { 
         wx.hideLoading();

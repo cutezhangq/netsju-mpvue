@@ -16,7 +16,7 @@
           <span class="span">个人中心 ></span>   
         </div>
         <!-- 设置-->
-        <button @logout="logout">注销用户</button>
+        <button @click="logout">注销</button>
 
       </div>
     </div>
@@ -149,57 +149,50 @@ export default {
   methods:{
     //用户登录处理
     handleGetUserInfo(res){
-      // console.log(res)
       //用户授权
       if(res.mp.detail.userInfo){
         this.userInfo = res.mp.detail.userInfo
-        console.log('user',this.userInfo);
         wx.login({
           success: (res)=>{
             var _this = this;
             let code = res.code
-            console.log('code',res.code);
             //存储code
             wx.setStorage({key:"code",data:res.code})
-            //同步取出code
-            // let token = wx.getStorageSync('token')
             let token = post(SH_API+"/login/wechat",{
                 avatarUrl:_this.userInfo.avatarUrl,
                 code:code,
                 gender:_this.userInfo.gender,
                 nickname:_this.userInfo.nickName,
                 phone:"1123"
+            }).then(resData =>{
+              // _this._token = resData.data;
+              console.log('token', resData.data);
+              // 将token缓存到storage中
+              wx.setStorage({key:"token",data: resData.data});
             });
-
-            // 将自定义登录状态缓存到storage中
-            // wx.setStorageSync('token', token);
-            console.log('token',token);
-            if (token.data) {
-            wx.showToast({
-              title: "添加成功", //提示的内容,
-              icon: "success", //图标,
-              duration: 2000, //延迟时间,
-              mask: true, //显示透明蒙层，防止触摸穿透,
-              success: res => {
-                wx.navigateBack({
-                  delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
-                });
-              }
-            });
-          }
-
-
-
+          //   if (token.data) {
+          //   wx.showToast({
+          //     title: "添加成功", //提示的内容,
+          //     icon: "success", //图标,
+          //     duration: 2000, //延迟时间,
+          //     mask: true, //显示透明蒙层，防止触摸穿透,
+          //     success: res => {
+          //       wx.navigateBack({
+          //         delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
+          //       });
+          //     }
+          //   });
+          // }
           }
         })
-
       }else{
         console.log('用户没授权！')
       }
     },
     logout(){
-
-    }
+      console.log('点击注销');
+       get(SH_API+"/logout");
+    },
    
   }
 }
