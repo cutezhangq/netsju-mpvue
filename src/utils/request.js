@@ -1,5 +1,6 @@
 import {SH_API,API} from '../api/api'
 
+
 function getAccessToken() {
   //取出code
   let accessToken = wx.getStorageSync('token');
