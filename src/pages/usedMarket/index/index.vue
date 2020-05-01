@@ -1,13 +1,8 @@
 <template>
   <div class="index">
-    <div class="search">
-      <!-- 城市位置 -->
-      <div @click="toMappage">{{cityName}}</div>
-      <div @click="toSearch">
-        <input type="text" placeholder="搜索商品">
-        <span class="icon"></span>
-      </div>
-    </div>
+    <!-- 搜索框 -->
+    <searchBar @click="toSearch"></searchBar>
+
     <!-- 轮播 -->
     <div class="listContainer">
       <swiper class="swiper" indicator-dots indicator-color="#EDEDED" indicator-active-color="#FFD800" autoplay="true" interval="3000" circular="true" duration="500">
@@ -51,10 +46,12 @@
 <script>
 import { API,SH_API } from "@/api/api";
 import { get } from "@/utils/request";
-import amapFile from "@/utils/amap-wx";
-import { mapState, mapMutations } from "vuex";
+import searchBar from "@/components/searchBar";
 
 export default {
+  components: {
+    searchBar,
+  },
   data () {
     return {
       //轮播图
@@ -87,7 +84,6 @@ export default {
     this.sh_indexGoods();
   },
   computed: {
-    ...mapState(["cityName"]),
    
   },
   methods: {
@@ -109,9 +105,9 @@ export default {
         wx.navigateTo({
           url: "/pages/usedMarket/index/allCategory/main"
         });
-      }
-      
+      }      
     },
+
     //请求---分类信息
     async sh_category(){
       const data = await get(SH_API+"/category",{location:0});
@@ -121,47 +117,6 @@ export default {
     async sh_indexGoods(){
       const data = await get(API+"/index/index");
       this.brandList = data.brandList;
-    },
-
-    ...mapMutations(["update"]),
-    //高德地图
-    toMappage() {
-      var _this = this;
-      // 通过 wx.getSetting先查询一下用户是否授权了这个 scope
-      wx.getSetting({
-        success(res) {
-          //如果没有同意授权,打开设置
-          if (!res.authSetting["scope.userLocation"]) {
-            wx.openSetting({
-              success: res => {
-                _this.getCityName();
-              }
-            });
-          } else {
-            wx.navigateTo({
-              url: "/pages/mapPage/main"
-            })
-          }
-        }
-      });
-    },
-    getCityName() {
-      var _this = this;
-      var myAmapFun = new amapFile.AMapWX({
-        key: "e545e7f79a643f23aef187add14e4548"   //高德key
-      });
-      myAmapFun.getRegeo({
-        success: function (data) {
-          console.log(data);
-          _this.update({ cityName: data[0].regeocodeData.formatted_address });
-        },
-        fail: function (info) {
-          console.log(info);
-          //如果用户拒绝授权,默认为南京
-          _this.cityName = "南京市";
-          _this.update({ cityName: "南京市" });
-        }
-      });
     },
   }
 }

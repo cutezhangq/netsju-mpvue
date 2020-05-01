@@ -48,8 +48,8 @@ import { get } from "@/utils/request";
 import { SH_API,img_API,avater,advertise,small_icon} from "@/api/api";
 import personModel from "@/components/personModel";
 export default {
-  components: {
-    personModel,
+  components:{
+    personModel
   },
   data () {
     return {

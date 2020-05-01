@@ -1,12 +1,13 @@
 {
   "pages": [
+    "pages/usedMarket/sell_goods/main",
     "pages/entranceClass/main",
     "pages/usedMarket/index/main" ,
     "pages/usedMarket/person/main",
     "pages/mapPage/main",
     "pages/usedMarket/boutique/main",
     "pages/usedMarket/news/main",
-    "pages/usedMarket/sell_goods/main",
+    
     "pages/usedMarket/index/search/main",
     "pages/usedMarket/index/categorylist/main",
     "pages/usedMarket/index/allCategory/main"
@@ -24,32 +25,32 @@
     "list": [
       {
         "pagePath": "pages/usedMarket/index/main",
-        "iconPath": "static/images/ic_tabbar_home_nor.png",
-        "selectedIconPath":"static/images/ic_tabbar_home_sel.png",
+        "iconPath": "static/images/icon/ic_tabbar_home_nor.png",
+        "selectedIconPath":"static/images/icon/ic_tabbar_home_sel.png",
         "text": "首页"
       },
       {
         "pagePath":  "pages/usedMarket/boutique/main",
-        "iconPath": "static/images/ic_menu_jingpin_nor.png",
-        "selectedIconPath": "static/images/ic_menu_jingpin_pressed.png",
+        "iconPath": "static/images/icon/ic_tabbar_jingpin_nor.png",
+        "selectedIconPath": "static/images/icon/ic_tabbar_jingpin_sel.png",
         "text": "精品"
       },
       {
         "pagePath":  "pages/usedMarket/news/main",
-        "iconPath": "static/images/ic_tabbar_message_nor.png",
-        "selectedIconPath": "static/images/ic_tabbar_message_sel.png",
+        "iconPath": "static/images/icon/ic_tabbar_message_nor.png",
+        "selectedIconPath": "static/images/icon/ic_tabbar_message_sel.png",
         "text": "消息"
       },
       {
         "pagePath":"pages/usedMarket/sell_goods/main",
-        "iconPath": "static/images/ic_menu_shoping_nor.png",
-        "selectedIconPath":"static/images/ic_menu_shoping_pressed.png",
+        "iconPath": "static/images/icon/ic_tabbar_maihuo_nor.png",
+        "selectedIconPath":"static/images/icon/ic_tabbar_maihuo_sel.png",
         "text": "卖货"
       },
       {
         "pagePath":"pages/usedMarket/person/main",
-        "iconPath":"static/images/ic_tabbar_my_nor.png",
-        "selectedIconPath": "static/images/ic_tabbar_my_sel.png",
+        "iconPath":"static/images/icon/ic_tabbar_my_nor.png",
+        "selectedIconPath": "static/images/icon/ic_tabbar_my_sel.png",
         "text": "我的"
       }
     ]
