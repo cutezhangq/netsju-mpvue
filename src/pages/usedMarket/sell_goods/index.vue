@@ -1,31 +1,22 @@
 <template>
   <div class="bg">
      <!-- 头部轮播消息 -->
-     <div class="head">
+     <div class="head" ref="gundong">
         <h2>超多人想买 快来发布赚钱</h2>
-        <swiper class="resale" autoplay="true" interval="3000" circular="true" easing-function="easeInOutCubic">
-          <swiper-item class="resale_detail">
-              <img src="../../../../static/images/sell_goods/1.png">
-              <p>宜搭T恤</p>
-              <span>2658人想买</span>
-              <input type="submit" value="一键转卖">
-          </swiper-item>
+        
+          
+            <div class="gundong_box">
+              <div class="gundong_text" v-for="(item,index) in gundongList" :key="index">
+                <img :src="item.imgUrl">
+                <p>{{item.text}}</p>
+                <span>{{item.num}}人想买</span>
+                <input type="text" value="一键转卖">
+              </div>
+            </div>
+          
 
-          <swiper-item class="resale_detail">
-            <img src="../../../../static/images/sell_goods/1.png">
-            <p>宜搭T恤</p>
-            <span>2658人想买</span>
-            <input type="submit" value="一键转卖">
-          </swiper-item>
-
-          <swiper-item class="resale_detail">
-            <img src="../../../../static/images/sell_goods/1.png">
-            <p>宜搭T恤</p>
-            <span>2658人想买</span>
-            <input type="submit" value="一键转卖">
-          </swiper-item>
-        </swiper>
      </div>
+
 
      <!-- 分类小板块 -->
      <div class="discount">
@@ -75,10 +66,32 @@ export default {
 
   data () {
     return {
+      gundongList:[
+        {
+          imgUrl:"/static/images/sell_goods/1.png",
+          text:"宜搭T恤",
+          num:5431
+        },
+        {
+          imgUrl:"/static/images/sell_goods/1.png",
+          text:"白色衬衫",
+          num:2658
+        },
+        {
+          imgUrl:"/static/images/sell_goods/1.png",
+          text:"男士西装",
+          num:5431
+        },
+        {
+          imgUrl:"/static/images/sell_goods/1.png",
+          text:"蓝色牛仔",
+          num:3125
+        },
+      ],
     }
   },
 
-  created () {
+  methods: {
   }
 }
 </script>
