@@ -1,161 +1,183 @@
-.bg{
-    background: white;
-    height:100%;
-    display: inline-block;
-    width: 100%;
+.bg {
+  background: white;
+  height: 100%;
+  display: inline-block;
+  width: 100%;
 
-.head{
+  .head {
     box-sizing: border-box;
-    margin:20rpx auto;
-    width:90%;
-    height:200rpx;
+    margin: 20rpx auto;
+    width: 90%;
+    height: 200rpx;
     background-color: #FDE5E5;
     border-radius: 15px;
-    h2{
-        color:#FF3D17;
-        margin-bottom:25rpx;
-        font-weight: 600;
-        display:block;
-        padding:30rpx 0rpx 0rpx 30rpx;
+
+    h2 {
+      color: #FF3D17;
+      margin-bottom: 25rpx;
+      font-weight: 600;
+      display: block;
+      padding: 30rpx 0rpx 0rpx 30rpx;
     }
-    
-        
+
     .gundong_box {
-        width: 100%;
-        position:relative;
-        white-space: nowrap;
-        display:block;
-        width:100%;
-        height: 70rpx;
-        padding:0 20rpx;
-        box-sizing: border-box;
-        overflow: hidden;
-    .gundong_text :hover{
-        animation-play-state: paused}
-    .gundong_text {
+      width: 100%;
+      position: relative;
+      white-space: nowrap;
+      display: block;
+      width: 100%;
+      height: 70rpx;
+      padding: 0 20rpx;
+      box-sizing: border-box;
+      overflow: hidden;
+
+      .gundong_text :hover {
+        animation-play-state: paused
+      }
+
+      .gundong_text {
         display: inline-block;
-		animation: geiwogun 25s linear infinite; 
-        margin:0 20rpx;
+        animation: geiwogun 25s linear infinite;
+        margin: 0 20rpx;
         border-radius: 30px;
         background-color: white;
-        font-size:15px;
-        padding-left:20rpx;
-            img{
-                width:50rpx;
-                height:50rpx;
-                border-radius: 5px;
-            }
-            p{
-                display:inline-block;
-                font-size: 16px;
-                padding-left:15rpx;
-                vertical-align:super
-            }
-            span{
-                padding:0 10rpx;
-                vertical-align:super
-            }
-            input{
-                display: inline-block;
-                width:140rpx;
-                text-align: center;
-                border-radius: 30px;
-                background-color: #fe4c11;
-                margin-top: 10rpx;
-                margin-right:10rpx;
-                color:white;
-                font-size: 13px;
-            }
-            @-webkit-keyframes geiwogun {
-				0% {
-					transform: translate(0, 0);
-				}
-				to {
-					transform: translate(-300%, 0);
-				}
-			}
+        font-size: 15px;
+        padding-left: 20rpx;
 
+        img {
+          width: 50rpx;
+          height: 50rpx;
+          border-radius: 5px;
         }
+
+        p {
+          display: inline-block;
+          font-size: 16px;
+          padding-left: 15rpx;
+          vertical-align: super
+        }
+
+        span {
+          padding: 0 10rpx;
+          vertical-align: super
+        }
+
+        input {
+          display: inline-block;
+          width: 140rpx;
+          text-align: center;
+          border-radius: 30px;
+          background-color: #fe4c11;
+          margin-top: 10rpx;
+          margin-right: 10rpx;
+          color: white;
+          font-size: 13px;
+        }
+
+        @-webkit-keyframes geiwogun {
+          0% {
+            transform: translate(0, 0);
+          }
+
+          to {
+            transform: translate(-300%, 0);
+          }
+        }
+
+      }
     }
-    
 
-        
-}
 
-.discount{
-    width:90vw;
-    margin:0 auto;
-    display:flex;
+
+  }
+
+  .discount {
+    width: 90vw;
+    margin: 0 auto;
+    display: flex;
     flex-flow: row wrap;
     align-content: flex-start;
-    .discount_item{
-        margin:5rpx;
-        border-radius:10px;
-        line-height: 40rpx;
-        padding:15rpx;
-        p:nth-child(1) {
-            font-size: 30rpx;
-            font-weight: bold;
-        }
-        p:nth-child(2) {
-            font-size: 22rpx;
-        }
-    }
-    .item_1{
-            flex:3.5;
-            background-color: #FEF4F3;
-            color:#FE7C78;
-        }
-    .item_2{
-            flex:4;
-            background-color: #EDF6FE;
-            color:#59a3fd;
-        }
-    .item_3{
-            flex:2;
-            background-color: #FEF4F3;
-            color:#FE6B69;
-        }
-    .item_4{
-            flex:4;
-            background-color: #EDF6FE;
-            color:#59a3fd;
-        }
-    .item_5{
-            flex:2;
-            background-color: #F2FCE4;
-            color:#4EC373;
-        }
-    .item_6{
-            flex:3;
-            background-color: #F5F1FE;
-            color:#8254C4;
-        }
-}
 
-.btn{
-    width:90%;
-    height:150rpx;
-    margin:400rpx auto 0 auto;
-    background-color: #FDE933;
-    border-radius:15px;
-    .submit{
-        width:360rpx;
-        margin:0 auto;
-        padding:30rpx 0;
-        text-align: left;
-        h2{
-            font-weight: 600;
-        }
-        p{
-            font-size: 30rpx;
-        }
-        img{
-            width:100rpx;
-            height:110rpx;
-            float:left;
-        }
+    .discount_item {
+      margin: 5rpx;
+      border-radius: 10px;
+      line-height: 40rpx;
+      padding: 15rpx;
+
+      p:nth-child(1) {
+        font-size: 30rpx;
+        font-weight: bold;
+      }
+
+      p:nth-child(2) {
+        font-size: 22rpx;
+      }
     }
-}
+
+    .item_1 {
+      flex: 3.5;
+      background-color: #FEF4F3;
+      color: #FE7C78;
+    }
+
+    .item_2 {
+      flex: 4;
+      background-color: #EDF6FE;
+      color: #59a3fd;
+    }
+
+    .item_3 {
+      flex: 2;
+      background-color: #FEF4F3;
+      color: #FE6B69;
+    }
+
+    .item_4 {
+      flex: 4;
+      background-color: #EDF6FE;
+      color: #59a3fd;
+    }
+
+    .item_5 {
+      flex: 2;
+      background-color: #F2FCE4;
+      color: #4EC373;
+    }
+
+    .item_6 {
+      flex: 3;
+      background-color: #F5F1FE;
+      color: #8254C4;
+    }
+  }
+
+  .btn {
+    width: 90%;
+    height: 150rpx;
+    margin: 400rpx auto 0 auto;
+    background-color: #FDE933;
+    border-radius: 15px;
+
+    .submit {
+      width: 360rpx;
+      margin: 0 auto;
+      padding: 30rpx 0;
+      text-align: left;
+
+      h2 {
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 30rpx;
+      }
+
+      img {
+        width: 100rpx;
+        height: 110rpx;
+        float: left;
+      }
+    }
+  }
 
 }

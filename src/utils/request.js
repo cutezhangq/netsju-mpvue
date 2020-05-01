@@ -6,6 +6,7 @@ function getAccessToken() {
   console.log('取出token',accessToken);
   let firstOpen = true;
   if (accessToken != null && !firstOpen) {
+  // if (accessToken != null) {
     return "Bearer " + accessToken;
   }else{
     return "";
