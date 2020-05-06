@@ -7,10 +7,10 @@
     "pages/mapPage/main",
     "pages/usedMarket/boutique/main",
     "pages/usedMarket/news/main",
-    
     "pages/usedMarket/index/search/main",
     "pages/usedMarket/index/categorylist/main",
     "pages/usedMarket/index/allCategory/main"
+
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -36,16 +36,16 @@
         "text": "精品"
       },
       {
-        "pagePath":  "pages/usedMarket/news/main",
-        "iconPath": "static/images/icon/ic_tabbar_message_nor.png",
-        "selectedIconPath": "static/images/icon/ic_tabbar_message_sel.png",
-        "text": "消息"
-      },
-      {
         "pagePath":"pages/usedMarket/sell_goods/main",
         "iconPath": "static/images/icon/ic_tabbar_maihuo_nor.png",
         "selectedIconPath":"static/images/icon/ic_tabbar_maihuo_sel.png",
         "text": "卖货"
+      },
+      {
+        "pagePath":  "pages/usedMarket/news/main",
+        "iconPath": "static/images/icon/ic_tabbar_message_nor.png",
+        "selectedIconPath": "static/images/icon/ic_tabbar_message_sel.png",
+        "text": "消息"
       },
       {
         "pagePath":"pages/usedMarket/person/main",
