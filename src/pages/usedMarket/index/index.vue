@@ -118,6 +118,17 @@ export default {
       const data = await get(API+"/index/index");
       this.brandList = data.brandList;
     },
+  },
+   /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    if (typeof this.getTabBar === 'function' &&this.getTabBar()) {
+      console.log('设置选中项 0')
+      this.getTabBar().setData({
+        selected: 0
+      })
+    }
   }
 }
 </script>

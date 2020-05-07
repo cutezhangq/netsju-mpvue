@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/usedMarket/sell_goods/main",
     "pages/entranceClass/main",
+    "pages/usedMarket/sell_goods/main",
+    
     "pages/usedMarket/index/main" ,
     "pages/usedMarket/person/main",
     "pages/mapPage/main",
@@ -19,6 +20,7 @@
     "navigationBarBackgroundColor":"#FFD800"
   },
   "tabBar": {
+    "custom": true,
     "backgroundColor": "#fafafa",
     "borderStyle": "white",
     "selectedColor": "#f7be05",
@@ -55,9 +57,11 @@
       }
     ]
   },
+  "usingComponents": {},
   "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于小程序学习使用"
     }
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
