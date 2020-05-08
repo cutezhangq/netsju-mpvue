@@ -1,8 +1,15 @@
 <template>
   <div class="index">
-    <!-- 搜索框 -->
-    <searchBar @click="toSearch"></searchBar>
-
+    <!-- 搜索 -->
+    <div class="search">
+      <!-- 城市位置 -->
+      <div @click="toMappage">{{cityName}}</div>
+      <div @click="toSearch">
+        <input type="text" placeholder="搜索商品">
+        <span class="icon"></span>
+      </div>
+    </div>
+    
     <!-- 轮播 -->
     <div class="listContainer">
       <swiper class="swiper" indicator-dots indicator-color="#EDEDED" indicator-active-color="#FFD800" autoplay="true" interval="3000" circular="true" duration="500">
@@ -31,7 +38,7 @@
         品牌制造商直供
       </div>
       <div class="content">
-        <div v-for="(item, index) in brandList" :key="index">
+        <div @click="brandDetail()" v-for="(item, index) in brandList" :key="index">
           <div>
             <p>{{item.name}}</p>
             <p>{{item.floor_price}}元起</p>
@@ -46,12 +53,10 @@
 <script>
 import { API,SH_API } from "@/api/api";
 import { get } from "@/utils/request";
-import searchBar from "@/components/searchBar";
+import amapFile from "@/utils/amap-wx";
+import { mapState, mapMutations } from "vuex";
 
 export default {
-  components: {
-    searchBar,
-  },
   data () {
     return {
       //轮播图
@@ -82,11 +87,53 @@ export default {
   beforeMount() {
     this.sh_category();
     this.sh_indexGoods();
+    this.getCityName();
   },
   computed: {
-   
+    ...mapState(["cityName"]),
   },
   methods: {
+    ...mapMutations(["update"]),
+    //高德地图
+    toMappage() {
+        var _this = this;
+        // 通过 wx.getSetting先查询一下用户是否授权了这个 scope
+        wx.getSetting({
+            success(res) {
+            //如果没有同意授权,打开设置
+            if (!res.authSetting["scope.userLocation"]) {
+                wx.openSetting({
+                success: res => {
+                    _this.getCityName();
+                }
+                });
+            } else {
+                wx.navigateTo({
+                url: "/pages/mapPage/main"
+                })
+            }
+            }
+        });
+        },
+        getCityName() {
+        var _this = this;
+        var myAmapFun = new amapFile.AMapWX({
+            key: "e545e7f79a643f23aef187add14e4548"   //高德key
+        });
+        myAmapFun.getRegeo({
+            success: function (data) {
+            console.log(data);
+            _this.update({ cityName: data[0].regeocodeData.formatted_address });
+            },
+            fail: function (info) {
+            console.log(info);
+            //如果用户拒绝授权,默认为南京
+            _this.cityName = "南京市";
+            _this.update({ cityName: "南京市" });
+            }
+        });
+     },
+
     //跳转---search页面
     toSearch() {
       wx.navigateTo({
@@ -106,6 +153,13 @@ export default {
           url: "/pages/usedMarket/index/allCategory/main"
         });
       }      
+    },
+    
+    //跳转到详情页面
+    brandDetail() {
+      wx.navigateTo({
+        url: "/pages/usedMarket/index/brandDetail/main"
+      });
     },
 
     //请求---分类信息
