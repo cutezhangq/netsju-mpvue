@@ -1,17 +1,17 @@
 {
   "pages": [
     "pages/entranceClass/main",
-    "pages/usedMarket/sell_goods/main",
-    
     "pages/usedMarket/index/main" ,
     "pages/usedMarket/person/main",
     "pages/mapPage/main",
     "pages/usedMarket/boutique/main",
     "pages/usedMarket/news/main",
+    "pages/usedMarket/sell_goods/main",
     "pages/usedMarket/index/search/main",
+    "pages/usedMarket/index/GoodsDetail/main",
+    "pages/usedMarket/index/brandDetail/main",
     "pages/usedMarket/index/categorylist/main",
     "pages/usedMarket/index/allCategory/main"
-
   ],
   "window": {
     "backgroundTextStyle": "light",
