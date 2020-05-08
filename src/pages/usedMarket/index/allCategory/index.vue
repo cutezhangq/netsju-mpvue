@@ -37,8 +37,11 @@
 </template>
 
 <script>
-import {API} from "@/api/api"
+import {API} from "@/api/api";
+
 export default {
+  components: {
+  },
   created() {},
   mounted() {
     //获取列表数据

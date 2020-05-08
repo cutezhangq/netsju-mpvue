@@ -40,6 +40,9 @@
         </div>
       </div>
     </div>
+
+    <!-- tabbar -->
+    <!-- <tabBar></tabBar> -->
   </div>
 </template>
 
@@ -47,10 +50,12 @@
 import { API,SH_API } from "@/api/api";
 import { get } from "@/utils/request";
 import searchBar from "@/components/searchBar";
+// import tabBar from "@/components/tabBar";
 
 export default {
   components: {
     searchBar,
+    // tabBar
   },
   data () {
     return {
