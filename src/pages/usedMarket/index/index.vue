@@ -9,20 +9,22 @@
         <span class="icon"></span>
       </div>
     </div>
-    
+
     <!-- 轮播 -->
     <div class="listContainer">
-      <swiper class="swiper" indicator-dots indicator-color="#EDEDED" indicator-active-color="#FFD800" autoplay="true" interval="3000" circular="true" duration="500">
-         <block v-for="(item, index) in banner" :key="index">
-           <swiper-item>
+      <swiper class="swiper" indicator-dots indicator-color="#EDEDED" indicator-active-color="#FFD800" autoplay="true"
+        interval="3000" circular="true" duration="500">
+        <block v-for="(item, index) in banner" :key="index">
+          <swiper-item>
             <img style="width:100%;" :src="item.image_url" alt="">
           </swiper-item>
-         </block>
+        </block>
       </swiper>
     </div>
+
     <!-- 分类 -->
     <div class="channel">
-      <div @click="categoryList(index)" v-for="(item, index) in category" :key="index">
+      <div @click="toCategoryList(index)" v-for="(item, index) in category" :key="index">
         <img :src="item.iconUrl">
         <p>{{item.name}}</p>
       </div>
@@ -30,8 +32,8 @@
         <img :src="all_channel.iconUrl">
         <p>{{all_channel.name}}</p>
       </div>
-    </div> 
-    
+    </div>
+
     <!-- 商品展示 -->
     <div class="brand">
       <div @click="tobrandList" class="head">
@@ -47,156 +49,170 @@
         </div>
       </div>
     </div>
-    
+
     <!-- tabbar -->
     <!-- <tabBar></tabBar> -->
   </div>
 </template>
 
 <script>
-import { API,SH_API } from "@/api/api";
-import { get } from "@/utils/request";
-import searchBar from "@/components/searchBar";
-import amapFile from "@/utils/amap-wx";
-import { mapState, mapMutations } from "vuex";
-// import tabBar from "@/components/tabBar";
+  import {
+    API,
+    SH_API
+  } from "@/api/api";
+  import {
+    get
+  } from "@/utils/request";
+  import searchBar from "@/components/searchBar";
+  import amapFile from "@/utils/amap-wx";
+  import {
+    mapState,
+    mapMutations
+  } from "vuex";
+  // import tabBar from "@/components/tabBar";
 
-export default {
-  components: {
-    searchBar,
-    // tabBar
-  },
-  data () {
-    return {
-      //轮播图
-      banner: [
-        {
-          image_url:"/static/images/index/carousel01.jpg"
+  export default {
+    components: {
+      searchBar,
+      // tabBar
+    },
+    data() {
+      return {
+        //轮播图
+        banner: [{
+            image_url: "/static/images/index/carousel01.jpg"
+          },
+          {
+            image_url: "/static/images/index/carousel02.jpg"
+          },
+          {
+            image_url: "/static/images/index/carousel03.jpg"
+          },
+          {
+            image_url: "/static/images/index/carousel04.jpg"
+          },
+        ],
+        //全部分类icon
+        all_channel: {
+          iconUrl: SH_API + "/images/icon/全部分类.png",
+          name: "全部分类"
         },
-         {
-          image_url:"/static/images/index/carousel02.jpg"
-        },
-         {
-          image_url:"/static/images/index/carousel03.jpg"
-        },
-         {
-          image_url:"/static/images/index/carousel04.jpg"
-        },
-      ], 
-      //全部分类icon
-      all_channel:{
-        iconUrl:SH_API + "/images/icon/全部分类.png",
-        name:"全部分类"
-      },
-      category:[],
-      //品牌直供
-      brandList:[]
-    }
-  },
-  beforeMount() {
-    this.sh_category();
-    this.sh_indexGoods();
-    this.getCityName();
-  },
-  computed: {
-    ...mapState(["cityName"]),
-  },
-  methods: {
-    ...mapMutations(["update"]),
-    //高德地图
-    toMappage() {
+        category: [],
+        //品牌直供
+        brandList: []
+      }
+    },
+    beforeMount() {
+      this.sh_category();
+      this.sh_indexGoods();
+      this.getCityName();
+    },
+    computed: {
+      ...mapState(["cityName"]),
+    },
+    methods: {
+      ...mapMutations(["city_update"]),
+      //高德地图
+      toMappage() {
         var _this = this;
         // 通过 wx.getSetting先查询一下用户是否授权了这个 scope
         wx.getSetting({
-            success(res) {
+          success(res) {
             //如果没有同意授权,打开设置
             if (!res.authSetting["scope.userLocation"]) {
-                wx.openSetting({
+              wx.openSetting({
                 success: res => {
-                    _this.getCityName();
+                  _this.getCityName();
                 }
-                });
+              });
             } else {
-                wx.navigateTo({
+              wx.navigateTo({
                 url: "/pages/mapPage/main"
-                })
+              })
             }
-            }
+          }
         });
-        },
-        getCityName() {
+      },
+      getCityName() {
         var _this = this;
         var myAmapFun = new amapFile.AMapWX({
-            key: "e545e7f79a643f23aef187add14e4548"   //高德key
+          key: "e545e7f79a643f23aef187add14e4548" //高德key
         });
         myAmapFun.getRegeo({
-            success: function (data) {
+          success: function (data) {
             console.log(data);
-            _this.update({ cityName: data[0].regeocodeData.formatted_address });
-            },
-            fail: function (info) {
+            _this.city_update({
+              cityName: data[0].regeocodeData.formatted_address
+            });
+          },
+          fail: function (info) {
             console.log(info);
             //如果用户拒绝授权,默认为南京
             _this.cityName = "南京市";
-            _this.update({ cityName: "南京市" });
-            }
+            _this.city_update({
+              cityName: "南京市"
+            });
+          }
         });
-     },
+      },
 
-    //跳转---search页面
-    toSearch() {
-      wx.navigateTo({
-        url: "/pages/usedMarket/index/search/main"
-      });
-    },
-    //跳转页面
-    toCategoryList(category_index){
-      if(category_index !== 4){
-        //分类列表 页面
+      //跳转---search页面
+      toSearch() {
         wx.navigateTo({
-          url: "/pages/usedMarket/index/categorylist/main"+"?categoryIndex="+category_index
+          url: "/pages/usedMarket/index/search/main"
         });
-      }else{
-        //全部分类 页面
+      },
+      //跳转---分类列表、全部分类页
+      toCategoryList(category_index) {
+        if (category_index !== 4) {
+          //分类列表 页面
+          wx.navigateTo({
+            url: "/pages/usedMarket/index/categoryList/main" + "?categoryIndex=" + category_index
+          });
+        } else {
+          //全部分类 页面
+          wx.navigateTo({
+            url: "/pages/usedMarket/index/allCategory/main"
+          });
+        }
+      },
+      //跳转---详情页面
+      brandDetail() {
         wx.navigateTo({
-          url: "/pages/usedMarket/index/allCategory/main"
+          url: "/pages/usedMarket/index/brandDetail/main"
         });
-      }      
-    },
-    
-    //跳转到详情页面
-    brandDetail() {
-      wx.navigateTo({
-        url: "/pages/usedMarket/index/brandDetail/main"
-      });
-    },
+      },
 
-    //请求---分类信息
-    async sh_category(){
-      const data = await get(SH_API+"/category",{location:0});
-      this.category = data.data;
+      //请求---分类信息
+      async sh_category() {
+        const data = await get(SH_API + "/category", {
+          location: 0
+        });
+        this.category = data.data;
+      },
+      //请求---首页商品
+      async sh_indexGoods() {
+        const data = await get(API + "/index/index");
+        this.brandList = data.brandList;
+      },
     },
-    //请求---首页商品
-    async sh_indexGoods(){
-      const data = await get(API+"/index/index");
-      this.brandList = data.brandList;
-    },
-  },
-   /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    if (typeof this.getTabBar === 'function' &&this.getTabBar()) {
-      console.log('设置选中项 0')
-      this.getTabBar().setData({
-        selected: 0
-      })
-    }
+    /**
+     * 生命周期函数--监听页面显示
+     */
+    // onShow: function () {
+    //   if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+    //     console.log('设置选中项 0')
+    //     this.getTabBar().setData({
+    //       selected: 0
+    //     })
+    //   }
+    // }
   }
-}
+
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import "~@/assets/common.styl";
-@import "./style.styl";
+  @import "~@/assets/common.styl";
+  @import "./style.styl";
+
 </style>
