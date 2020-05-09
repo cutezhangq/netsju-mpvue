@@ -4,8 +4,7 @@ import {SH_API,API} from '../api/api'
 function getAccessToken() {
   //取出code
   let accessToken = wx.getStorageSync('token');
-  console.log('取出token',accessToken);
-  console.log('取出token--',accessToken.length);
+  // console.log('取出token',accessToken);
   if (accessToken.length!=0) {
      return "Bearer " + accessToken;
   }else{
