@@ -177,7 +177,7 @@
               nickname: userInfo.nickName,
               phone: ""
             }).then(resData => {
-              console.log('token123', resData.data);
+              console.log('token', resData.data);
               // 存储token,加入Storage缓存
               wx.setStorage({key: "token",data: resData.data});
               this.isLogin = true;
@@ -190,6 +190,8 @@
       loginOut() {
         get(SH_API + "/logout").then(res => {
           this.isLogin = false;
+          wx.setStorage({key: "token",data:""});
+          this.Toast_login();
         })
       },
       Toast_login() {
