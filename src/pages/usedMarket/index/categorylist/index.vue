@@ -71,10 +71,7 @@ import {get} from "@/utils/request";
       async getGoodsList(navid){
         const data = await get(SH_API + "/category/"+this.navId);
         this.goodsList = data.data
-        // console.log('----请求GoodsList列表---',this.goodsList)
       }
-      
-
     }
   }
 
