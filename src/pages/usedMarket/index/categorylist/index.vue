@@ -1,32 +1,20 @@
 <template>
   <div class="categoryList">
-    <!-- navSwitch:点击监听导航栏
-            navState:当前状态
-            index:动态修改当前状态
-            current:保持导航栏和滑块数据一致
-            监听导航栏
-                点击获取index,然后把index赋值给navState。若navState==index,显示红色。
-            监听滑块
-                滑动滑块，navState会改变（current改变）会触发change事件，调用bingChange方法。
-            双向监听
-                current动态绑定navState，点击导航栏=>改变navState=>改变current=>滑块跟着改变
-                                        滑动滑块=>navState改变=>current改变=>触发change事件=>导航栏改变
-        -->
     <!-- 导航栏 -->
     <scroll-view scroll-x="true" :scroll-left="scrollLeft" class="head">
-      <div @click="navSwitch(index)" class="navState" v-for="(item, index) in test_navData" :key="index">
+      <div @click="changeTab(index,item.id)" class="navState" v-for="(item, index) in navData" :key="index">
         {{item.name}}
       </div>
     </scroll-view>
 
     <!-- 主题介绍 -->
     <div class="info">
-      <p>{{test_currentNav.name}}</p>
-      <p>{{test_currentNav.front_desc}}</p>
+      <p>{{currentNav.name}}</p>
+      <p>{{currentNav.frontName}}</p>
     </div>
 
     <!-- 商品列表 -->
-    <div @change="bingChange" :current="navState" v-if="test_navData.length!=0">
+    <div @change="bingChange" :current="navState" v-if="navData.length!=0">
       <div class="list">
         <div class="item" v-for="(item, index) in test_navData" :key="index">
           <img :src="item.img_url">
@@ -44,88 +32,49 @@
 </template>
 
 <script>
-import {API} from "@/api/api"
-  export default {
+import {API,SH_API} from "@/api/api"
+import {get} from "@/utils/request";
 
+  export default {
+    mounted() {
+    //获取index页面传参
+    this.categoryId = this.$root.$mp.query.id;
+  },
     data() {
       return {
-        navData: [{
-            text: "服装"
-          },
-          {
-            text: "食品"
-          },
-          {
-            text: "配件"
-          },
-          {
-            text: "书籍"
-          },
-          {
-            text: "服装"
-          },
-          {
-            text: "食品"
-          },
-          {
-            text: "配件"
-          },
-        ],
-        goodsList: [{
-            list_pic_url: "/static/images/categoryList/1.png",
-            name: "抱枕",
-            price: 30,
-          },
-          {
-            list_pic_url: "/static/images/categoryList/1.png",
-            name: "抱枕",
-            price: 30,
-          },
-          {
-            list_pic_url: "/static/images/categoryList/1.png",
-            name: "抱枕",
-            price: 30,
-          },
-          {
-            list_pic_url: "/static/images/categoryList/1.png",
-            name: "抱枕",
-            price: 30,
-          },
-          {
-            list_pic_url: "/static/images/categoryList/1.png",
-            name: "抱枕",
-            price: 30,
-          },
-          {
-            list_pic_url: "/static/images/categoryList/1.png",
-            name: "抱枕",
-            price: 30,
-          }
-        ],
-        test_navData:[],
-        test_currentNav:[],
-        nowIndex: 0,
+        categoryId: "",
+        navData:[],
+        currentNav:{},
+        goodsList: [],
         scrollLeft: 0,
       }
     },
     beforeMount(){
-      this.getGoodsList()
+      this.getNavList()
+     
     },
     methods: {
-      //请求列表
-      getGoodsList(){
-        //let data = {req: this.searchContent}
-        wx.request({
-          url:API+'/category/categoryNav?id=1005000',
-          // data:{},
-          //data,   //es6中同名的属性可以简化不写
-          success:(res)=>{
-            this.test_navData = res.data.navData
-            this.test_currentNav = res.data.currentNav
-            console.log(res.data)
-          }
-        })
+      //请求nav列表,一级目录
+      async getNavList() {
+        const data = await get(SH_API + "/category",{
+          parentId:0
+        });
+        this.navData = data.data
+        
       },
+      //切换nav
+      changeTab(index,current_navid){
+        console.log('点击----',index+current_navid);
+        this.getGoodsList(current_navid);
+      },
+      //请求goodsList,二级目录
+      async getGoodsList(navid){
+        const data = await get(SH_API + "/category/"+this.navId);
+        this.goodsList = data.data
+        console.log('----请求GoodsList列表---',this.goodsList)
+      }
+      
+
     }
   }
 

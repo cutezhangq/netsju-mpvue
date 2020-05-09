@@ -24,7 +24,7 @@
 
     <!-- 分类 -->
     <div class="channel">
-      <div @click="toCategoryList(index)" v-for="(item, index) in category" :key="index">
+      <div @click="toCategoryList(index,item.id)" v-for="(item, index) in category" :key="index">
         <img :src="item.iconUrl">
         <p>{{item.name}}</p>
       </div>
@@ -163,11 +163,11 @@
         });
       },
       //跳转---分类列表、全部分类页
-      toCategoryList(category_index) {
+      toCategoryList(category_index,category_id) {
         if (category_index !== 4) {
           //分类列表 页面
           wx.navigateTo({
-            url: "/pages/usedMarket/index/categoryList/main" + "?categoryIndex=" + category_index
+            url: "/pages/usedMarket/index/categoryList/main" + "?categoryId=" + category_id
           });
         } else {
           //全部分类 页面
