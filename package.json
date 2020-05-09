@@ -27,6 +27,7 @@
     "@vant/weapp": "^1.0.7",
     "miniprogram-sm-crypto": "^0.1.0",
     "mpvue": "^2.0.0",
+    "mpvue-wxparse": "^0.6.5",
     "vant-weapp": "^0.5.27",
     "vconsole": "^3.3.4",
     "vuex": "^3.3.0",

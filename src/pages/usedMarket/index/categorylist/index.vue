@@ -86,6 +86,12 @@ export default {
     async getGoodsList(navid) {
       const data = await get(SH_API + `/shProduct/category1/${navid}/${this.goods_page}`);
       this.goodsList = data.data
+    },
+    goodsDetail(id) {
+      console.log(id);
+      wx.navigateTo({
+        url: "/pages/usedMarket/index/GoodsDetail/main?categoryId="+id
+      });
     }
   }
 }

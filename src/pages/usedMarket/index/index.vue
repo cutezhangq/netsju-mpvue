@@ -35,7 +35,7 @@
     </div>
 
     <!-- 商品展示 -->
-    <div class="brand">
+    <!-- <div class="brand">
       <div @click="tobrandList" class="head">
         品牌制造商直供
       </div>
@@ -46,6 +46,17 @@
             <p>{{item.floor_price}}元起</p>
           </div>
           <img :src="item.new_pic_url">
+        </div>
+      </div>
+    </div> -->
+    <div class="newcategory">
+      <div class="list" v-for="(item, index) in newCategoryList" :key="index">
+        <div class="sublist">
+          <div @click="goodsDetail()">
+            <img :src="subitem.list_pic_url" alt="">
+            <p>{{subitem.name}}</p>
+            <p>￥{{subitem.retail_price}}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -177,11 +188,11 @@
         }
       },
       //跳转---详情页面
-      brandDetail() {
-        wx.navigateTo({
-          url: "/pages/usedMarket/index/brandDetail/main"
-        });
-      },
+      // brandDetail() {
+      //   wx.navigateTo({
+      //     url: "/pages/usedMarket/index/brandDetail/main"
+      //   });
+      // },
 
       //请求---分类信息
       async sh_category() {

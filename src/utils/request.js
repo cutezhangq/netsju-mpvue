@@ -47,3 +47,4 @@ export function get(url, data) {
 export function post(url, data) {
   return request(url, "POST", data);
 }
+
