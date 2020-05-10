@@ -48,3 +48,22 @@ export function post(url, data) {
   return request(url, "POST", data);
 }
 
+//用户登录
+export function login() {
+  const userInfo = wx.getStorageSync("userInfo");
+  if (userInfo) {
+    return userInfo;
+  }
+}
+
+//用户未登录
+export function toLogin() {
+  const userInfo = wx.getStorageSync("userInfo");
+  if (!userInfo) {
+    wx.navigateTo({
+      url: "/pages/usedMarket/person/main"
+    });
+  } else {
+    return true;
+  }
+}

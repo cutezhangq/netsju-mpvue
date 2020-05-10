@@ -24,7 +24,7 @@
         </span>
       </div>
       <div class="grid-item-4">
-         <i class="iconfont school" style="font-size:179%">&#xe622;</i>
+        <i class="iconfont school" style="font-size:179%">&#xe622;</i>
         <i class="web-font">校园社区</i>
         <span class="spanSty">
           <span>1111</span>

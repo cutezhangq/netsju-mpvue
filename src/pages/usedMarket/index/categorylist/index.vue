@@ -16,7 +16,7 @@
 
     <!-- 商品列表 -->
     <div class="list" v-if="goodsList.length!=0">
-      <div @click="goodsDetail(item.id)" class="item" v-for="(item, index) in goodsList" :key="index">
+      <div @click="goodsDetail(item.pid)" class="item" v-for="(item, index) in goodsList" :key="index">
         <img :src="item.pimg" alt="">
         <p class="name">{{item.pname}}</p>
         <p class="price">￥{{item.price}}</p>
@@ -88,7 +88,6 @@ export default {
       this.goodsList = data.data
     },
     goodsDetail(id) {
-      console.log(id);
       wx.navigateTo({
         url: "/pages/usedMarket/index/GoodsDetail/main?categoryId="+id
       });

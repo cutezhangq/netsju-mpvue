@@ -159,6 +159,7 @@
         if (res.mp.detail.userInfo) {
           this.userInfo = res.mp.detail.userInfo;
           this.loginIn(this.userInfo);
+          wx.setStorage({key: "userInfo",data: this.userInfo });
         } else {
           console.log('用户没授权！');
         }

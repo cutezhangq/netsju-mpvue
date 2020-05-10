@@ -5,7 +5,7 @@
       <swiper class="swiper-container" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
         <block v-for="(item, index) in gallery " :key="index">
           <swiper-item class="swiper-item">
-            <image :src="item.img_url" class="slide-image" />
+            <image :src="item.imgUrl" class="slide-image" />
           </swiper-item>
         </block>
       </swiper>
@@ -23,11 +23,11 @@
     <div class="goods-info">
       <div class="c">
         <p>{{info.name}}</p>
-        <p>{{info.goods_brief}}</p>
-        <p>￥{{info.retail_price}}</p>
-        <div v-if="brand.name" class="brand">
+        <p>{{info.description}}</p>
+        <p>￥{{info.price}}</p>
+        <!-- <div v-if="brand.name" class="brand">
           <p>{{brand.name}}</p>
-        </div>
+        </div> -->
       </div>
     </div>
     
@@ -56,24 +56,25 @@
       </div>
       <div class="sublist">
         <div @click="togoodsDetail(subitem.id)" v-for="(subitem, subindex) in productList" :key="subindex">
-          <img :src="subitem.list_pic_url" alt="">
-          <p>{{subitem.name}}</p>
-          <p>￥{{subitem.retail_price}}</p>
+          <img :src="subitem.pimg" alt="">
+          <p>{{subitem.pname}}</p>
+          <p>￥{{subitem.price}}</p>
         </div>
       </div>
     </div>
 
     <!-- 底部固定栏 -->
     <div class="bottom-fixed">
-      <!-- <div @click="collect">
+      <div @click="collect">
         <div class="collect" :class="[collectFlag ? 'active' :'']"></div>
-      </div> -->
+      </div>
       <div @click="toCart">
         <div class="car">
           <span>
             {{allnumber}}
           </span>
-          <img src="/static/images/ic_menu_shoping_nor.png" alt="">
+          <!-- <img src="/static/images/ic_menu_shoping_nor.png" alt=""> -->
+           <i class="iconfont cart" style="font-size:142%">&#xe6c7;</i>
         </div>
       </div>
       <div @click="buy">立即购买</div>
@@ -86,11 +87,11 @@
     <div class="attr-pop" :class="[showpop ? 'fadeup' : 'fadedown']">
       <div class="top">
         <div class="left">
-          <img :src="info.primary_pic_url" alt="">
+          <img :src="info.primaryPicUrl" alt="">
         </div>
         <div class="right">
           <div>
-            <p>价格￥{{info.retail_price}}</p>
+            <p>价格￥{{info.price}}</p>
             <p>请选择数量</p>
           </div>
         </div>
@@ -113,7 +114,6 @@
 </template>
 
 <script>
-// import { get, post, toLogin, login, getStorageOpenid } from "../../utils";
 import {API,SH_API} from "@/api/api";
 import {get,post,toLogin,login} from "@/utils/request";
 import wxParse from "mpvue-wxparse";
@@ -127,40 +127,33 @@ export default {
       this.userInfo = login();
     }
     console.log(this.$root.$mp.query.id);
-
-    this.categoryId = this.$root.$mp.query.categoryId;
-
-    this.openId = getStorageOpenid();
-    this.goodsDetail();
+    this.goodsDetail(this.$root.$mp.query.categoryId);
   },
   //商品转发
   onShareAppMessage() {
     console.log(this.info.name);
     console.log(this.info.id);
-    console.log(this.gallery[0].img_url);
+    console.log(this.gallery[0].imgUrl);
 
     return {
       title: this.info.name,
       path: "/pages/goods/main?id=" + this.info.id,
-      imageUrl: this.gallery[0].img_url //拿第一张商品的图片
+      imageUrl: this.gallery[0].imgUrl //拿第一张商品的图片
     };
   },
   data() {
     return {
       allnumber: 0,
-      openId: "",
-      collectFlag: false,
+      // collectFlag: false,
       number: 0,
       showpop: false,
       gallery: [],
       info: {},
-      brand: {},
+      // brand: {},
       productList: [],
       goods_desc: "",
-      categoryId: "",
       userInfo: "",
       goodsId: "",
-      allPrise: ""
     };
   },
   components: {
@@ -196,12 +189,9 @@ export default {
             return false;
           }
           console.log(this.goodsId);
-          console.log(this.openId);
 
           const data = await post("/order/submitAction", {
             goodsId: this.goodsId,
-            openId: this.openId,
-            allPrise: this.allPrise
           });
           if (data) {
             wx.navigateTo({
@@ -217,7 +207,6 @@ export default {
     //   if (toLogin()) {
     //     this.collectFlag = !this.collectFlag;
     //     const data = await post("/collect/addcollect", {
-    //       openId: this.userInfo.openId,
     //       goodsId: this.goodsId
     //     });
     //   }
@@ -238,7 +227,6 @@ export default {
             return false;
           }
           const data = await post("/cart/addCart", {
-            openId: this.userInfo.openId,
             goodsId: this.goodsId,
             number: this.number
           });
@@ -266,16 +254,16 @@ export default {
       // });
     },
     //请求--商品详情页
-    async goodsDetail() {
-      const data = await get(SH_API+`/shProduct/${this.categoryId}`);
+    async goodsDetail(categoryId) {
+      const data = await get(SH_API+`/shProduct/${categoryId}`);
+      console.log(data.data);
       this.gallery = data.data.gallery;
-      this.info = data.data.info;
-      this.allPrise = data.data.info.retail_price;
-      this.goodsId = data.data.info.id;
-      this.brand = data.data.brand;
-      this.goods_desc = data.data.info.goods_desc;
-      this.collectFlag = data.data.collected;
-      this.allnumber = data.data.allnumber;
+      this.info = data.data.productInfo;
+      this.goodsId = data.data.productInfo.id;
+      // this.brand = data.data.brand;
+      this.goods_desc = data.data.productInfo.productDesc;
+      // this.collectFlag = data.data.collected;
+      this.allnumber = 111;
       this.productList = data.data.productList;
     },
     showType() {
