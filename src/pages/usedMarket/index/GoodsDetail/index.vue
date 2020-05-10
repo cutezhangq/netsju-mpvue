@@ -38,11 +38,18 @@
     </div>
 
     <!-- 评论 -->
-    <div @click="showType" class="section-nav">
-      <div>用户评价</div>
-      <div></div>
+    <div class="comment">
+      <div @click="showType_comment" class="section-nav">
+        <div>用户评价</div>
+        <div></div>
+      </div>
+      <div class="goods-info">
+        <div class="c">
+          <p>还没有用户评价...</p>
+        </div>
+      </div>
     </div>
-
+    
     <!-- 解析富文本图片 -->
     <div v-if="goods_desc" class="detail">
       <wxParse :content="goods_desc" />
@@ -69,6 +76,7 @@
       <div @click="collect">
         <div class="collect" :class="[collectFlag ? 'active' :'']"></div>
       </div>
+      <!-- 购物车 -->
       <div @click="toCart">
         <div class="car">
           <span>

@@ -60,9 +60,18 @@ export function login() {
 export function toLogin() {
   const userInfo = wx.getStorageSync("userInfo");
   if (!userInfo) {
-    wx.navigateTo({
-      url: "/pages/usedMarket/person/main"
-    });
+    wx.showModal({
+      title: '提示',
+      content: '还没登陆，去登陆',
+      success (res) {
+        if (res.confirm) {
+          wx.switchTab({
+            url: "/pages/usedMarket/person/main"
+          });
+        } else if (res.cancel) {
+        }
+      }
+    })
   } else {
     return true;
   }
