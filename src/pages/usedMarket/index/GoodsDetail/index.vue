@@ -37,10 +37,11 @@
       <div></div>
     </div>
 
-    <!-- <div @click="showType" class="section-nav">
+    <!-- 评论 -->
+    <div @click="showType" class="section-nav">
       <div>用户评价</div>
       <div></div>
-    </div> -->
+    </div>
 
     <!-- 解析富文本图片 -->
     <div v-if="goods_desc" class="detail">
@@ -55,7 +56,7 @@
         <div class="line"></div>
       </div>
       <div class="sublist">
-        <div @click="togoodsDetail(subitem.id)" v-for="(subitem, subindex) in productList" :key="subindex">
+        <div @click="togoodsDetail(subitem.pid)" v-for="(subitem, subindex) in productList" :key="subindex">
           <img :src="subitem.pimg" alt="">
           <p>{{subitem.pname}}</p>
           <p>￥{{subitem.price}}</p>
@@ -108,8 +109,7 @@
         </div>
       </div>
     </div>
-    <!-- 选择规格部分 -->
-
+    
   </div>
 </template>
 
@@ -126,19 +126,14 @@ export default {
     if (login()) {
       this.userInfo = login();
     }
-    console.log(this.$root.$mp.query.id);
     this.goodsDetail(this.$root.$mp.query.categoryId);
   },
   //商品转发
   onShareAppMessage() {
-    console.log(this.info.name);
-    console.log(this.info.id);
-    console.log(this.gallery[0].imgUrl);
-
     return {
       title: this.info.name,
       path: "/pages/goods/main?id=" + this.info.id,
-      imageUrl: this.gallery[0].imgUrl //拿第一张商品的图片
+      imageUrl: this.gallery[0].imgUrl  //拿第一张商品的图片
     };
   },
   data() {
@@ -160,10 +155,12 @@ export default {
     wxParse
   },
   methods: {
+    //跳转--商品详情页
     togoodsDetail(id) {
       //关闭当前页面，跳转到应用内的某个页面，不允许跳转到 tabbar 页面
       wx.redirectTo({ url: "/pages/usedMarket/index/GoodsDetail/main?categoryId=" + id });
     },
+
     add() {
       this.number = this.number + 1;
     },
@@ -174,6 +171,7 @@ export default {
         return false;
       }
     },
+
     //立即购买
     async buy() {
       if (toLogin()) {
@@ -188,7 +186,6 @@ export default {
             });
             return false;
           }
-          console.log(this.goodsId);
 
           const data = await post("/order/submitAction", {
             goodsId: this.goodsId,
@@ -244,6 +241,7 @@ export default {
         }
       }
     },
+
     // 跳转--购物车
     toCart() {
       wx.switchTab({
@@ -253,19 +251,20 @@ export default {
       //   url: "/pages/cart/main"
       // });
     },
+
     //请求--商品详情页
     async goodsDetail(categoryId) {
       const data = await get(SH_API+`/shProduct/${categoryId}`);
-      console.log(data.data);
       this.gallery = data.data.gallery;
       this.info = data.data.productInfo;
       this.goodsId = data.data.productInfo.id;
-      // this.brand = data.data.brand;
       this.goods_desc = data.data.productInfo.productDesc;
+      // this.brand = data.data.brand;
       // this.collectFlag = data.data.collected;
-      this.allnumber = 111;
+      this.allnumber = 6;
       this.productList = data.data.productList;
     },
+
     showType() {
       this.showpop = !this.showpop;
     }

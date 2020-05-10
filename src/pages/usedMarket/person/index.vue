@@ -144,11 +144,10 @@
       wx.getUserInfo({
         success: (res) => {
           // 更新userInfo的状态数据
-          console.log('获取成功', res)
           this.userInfo = res.userInfo
         },
         fail: () => {
-          console.log('获取失败');
+          console.log('userInfo 获取失败');
         }
       })
     },
@@ -178,7 +177,6 @@
               nickname: userInfo.nickName,
               phone: ""
             }).then(resData => {
-              console.log('token', resData.data);
               // 存储token,加入Storage缓存
               wx.setStorage({key: "token",data: resData.data});
               this.isLogin = true;

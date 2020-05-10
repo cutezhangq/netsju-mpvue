@@ -90,6 +90,6 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "./style.styl";
-
+@import "~@/assets/common.styl";
+@import "./style.styl";
 </style>

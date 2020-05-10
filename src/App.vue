@@ -27,4 +27,12 @@ page{
   /* 背景色 */
   background: #f4f4f4;  
 }
+
+.wxParse .p {
+  margin: 0 !important;
+}
+
+.wxParse .img {
+  display: block !important;
+}
 </style>

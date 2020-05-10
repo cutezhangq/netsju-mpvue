@@ -151,13 +151,11 @@
         });
         myAmapFun.getRegeo({
           success: function (data) {
-            console.log(data);
             _this.city_update({
               cityName: data[0].regeocodeData.formatted_address
             });
           },
           fail: function (info) {
-            console.log(info);
             //如果用户拒绝授权,默认为南京
             _this.cityName = "南京市";
             _this.city_update({
