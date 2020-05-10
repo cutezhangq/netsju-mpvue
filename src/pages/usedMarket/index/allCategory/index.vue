@@ -17,17 +17,17 @@
       </scroll-view>
       <!-- 右侧 商品滑动栏 -->
       <scroll-view class="right" scroll-y="true">
-        <div class="banner">
-          <img :src="detailData.banner_url" alt="">
+        <div class="banner" v-for="(item, index) in listData" :key="index"> 
+          <img :src="item.bannerUrl" alt="">
         </div>
-        <div class="title">
+        <div class="title" v-for="(item, index) in listData" :key="index">
           <span>—</span>
-          <span>{{detailData.name}}分类</span>
+          <span>{{item.name}}分类</span>
           <span>—</span>
         </div>
         <div class="bottom">
-          <div v-for="(item,index) in detailData.subList" :key="index" class="item">
-            <img :src="item.wap_banner_url" alt="">
+          <div class="item" v-for="(item, index) in detailData" :key="index">
+            <img :src="item.bannerUrl" alt="">
             <span>{{item.name}}</span>
           </div>
         </div>
@@ -38,6 +38,7 @@
 
 <script>
 import {API} from "@/api/api";
+import {SH_API} from "@/api/api";
 
 export default {
   components: {
@@ -48,6 +49,7 @@ export default {
     this.getListData();
     //获取默认右侧数据
     this.selectitem(this.id, this.nowIndex);
+    //this.changeTab();
   },
   data() {
     return {
@@ -62,27 +64,30 @@ export default {
     tosearch() {
       wx.navigateTo({ url: "/pages/usedMarket/index/search/main" });
     },
+    //右边数据接口
     selectitem(id, index) {
       let data = {id: id};
       this.nowIndex = index;
        wx.request({
-        url:API+'/category/currentaction',
+        url:SH_API+'/category/1005000',
         data,
         success:(res)=>{
-          this.detailData = res.data.data.currentOne;
+          this.detailData = res.data.data;
+          console.log(this.detailData)
         }
       })
       
-    },
+    }, 
+
+    //左边列表接口
     getListData(){
       wx.request({
-        url:API+'/category/indexaction',
+        url:SH_API+'/category/?parentId='+this.id,
         success:(res)=>{
-          this.listData = res.data.categoryList
+          this.listData = res.data.data;
         }
       })
-    }
-    
+    },
   },
   computed: {}
 }

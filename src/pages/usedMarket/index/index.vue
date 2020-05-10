@@ -16,7 +16,7 @@
         interval="3000" circular="true" duration="500">
         <block v-for="(item, index) in banner" :key="index">
           <swiper-item>
-            <img style="width:100%;" :src="item.image_url" alt="">
+            <img style="width:100%;" :src="item.imageUrl" alt="">
           </swiper-item>
         </block>
       </swiper>
@@ -79,19 +79,7 @@
     data() {
       return {
         //轮播图
-        banner: [{
-            image_url: "/static/images/index/carousel01.jpg"
-          },
-          {
-            image_url: "/static/images/index/carousel02.jpg"
-          },
-          {
-            image_url: "/static/images/index/carousel03.jpg"
-          },
-          {
-            image_url: "/static/images/index/carousel04.jpg"
-          },
-        ],
+        banner:[],
         //全部分类icon
         all_channel: {
           iconUrl: SH_API + "/images/icon/全部分类.png",
@@ -106,6 +94,7 @@
       this.sh_category();
       this.sh_indexGoods();
       this.getCityName();
+      this.getIndexBanner();
     },
     computed: {
       ...mapState(["cityName"]),
@@ -195,6 +184,11 @@
         const data = await get(API + "/index/index");
         this.brandList = data.brandList;
       },
+      //请求首页轮播图
+      async getIndexBanner(){
+        const data = await get(SH_API +"/ad/0")
+        this.banner = data.data;
+      }
     },
     /**
      * 生命周期函数--监听页面显示
