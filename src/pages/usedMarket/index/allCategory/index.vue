@@ -11,18 +11,18 @@
     <div class="content">
       <!-- 左侧 分类滑动栏 -->
       <scroll-view class="left" scroll-y="true">
-        <div class="iconText" v-for="(item, index) in listData" :class="[index==nowIndex?'active':'']" :key="index">
+        <div class="iconText" @click="changeTab(index,item.id)" v-for="(item, index) in listData" :class="[index==nowIndex?'active':'']" :key="index">
           {{item.name}}
         </div>
       </scroll-view>
       <!-- 右侧 商品滑动栏 -->
       <scroll-view class="right" scroll-y="true">
-        <div class="banner" v-for="(item, index) in listData" :key="index"> 
-          <img :src="item.bannerUrl" alt="">
+        <div class="banner"> 
+          <img :src="currentNav.bannerUrl" alt="">
         </div>
-        <div class="title" v-for="(item, index) in listData" :key="index">
+        <div class="title">
           <span>—</span>
-          <span>{{item.name}}分类</span>
+          <span>{{currentNav.name}}分类</span>
           <span>—</span>
         </div>
         <div class="bottom">
@@ -45,18 +45,18 @@ export default {
   },
   created() {},
   mounted() {
-    //获取列表数据
+    //获取默认数据
     this.getListData();
-    //获取默认右侧数据
-    this.selectitem(this.id, this.nowIndex);
-    //this.changeTab();
+    //获取页面传的参数
+    this.id = this.$root.$mp.query.id;
   },
   data() {
     return {
-      id: "1005000",
+      id: "",
       nowIndex: 0,
       listData: [],
-      detailData: {}
+      detailData: {},
+      currentNav:{}
     };
   },
   components: {},
@@ -64,8 +64,27 @@ export default {
     tosearch() {
       wx.navigateTo({ url: "/pages/usedMarket/index/search/main" });
     },
-    //右边数据接口
-    selectitem(id, index) {
+    //点击改变当前的下标,右边的数据动态改变
+    changeTab(index,id){
+      let data = {id: id};
+      this.nowIndex = index;
+       wx.request({
+        url:SH_API+'/category/'+id,
+        data,
+        success:(res)=>{
+          this.detailData = res.data.data;
+        }
+      }),
+      wx.request({
+        url:SH_API+'/category/?parentId='+this.id,
+        success:(res) =>{
+          this.listData = res.data.data;
+          this.currentNav = res.data.data[this.nowIndex];
+          }     
+      })
+    },
+    //获取默认数据
+    getListData(index,id){
       let data = {id: id};
       this.nowIndex = index;
        wx.request({
@@ -73,21 +92,17 @@ export default {
         data,
         success:(res)=>{
           this.detailData = res.data.data;
-          console.log(this.detailData)
         }
-      })
-      
-    }, 
-
-    //左边列表接口
-    getListData(){
+      }),
       wx.request({
         url:SH_API+'/category/?parentId='+this.id,
-        success:(res)=>{
+        success:(res) =>{
           this.listData = res.data.data;
-        }
+          this.currentNav = res.data.data[0];
+          }     
       })
     },
+
   },
   computed: {}
 }
