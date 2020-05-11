@@ -9,7 +9,6 @@
     "pages/usedMarket/sell_goods/main",
     "pages/usedMarket/index/search/main",
     "pages/usedMarket/index/GoodsDetail/main",
-    "pages/usedMarket/index/brandDetail/main",
     "pages/usedMarket/index/categoryList/main",
     "pages/usedMarket/index/allCategory/main"
   ],

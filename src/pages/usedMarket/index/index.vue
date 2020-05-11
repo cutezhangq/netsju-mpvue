@@ -145,9 +145,7 @@
 
       //请求---分类信息
       async sh_category() {
-        const data = await get(SH_API + "/category", {
-          location: 0
-        });
+        const data = await get(SH_API + "/category", {location: 0});
         this.category = data.data;
       },
       //请求轮播图
