@@ -11,23 +11,23 @@
     <div class="content">
       <!-- 左侧 分类滑动栏 -->
       <scroll-view class="left" scroll-y="true">
-        <div class="iconText" v-for="(item, index) in listData" :class="[index==nowIndex?'active':'']" :key="index">
+        <div class="iconText" @click="changeTab(index,item.id)" v-for="(item, index) in listData" :class="[index==nowIndex?'active':'']" :key="index">
           {{item.name}}
         </div>
       </scroll-view>
       <!-- 右侧 商品滑动栏 -->
       <scroll-view class="right" scroll-y="true">
-        <div class="banner">
-          <img :src="detailData.banner_url" alt="">
+        <div class="banner"> 
+          <img :src="currentNav.bannerUrl" alt="">
         </div>
         <div class="title">
           <span>—</span>
-          <span>{{detailData.name}}分类</span>
+          <span>{{currentNav.name}}分类</span>
           <span>—</span>
         </div>
         <div class="bottom">
-          <div v-for="(item,index) in detailData.subList" :key="index" class="item">
-            <img :src="item.wap_banner_url" alt="">
+          <div class="item" v-for="(item, index) in detailData" :key="index">
+            <img :src="item.bannerUrl" alt="">
             <span>{{item.name}}</span>
           </div>
         </div>
@@ -38,23 +38,26 @@
 
 <script>
 import {API} from "@/api/api";
+import {SH_API} from "@/api/api";
+import { get} from "@/utils/request";
 
 export default {
   components: {
   },
   created() {},
   mounted() {
-    //获取列表数据
+    //获取默认数据
     this.getListData();
-    //获取默认右侧数据
-    this.selectitem(this.id, this.nowIndex);
+    //获取页面传的参数
+    this.id = this.$root.$mp.query.id;
   },
   data() {
     return {
-      id: "1005000",
+      id: "",
       nowIndex: 0,
       listData: [],
-      detailData: {}
+      detailData: {},
+      currentNav:{}
     };
   },
   components: {},
@@ -62,34 +65,52 @@ export default {
     tosearch() {
       wx.navigateTo({ url: "/pages/usedMarket/index/search/main" });
     },
-    selectitem(id, index) {
+    //点击改变当前的下标,右边的数据动态改变
+    changeTab(index,id){
       let data = {id: id};
       this.nowIndex = index;
        wx.request({
-        url:API+'/category/currentaction',
+        url:SH_API+'/category/'+id,
         data,
         success:(res)=>{
-          this.detailData = res.data.data.currentOne;
+          this.detailData = res.data.data;
         }
-      })
-      
-    },
-    getListData(){
+      }),
       wx.request({
-        url:API+'/category/indexaction',
-        success:(res)=>{
-          this.listData = res.data.categoryList
-        }
+        url:SH_API+'/category/?parentId='+this.id,
+        success:(res) =>{
+          this.listData = res.data.data;
+          this.currentNav = res.data.data[this.nowIndex];
+          }     
       })
-    }
-    
+    },
+    //获取默认数据
+    getListData(index,id){
+      let data = {id: id};
+      this.nowIndex = index;
+       wx.request({
+        url:SH_API+'/category/1005000',
+        data,
+        success:(res)=>{
+          this.detailData = res.data.data;
+        }
+      }),
+      wx.request({
+        url:SH_API+'/category/?parentId='+this.id,
+        success:(res) =>{
+          this.listData = res.data.data;
+          this.currentNav = res.data.data[0];
+          }     
+      })
+    },
+
   },
   computed: {}
 }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-  @import "./style.styl";
-
+@import "~@/assets/common.styl";
+@import "./style.styl";
 </style>
 

@@ -9,19 +9,17 @@
         <span class="icon"></span>
       </div>
     </div>
-
     <!-- 轮播 -->
     <div class="listContainer">
       <swiper class="swiper" indicator-dots indicator-color="#EDEDED" indicator-active-color="#FFD800" autoplay="true"
         interval="3000" circular="true" duration="500">
         <block v-for="(item, index) in banner" :key="index">
           <swiper-item>
-            <img style="width:100%;" :src="item.image_url" alt="">
+            <img style="width:100%;" :src="item.imageUrl" alt="">
           </swiper-item>
         </block>
       </swiper>
     </div>
-
     <!-- 分类 -->
     <div class="channel">
       <div @click="toCategoryList(index,item.id)" v-for="(item, index) in category" :key="index">
@@ -34,34 +32,7 @@
       </div>
     </div>
 
-    <!-- 商品展示 -->
-    <!-- <div class="brand">
-      <div @click="tobrandList" class="head">
-        品牌制造商直供
-      </div>
-      <div class="content">
-        <div @click="brandDetail()" v-for="(item, index) in brandList" :key="index">
-          <div>
-            <p>{{item.name}}</p>
-            <p>{{item.floor_price}}元起</p>
-          </div>
-          <img :src="item.new_pic_url">
-        </div>
-      </div>
-    </div> -->
-    <div class="newcategory">
-      <div class="list" v-for="(item, index) in newCategoryList" :key="index">
-        <div class="sublist">
-          <div @click="goodsDetail()">
-            <img :src="subitem.list_pic_url" alt="">
-            <p>{{subitem.name}}</p>
-            <p>￥{{subitem.retail_price}}</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- tabbar -->
     <!-- <tabBar></tabBar> -->
   </div>
 </template>
@@ -89,34 +60,20 @@
     },
     data() {
       return {
-        //轮播图
-        banner: [{
-            image_url: "/static/images/index/carousel01.jpg"
-          },
-          {
-            image_url: "/static/images/index/carousel02.jpg"
-          },
-          {
-            image_url: "/static/images/index/carousel03.jpg"
-          },
-          {
-            image_url: "/static/images/index/carousel04.jpg"
-          },
-        ],
+        banner: [],
+        bannerPage: 0,
         //全部分类icon
         all_channel: {
           iconUrl: SH_API + "/images/icon/全部分类.png",
           name: "全部分类"
         },
         category: [],
-        //品牌直供
-        brandList: []
       }
     },
     beforeMount() {
       this.sh_category();
-      this.sh_indexGoods();
       this.getCityName();
+      this.getIndexBanner();
     },
     computed: {
       ...mapState(["cityName"]),
@@ -172,7 +129,7 @@
         });
       },
       //跳转---分类列表、全部分类页
-      toCategoryList(category_index,category_id) {
+      toCategoryList(category_index, category_id) {
         if (category_index !== 4) {
           //分类列表 页面
           wx.navigateTo({
@@ -185,12 +142,6 @@
           });
         }
       },
-      //跳转---详情页面
-      // brandDetail() {
-      //   wx.navigateTo({
-      //     url: "/pages/usedMarket/index/brandDetail/main"
-      //   });
-      // },
 
       //请求---分类信息
       async sh_category() {
@@ -199,23 +150,12 @@
         });
         this.category = data.data;
       },
-      //请求---首页商品
-      async sh_indexGoods() {
-        const data = await get(API + "/index/index");
-        this.brandList = data.brandList;
-      },
-    },
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    // onShow: function () {
-    //   if (typeof this.getTabBar === 'function' && this.getTabBar()) {
-    //     console.log('设置选中项 0')
-    //     this.getTabBar().setData({
-    //       selected: 0
-    //     })
-    //   }
-    // }
+      //请求轮播图
+      async getIndexBanner() {
+        const data = await get(SH_API + `/ad/${this.bannerPage}`)
+        this.banner = data.data;
+      }
+    }
   }
 
 </script>

@@ -7,16 +7,15 @@
           <img :src="userInfo.avatarUrl?userInfo.avatarUrl:'/static/images/news_person/avater/personal.png'" alt="">
         </div>
         <!-- 登陆按钮 -->
-        <button class="btn" open-type="getUserInfo" @getuserinfo="handleGetUserInfo">登录</button>
+        <button v-if="!isLogin" class="btn" open-type="getUserInfo" @getuserinfo="handleGetUserInfo">登录</button>
         <!-- <button class="btn" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">授权手机号</button> -->
+        <!-- 注销按钮-->
+        <button class="btn" @click="loginOut" v-else>注销</button>
         <!-- 用户信息 -->
         <div class="user_name">
           <span>昵称：{{userInfo.nickName?userInfo.nickName:'未设置'}}</span>
           <span class="span">个人中心 ></span>
         </div>
-        <!-- 设置-->
-        <button @click="loginOut">注销</button>
-
       </div>
     </div>
 
