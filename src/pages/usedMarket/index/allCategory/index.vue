@@ -40,6 +40,7 @@
 import {API} from "@/api/api";
 import {SH_API} from "@/api/api";
 import { get} from "@/utils/request";
+import { mapMutations} from "vuex";
 
 export default {
   data() {
@@ -58,6 +59,7 @@ export default {
     this.selectitem(this.id, this.nowIndex);
   },
   methods: {
+    ...mapMutations(["category_selected"]),
     tosearch() {
       wx.navigateTo({ url: "/pages/usedMarket/index/search/main" });
     },
@@ -65,16 +67,21 @@ export default {
       this.nowIndex = index;
       const data = await get(SH_API+`/category/${id}`);
       this.detailData = data.data;
-
+      //存入vuex
+      this.category_selected({
+        AllCg_curSelectId:data.data
+      })
     },
     async getListData() {
       const data = await get(SH_API+"/category");
       this.listData = data.data;
     },
     categoryList(id) {
-      // wx.navigateTo({
-      //   url: "../categorylist/main?id=" + id
-      // });
+      //全部分类中使用一级分类id判断
+      let parentCategoryId = this.listData[this.nowIndex].id;
+      wx.navigateTo({
+        url: "/pages/usedMarket/index/categoryList/main?categoryId="+parentCategoryId+"&sonCategoryId="+id
+      });
     }
   }
 }

@@ -94,9 +94,8 @@ export default {
         }
       });
     },
-  },
-  computed: {}
-};
+  }
+}
 </script>
 <style lang='stylus' scoped>
 @import "./style";

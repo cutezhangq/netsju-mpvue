@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    cityName: "定位中.."
+    cityName: "定位中..",
+    AllCg_curSelectId:[],
   },
   mutations: {
     /**
@@ -24,7 +25,14 @@ const store = new Vuex.Store({
      * @param {*} state 
      * @param {*Object} config 
      */
+    //所在城市
     city_update(state, config) {
+      Object.keys(config).map((item, key) => {
+        state[item] = config[item]
+      })
+    },
+    //全部分类页面选择的二级分类数组
+    category_selected(state, config){
       Object.keys(config).map((item, key) => {
         state[item] = config[item]
       })

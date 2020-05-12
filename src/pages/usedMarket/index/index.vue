@@ -38,19 +38,11 @@
 </template>
 
 <script>
-  import {
-    API,
-    SH_API
-  } from "@/api/api";
-  import {
-    get
-  } from "@/utils/request";
+  import {API,SH_API} from "@/api/api";
+  import {get } from "@/utils/request";
   import searchBar from "@/components/searchBar";
   import amapFile from "@/utils/amap-wx";
-  import {
-    mapState,
-    mapMutations
-  } from "vuex";
+  import {mapState, mapMutations} from "vuex";
   // import tabBar from "@/components/tabBar";
 
   export default {

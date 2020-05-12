@@ -30,32 +30,47 @@
 </template>
 
 <script>
-import { API,SH_API} from "@/api/api"
+import { API,SH_API,FROM_PAGE} from "@/api/api"
 import { get } from "@/utils/request";
+import {mapState} from "vuex";
+
 export default {
   mounted() {
     //参数 获取index页面传参
-    this.getNavList(this.$root.$mp.query.categoryId);
+    this.getNavList(
+      this.$root.$mp.query.categoryId,
+      this.$root.$mp.query.sonCategoryId
+      );
   },
   data() {
     return {
       navData: [],
       currentNav: {},
       goodsList: [],
-      scrollLeft: 0, //nav滑动的位置
-      nowIndex: 0, //当前nav的下标
-      goods_page: 0, //商品列表分页
+      scrollLeft: 0,  //nav滑动的位置
+      nowIndex: 0,    //当前nav的下标
+      goods_page: 0,  //商品列表分页
+      fromPageRoute:""  //上页的路由
     }
+  },
+  computed: {
+    //拿到vuex中数据
+    ...mapState(["AllCg_curSelectId"]),
   },
   methods: {
     //请求nav列表,一级目录
-    async getNavList(cur_categoryId) {
+    async getNavList(cur_categoryId,sonCategoryId) {
       const data = await get(SH_API + "/category", {
         parentId: 0
       });
-      this.navData = data.data;
-      //index页面传参--选择的分类id
-      this.currentNav.id = cur_categoryId;
+      if(this.fromPageRoute == FROM_PAGE.page_usedM_allCategory){
+        //from全部分类
+        //使用vuex中数据
+        this.navData = this.AllCg_curSelectId;
+      }else{
+        this.navData = data.data;
+      }
+      this.fromPageRoute == FROM_PAGE.page_usedM_allCategory?this.currentNav.id = sonCategoryId : this.currentNav.id = cur_categoryId
       //匹配当前nav下标
       for (let i = 0; i < this.navData.length; i++) {
         const id = this.navData[i].id;
@@ -84,14 +99,28 @@ export default {
     },
     //请求goodsList,二级目录
     async getGoodsList(navid) {
-      const data = await get(SH_API + `/shProduct/category1/${navid}/${this.goods_page}`);
-      this.goodsList = data.data
+      if(this.fromPageRoute == FROM_PAGE.page_usedM_allCategory){
+        //from全部分类页
+        const data = await get(SH_API + `/shProduct/category2/${navid}/${this.goods_page}`);
+        this.goodsList = data.data;
+      }else{
+        //from首页
+        const data = await get(SH_API + `/shProduct/category1/${navid}/${this.goods_page}`);
+        this.goodsList = data.data;
+      }
     },
     goodsDetail(id) {
       wx.navigateTo({
         url: "/pages/usedMarket/index/GoodsDetail/main?categoryId="+id
       });
     }
+  },
+  onShow(){
+    //getCurrentPages获取页面栈
+    let pages = getCurrentPages();
+    let prevpage = pages[pages.length - 2];
+    this.fromPageRoute = prevpage.route;
+    // console.log(prevpage.route);
   }
 }
 </script>
