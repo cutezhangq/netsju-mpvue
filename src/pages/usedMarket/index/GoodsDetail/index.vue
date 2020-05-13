@@ -200,7 +200,7 @@ export default {
           });
           if (data) {
             wx.navigateTo({
-              url: "/pages/order/main"
+              url: "/pages/usedMarket/order/main"
             });
           }
         } else {
@@ -252,12 +252,9 @@ export default {
 
     // 跳转--购物车
     toCart() {
-      wx.switchTab({
-        url: "/pages/cart/main"
+      wx.navigateTo({
+        url: "/pages/usedMarket/cart/main"
       });
-      // wx.navigateTo({
-      //   url: "/pages/cart/main"
-      // });
     },
 
     //请求--商品详情页

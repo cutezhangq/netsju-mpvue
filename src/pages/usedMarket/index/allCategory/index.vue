@@ -17,11 +17,11 @@
       <!-- 右侧 商品滑动栏 -->
       <scroll-view class="right" scroll-y="true">
         <div class="banner">
-          <img :src="listData[nowIndex].bannerUrl" alt="">
+          <img :src="cur_listData.bannerUrl" alt="">
         </div>
         <div class="title">
           <span>—</span>
-          <span>{{listData[nowIndex].name}}分类</span>
+          <span>{{cur_listData.name}}分类</span>
           <span>—</span>
         </div>
         
@@ -49,7 +49,9 @@ export default {
       nowIndex: 0,
       listData: [], //分类导航部分数据（含海报）
       detailData: {},
-      currentNav:{}
+      currentNav:{},
+      bannerUrl:"",
+      cur_listData:{},
     };
   },
   beforeMount() {
@@ -67,6 +69,7 @@ export default {
       this.nowIndex = index;
       const data = await get(SH_API+`/category/${id}`);
       this.detailData = data.data;
+      this.cur_listData = this.listData[this.nowIndex];
       //存入vuex
       this.category_selected({
         AllCg_curSelectId:data.data
@@ -75,6 +78,7 @@ export default {
     async getListData() {
       const data = await get(SH_API+"/category");
       this.listData = data.data;
+      this.cur_listData = this.listData[this.nowIndex];
     },
     categoryList(id) {
       //全部分类中使用一级分类id判断
