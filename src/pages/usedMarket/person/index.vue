@@ -27,8 +27,9 @@
     </div>
 
     <!-- 广告 -->
-    <div class="advertise">
-      <img :src="img_advertise">
+    <div :class="[del?'none':'advertise']" v-for="(item,index) in ad" :key="index">
+      <img :src="item.imageUrl">
+      <span @click="delAd()"> X </span>
     </div>
 
     <div class="model">
@@ -62,7 +63,10 @@
     },
     data() {
       return {
+        page:2,
         userInfo: {},
+        ad:[],
+        del:false,
         isLogin: false,
         //头像
         img_userAvatar: img_API + avater + "/default_user_avatar.png",
@@ -134,6 +138,9 @@
           ]
         }
       }
+    },
+    beforeMount () {
+      this.getAdvertise();
     },
     created() {
 
@@ -215,6 +222,14 @@
           });
         }
       },
+      async getAdvertise(){
+        const data = await get(SH_API+`/ad/${this.page}`)
+        this.ad = data.data;
+      },
+      //删除广告
+      delAd(){
+        this.del = true;
+      }
     }
   }
 

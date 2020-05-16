@@ -32,8 +32,13 @@
       </div>
     </div>
 
-
     <!-- <tabBar></tabBar> -->
+    
+    <!-- 商品信息组件 -->
+    <div class="bar">
+      <productBar :product="product"></productBar>
+    </div>
+
   </div>
 </template>
 
@@ -46,6 +51,7 @@
     get
   } from "@/utils/request";
   import searchBar from "@/components/searchBar";
+  import productBar from "@/components/productBar";
   import amapFile from "@/utils/amap-wx";
   import {
     mapState,
@@ -56,11 +62,14 @@
   export default {
     components: {
       searchBar,
+      productBar
       // tabBar
     },
     data() {
       return {
         banner: [],
+        page:0,
+        product:[],
         bannerPage: 0,
         //全部分类icon
         all_channel: {
@@ -74,6 +83,7 @@
       this.sh_category();
       this.getCityName();
       this.getIndexBanner();
+      this.getShProduct();
     },
     computed: {
       ...mapState(["cityName"]),
@@ -152,6 +162,11 @@
       async getIndexBanner() {
         const data = await get(SH_API + `/ad/${this.bannerPage}`)
         this.banner = data.data;
+      },
+      //请求商品信息
+      async getShProduct(){
+        const data = await get(SH_API + `/shProduct/index?page=${this.page}`)
+        this.product = data.data;
       }
     }
   }

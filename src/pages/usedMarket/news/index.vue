@@ -10,8 +10,9 @@
       </div>
     </div>
     <!-- 广告 -->
-    <div class="advertise">
-      <img :src="img_advertise">
+    <div :class="[del?'none':'advertise']" v-for="(item,index) in ad" :key="index">
+      <img :src="item.imageUrl">
+      <span @click="delAd()"> X </span>
     </div>
     <!-- 消息列表 -->
     <div class="news">
@@ -32,9 +33,19 @@
 
 <script>
 import { img_API,advertise,avater,goods,icon } from "@/api/api";
+import {
+    API,
+    SH_API
+  } from "@/api/api";
+  import {
+    get
+  } from "@/utils/request";
   export default {
     data() {
       return {
+        page:1,
+        ad:[],
+        del:false,
         img_advertise:img_API+advertise+"/operation_enter.png",
         newsicon:[
           {
@@ -84,6 +95,19 @@ import { img_API,advertise,avater,goods,icon } from "@/api/api";
             goods_img:img_API+goods+"/4.png"
           },
         ],
+      }
+    },
+    beforeMount () {
+      this.getAdvertise()
+    },
+    methods: {
+      async getAdvertise(){
+        const data = await get(SH_API+`/ad/${this.page}`)
+        this.ad = data.data;
+      },
+      delAd(){
+        console.log('调用该方法');
+        this.del=true;
       }
     }
   }
