@@ -57,7 +57,7 @@
   .price{
     padding:0 15rpx;
     height:18px;
-    margin:20rpx 0 10rpx 0;}
+    margin:20rpx 0 20rpx 0;}
   span{
       float:left;
       color:red;
