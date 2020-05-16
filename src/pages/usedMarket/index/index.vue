@@ -32,7 +32,6 @@
       </div>
     </div>
 
-
     <!-- <tabBar></tabBar> -->
   </div>
 </template>
