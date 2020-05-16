@@ -1,6 +1,5 @@
 {
   "pages": [
-    
     "pages/usedMarket/index/main" ,
     "pages/entranceClass/main",
     "pages/usedMarket/person/main",
@@ -9,7 +8,7 @@
     "pages/usedMarket/news/main",
     "pages/usedMarket/sell_goods/main",
     "pages/usedMarket/index/search/main",
-    "pages/usedMarket/index/GoodsDetail/main",
+    "pages/usedMarket/index/goodsDetail/main",
     "pages/usedMarket/index/categoryList/main",
     "pages/usedMarket/index/allCategory/main",
     "pages/usedMarket/cart/main",
