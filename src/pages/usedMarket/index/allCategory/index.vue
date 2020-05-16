@@ -50,7 +50,6 @@ export default {
       listData: [], //分类导航部分数据（含海报）
       detailData: {},
       currentNav:{},
-      bannerUrl:"",
       cur_listData:{},
     };
   },
