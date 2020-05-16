@@ -31,7 +31,6 @@
         <p>{{all_channel.name}}</p>
       </div>
     </div>
-
     <!-- <tabBar></tabBar> -->
     
     <!-- 商品信息组件 -->
