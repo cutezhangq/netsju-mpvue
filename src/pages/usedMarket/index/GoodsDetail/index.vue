@@ -195,9 +195,9 @@ export default {
             return false;
           }
 
-          const data = await post("/order/submitAction", {
-            goodsId: this.goodsId,
-          });
+          // const data = await post("/order/submitAction", {
+          //   goodsId: this.goodsId,
+          // });
           if (data) {
             wx.navigateTo({
               url: "/pages/usedMarket/order/main"
@@ -231,8 +231,8 @@ export default {
             });
             return false;
           }
-          const data = await post("/cart/addCart", {
-            goodsId: this.goodsId,
+          const data = await post(SH_API+"/cart", {
+            productId: this.goodsId,
             number: this.number
           });
           //添加成功后
