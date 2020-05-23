@@ -31,7 +31,6 @@
         <p>{{all_channel.name}}</p>
       </div>
     </div>
-
     <!-- <tabBar></tabBar> -->
     
     <!-- 商品信息组件 -->
@@ -43,20 +42,12 @@
 </template>
 
 <script>
-  import {
-    API,
-    SH_API
-  } from "@/api/api";
-  import {
-    get
-  } from "@/utils/request";
+  import {API,SH_API} from "@/api/api";
+  import {get } from "@/utils/request";
   import searchBar from "@/components/searchBar";
   import productBar from "@/components/productBar";
   import amapFile from "@/utils/amap-wx";
-  import {
-    mapState,
-    mapMutations
-  } from "vuex";
+  import {mapState, mapMutations} from "vuex";
   // import tabBar from "@/components/tabBar";
 
   export default {
@@ -64,6 +55,27 @@
       searchBar,
       productBar
       // tabBar
+    },
+    //下拉刷新
+    onPullDownRefresh(){
+      this.page=1
+      this.getShProduct(true)
+      //刷新后关闭
+      wx.stopPullDownRefresh()
+    },
+    //划到底部
+    onReachBottom(){
+      this.page=this.page+1;
+      wx.showToast({
+        title: '数据库中没有数据啦',
+        icon: 'none',
+        duration: 2000
+      })
+      //判断数据是否还有没有
+      if(this.page>8){
+        return false;
+      }
+      this.getShProduct()
     },
     data() {
       return {
@@ -83,7 +95,7 @@
       this.sh_category();
       this.getCityName();
       this.getIndexBanner();
-      this.getShProduct();
+      this.getShProduct(true);
     },
     computed: {
       ...mapState(["cityName"]),
@@ -164,9 +176,13 @@
         this.banner = data.data;
       },
       //请求商品信息
-      async getShProduct(){
+      async getShProduct(first){
         const data = await get(SH_API + `/shProduct/index?page=${this.page}`)
-        this.product = data.data;
+        if(first){
+          this.product = data.data;
+        } else {
+          this.product = this.product.concat(data.data);
+        }
       }
     }
   }

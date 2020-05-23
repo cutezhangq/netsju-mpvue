@@ -35,11 +35,12 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .productList{
     display:flex;
-    flex-wrap: wrap;}
+    flex-wrap: wrap;
+    margin-bottom: 20px;}
   .product{
       flex:0 0 46%;
       background-color: white;
-      border-radius: 15px;
+      border-radius: 10px;
       margin:10px 0 0 2.5%;
       box-sizing: border-box;
       white-space: nowrap;
@@ -52,7 +53,7 @@
     padding:0 15rpx;
     font-size: 30rpx;
     overflow:hidden;
-    text-overflow:hidden;
+    text-overflow: ellipsis;
   }
   .price{
     padding:0 15rpx;
