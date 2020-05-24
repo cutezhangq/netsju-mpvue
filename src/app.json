@@ -1,10 +1,9 @@
 {
   "pages": [
-    
-    "pages/usedMarket/index/main" ,
     "pages/entranceClass/main",
-    "pages/usedMarket/person/main",
     "pages/mapPage/main",
+    "pages/usedMarket/person/main",
+    "pages/usedMarket/index/main" ,
     "pages/usedMarket/boutique/main",
     "pages/usedMarket/news/main",
     "pages/usedMarket/sell_goods/main",

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { API,SH_API,FROM_PAGE} from "@/api/api"
+import { SH_API,FROM_PAGE} from "@/api/api"
 import { get } from "@/utils/request";
 import {mapState} from "vuex";
 
@@ -111,7 +111,7 @@ export default {
     },
     goodsDetail(id) {
       wx.navigateTo({
-        url: "/pages/usedMarket/index/GoodsDetail/main?categoryId="+id
+        url: "/pages/usedMarket/index/goodsDetail/main?categoryId="+id
       });
     }
   },
