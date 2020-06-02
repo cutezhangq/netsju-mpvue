@@ -2,7 +2,7 @@
 <template>
   <div class="search">
     <div class="search_goods">
-      <input type="text" placeholder="搜索商品">
+      <input type="text" placeholder="搜索">
       <span class="icon"></span>
     </div>
   </div>
@@ -46,5 +46,15 @@
     box-sizing: border-box;
     padding-left: 40rpx;
   }
+  .icon {
+        position: absolute;
+        top: 15rpx;
+        left: 10rpx;
+        background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png') center no-repeat;
+        background-size: 100%;
+        width: 28rpx;
+        height: 28rpx;
+        margin-right: 10rpx;
+      }
 
 </style>

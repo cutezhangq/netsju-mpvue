@@ -111,7 +111,7 @@ export default {
     },
     goodsDetail(id) {
       wx.navigateTo({
-        url: "/pages/usedMarket/index/GoodsDetail/main?categoryId="+id
+        url: "/pages/usedMarket/index/goodsDetail/main?categoryId="+id
       });
     }
   },

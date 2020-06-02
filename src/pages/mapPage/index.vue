@@ -1,7 +1,8 @@
 <template>
   <div class="mappage">
     <div class="section">
-      <input @input="bindInput" placeholder="搜索" v-model="keywords" focus="true" />
+      <!-- <input @input="bindInput" placeholder="搜索" v-model="keywords" focus="true" /> -->
+      <searchBar></searchBar>
     </div>
     <scroll-view :scroll-y="true" class="addcont" style="height: 500rpx;">
       <div class="result" @touchstart="bindSearch(item.name)" v-for="(item, index) in tips" :key="index">
@@ -21,6 +22,7 @@
 <script>
 import amapFile from "@/utils/amap-wx";
 import { mapMutations } from "vuex";
+import searchBar from "@/components/searchBar";
 export default {
   created() { },
   mounted() {
@@ -35,7 +37,9 @@ export default {
       markers: []
     };
   },
-  components: {},
+  components: {
+    searchBar
+  },
   methods: {
     ...mapMutations(["update"]),
     bindInput: function (e) {

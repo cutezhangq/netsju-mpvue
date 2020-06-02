@@ -1,5 +1,6 @@
 {
   "pages": [
+    
 
     "pages/usedMarket/index/main" ,
     "pages/entranceClass/main",
@@ -11,9 +12,11 @@
     "pages/usedMarket/index/goodsDetail/main",
     "pages/usedMarket/index/categoryList/main",
     "pages/usedMarket/index/allCategory/main",
+    "pages/usedMarket/index/newGoods/main",
     "pages/usedMarket/cart/main",
     "pages/usedMarket/order/main",
     "pages/usedMarket/boutique/main"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="productList">
-        <div class="product" v-for="(item,index) in product" :key="index">
+        <div @click="goodsDetail(item.pid)" class="product" v-for="(item,index) in product" :key="index">
           <img :src="item.pimg">
           <h3>{{item.pname}}</h3>
             <div class="price">
@@ -28,7 +28,15 @@
     data(){
       return{
       }
-    },     
+    },  
+    methods: {
+      //跳转到商品详情页
+      goodsDetail(id) {
+      wx.navigateTo({
+        url: "/pages/usedMarket/index/goodsDetail/main?categoryId="+id
+      });
+    }
+    }   
   }
 </script>
 

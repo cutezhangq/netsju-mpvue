@@ -38,17 +38,42 @@
     </div>
 
     <!-- 评论 -->
-    <div class="comment">
-      <div @click="showType_comment" class="section-nav">
-        <div>用户评价</div>
-        <div></div>
-      </div>
-      <div class="goods-info">
-        <div class="c">
-          <p>还没有用户评价...</p>
+    <div class="bg">
+    <div class="evaluation">
+      <span>评价（3.4万+）</span>
+      <span>好评率98%> </span>
+    </div>
+  
+    <scroll-view scroll-x>
+    <div class="reviewList">    
+      <div class="review" v-for="(item,index) in review" :key="index">
+        <div class="user">
+          <div class="userInfo">
+            <img :src="item.uImg">
+            <div class="userName">
+              <p>{{item.uName}}</p>
+              <p>{{item.time}}</p>
+            </div>
+          </div> 
+          <p class="userReview">{{item.uReview}}</p> 
+          <div class="image">
+            <img :src="item.goodsImg">
+            <img :src="item.goodsImg">
+            <img :src="item.goodsImg">
+          </div>
+        </div>
+        <div class="reply">
+          <p><span>[官方恢复]</span>{{item.reply}}</p>
         </div>
       </div>
+  
+      <div class="more">
+        <p>查看更多</p>
+      </div> 
+      
     </div>
+  </scroll-view>
+  </div>
     
     <!-- 解析富文本图片 -->
     <div v-if="goods_desc" class="detail">
@@ -157,6 +182,32 @@ export default {
       goods_desc: "",
       userInfo: "",
       goodsId: "",
+      review:[
+        {
+          uImg:"/static/images/user.png",
+          uName:"七***花",
+          time:"2020-05-12",
+          uReview:"速度非常快，次日中午拿到货。手机很漂亮，很好用。一家人都用vivo手机。手持iqoo来评价",
+          goodsImg:"/static/images/sell_goods/1.png",
+          reply:"看到您这句话，就知道您是我们最最最可爱的v粉啦，您和您的家人是我们坚强的后盾，。。",
+        },
+        {
+          uImg:"/static/images/user.png",
+          uName:"七***花",
+          time:"2020-05-23",
+          uReview:"速度非常快，次日中午拿到货。手机很漂亮，很好用。一家人都用vivo手机。手持iqoo来评价",
+          goodsImg:"/static/images/sell_goods/1.png",
+          reply:"看到您这句话，就知道您是我们最最最可爱的v粉啦，您和您的家人是我们坚强的后盾，。。",
+        },
+        {
+          uImg:"/static/images/user.png",
+          uName:"七***花",
+          time:"2020-05-18",
+          uReview:"速度非常快，次日中午拿到货。手机很漂亮，很好用。一家人都用vivo手机。手持iqoo来评价",
+          goodsImg:"/static/images/sell_goods/1.png",
+          reply:"看到您这句话，就知道您是我们最最最可爱的v粉啦，您和您的家人是我们坚强的后盾，。。",
+        },
+      ]
     };
   },
   components: {
@@ -166,7 +217,7 @@ export default {
     //跳转--商品详情页
     togoodsDetail(id) {
       //关闭当前页面，跳转到应用内的某个页面，不允许跳转到 tabbar 页面
-      wx.redirectTo({ url: "/pages/usedMarket/index/GoodsDetail/main?categoryId=" + id });
+      wx.redirectTo({ url: "/pages/usedMarket/index/goodsDetail/main?categoryId=" + id });
     },
 
     add() {

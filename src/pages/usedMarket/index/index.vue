@@ -31,8 +31,25 @@
         <p>{{all_channel.name}}</p>
       </div>
     </div>
-    <!-- <tabBar></tabBar> -->
     
+    <!-- 新品首发 -->
+    <div class="bg">
+    <div @click="goodsList('new')" class="newgoods">
+      <div class="top">
+        <p>新品首发</p>
+        <p>查看全部</p>
+      </div>
+    </div>
+
+    <!-- 人气推荐 -->
+    <div @click="goodsList('hot')" class="newgoods hotgoods">
+      <div class="top">
+        <p>人气推荐
+          <span></span> 好物精选</p>
+        <p>查看全部</p>
+      </div>
+    </div>
+    </div>
     <!-- 商品信息组件 -->
     <div class="bar">
       <productBar :product="product"></productBar>
@@ -183,7 +200,19 @@
         } else {
           this.product = this.product.concat(data.data);
         }
+      },
+      //跳转到新品或人气页面
+      goodsList(info) {
+      if (info == "hot") {
+        wx.navigateTo({
+          url:"../index/newGoods/main?isHot="+1
+        });
+      } else {
+        wx.navigateTo({
+          url: "../index/newGoods/main?isNew="+1
+        });
       }
+    },
     }
   }
 
