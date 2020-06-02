@@ -19,7 +19,9 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"useCompilerModule": true,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
@@ -27,7 +29,7 @@
 	"projectname": "netsju-mpvue",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
-	"libVersion": "2.11.0",
+	"libVersion": "2.11.1",
 	"condition": {
 		"search": {
 			"current": -1,

@@ -1,18 +1,19 @@
 {
   "pages": [
-    "pages/entranceClass/main",
-    "pages/mapPage/main",
-    "pages/usedMarket/person/main",
     "pages/usedMarket/index/main" ,
-    "pages/usedMarket/boutique/main",
+    "pages/entranceClass/main",
+    "pages/usedMarket/person/main",
+    "pages/mapPage/main",   
     "pages/usedMarket/news/main",
     "pages/usedMarket/sell_goods/main",
     "pages/usedMarket/index/search/main",
     "pages/usedMarket/index/goodsDetail/main",
     "pages/usedMarket/index/categoryList/main",
     "pages/usedMarket/index/allCategory/main",
+    "pages/usedMarket/index/newGoods/main",
     "pages/usedMarket/cart/main",
-    "pages/usedMarket/order/main"
+    "pages/usedMarket/order/main",
+    "pages/usedMarket/boutique/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

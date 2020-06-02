@@ -121,7 +121,6 @@ export default {
     let prevpage = pages[pages.length - 2];
     this.fromPageRoute = prevpage.route;
     // console.log(prevpage.route);
-    
   }
 }
 </script>

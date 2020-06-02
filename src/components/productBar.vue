@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="productList">
-        <div class="product" v-for="(item,index) in product" :key="index">
+        <div @click="goodsDetail(item.pid)" class="product" v-for="(item,index) in product" :key="index">
           <img :src="item.pimg">
           <h3>{{item.pname}}</h3>
             <div class="price">
@@ -28,18 +28,27 @@
     data(){
       return{
       }
-    },     
+    },  
+    methods: {
+      //跳转到商品详情页
+      goodsDetail(id) {
+      wx.navigateTo({
+        url: "/pages/usedMarket/index/goodsDetail/main?categoryId="+id
+      });
+    }
+    }   
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .productList{
     display:flex;
-    flex-wrap: wrap;}
+    flex-wrap: wrap;
+    margin-bottom: 20px;}
   .product{
       flex:0 0 46%;
       background-color: white;
-      border-radius: 15px;
+      border-radius: 10px;
       margin:10px 0 0 2.5%;
       box-sizing: border-box;
       white-space: nowrap;
@@ -52,7 +61,7 @@
     padding:0 15rpx;
     font-size: 30rpx;
     overflow:hidden;
-    text-overflow:hidden;
+    text-overflow: ellipsis;
   }
   .price{
     padding:0 15rpx;

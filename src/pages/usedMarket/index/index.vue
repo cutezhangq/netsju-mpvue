@@ -33,6 +33,24 @@
     </div>
     <!-- <tabBar></tabBar> -->
     
+    <!-- 新品首发 -->
+    <div class="bg">
+    <div @click="goodsList('new')" class="newgoods">
+      <div class="top">
+        <p>新品首发</p>
+        <p>查看全部</p>
+      </div>
+    </div>
+
+    <!-- 人气推荐 -->
+    <div @click="goodsList('hot')" class="newgoods hotgoods">
+      <div class="top">
+        <p>人气推荐
+          <span></span> 好物精选</p>
+        <p>查看全部</p>
+      </div>
+    </div>
+    </div>
     <!-- 商品信息组件 -->
     <div class="bar">
       <productBar :product="product"></productBar>
@@ -56,6 +74,27 @@
       productBar
       // tabBar
     },
+    //下拉刷新
+    onPullDownRefresh(){
+      this.page=1
+      this.getShProduct(true)
+      //刷新后关闭
+      wx.stopPullDownRefresh()
+    },
+    //划到底部
+    onReachBottom(){
+      this.page=this.page+1;
+      wx.showToast({
+        title: '数据库中没有数据啦',
+        icon: 'none',
+        duration: 2000
+      })
+      //判断数据是否还有没有
+      if(this.page>8){
+        return false;
+      }
+      this.getShProduct()
+    },
     data() {
       return {
         banner: [],
@@ -74,7 +113,7 @@
       this.sh_category();
       this.getCityName();
       this.getIndexBanner();
-      this.getShProduct();
+      this.getShProduct(true);
     },
     computed: {
       ...mapState(["cityName"]),
@@ -155,10 +194,26 @@
         this.banner = data.data;
       },
       //请求商品信息
-      async getShProduct(){
+      async getShProduct(first){
         const data = await get(SH_API + `/shProduct/index?page=${this.page}`)
-        this.product = data.data;
+        if(first){
+          this.product = data.data;
+        } else {
+          this.product = this.product.concat(data.data);
+        }
+      },
+      //跳转到新品或人气页面
+      goodsList(info) {
+      if (info == "hot") {
+        wx.navigateTo({
+          url:"../index/newGoods/main?isHot="+1
+        });
+      } else {
+        wx.navigateTo({
+          url: "../index/newGoods/main?isNew="+1
+        });
       }
+    },
     }
   }
 
