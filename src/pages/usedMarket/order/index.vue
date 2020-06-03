@@ -65,9 +65,6 @@
       <div>
         实付 : ￥{{allprice}}
       </div>
-      <!-- <div @click="pay">
-        支付
-      </div> -->
       <div @click="pay">
         确认订单
       </div>
