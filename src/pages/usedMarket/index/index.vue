@@ -60,7 +60,7 @@
 </template>
 
 <script>
-  import {API,SH_API} from "@/api/api";
+  import {SH_API} from "@/api/api";
   import {get } from "@/utils/request";
   import searchBar from "@/components/searchBar";
   import productBar from "@/components/productBar";

@@ -10,7 +10,7 @@
         :key="index">
         <div class="con" :style="item.textStyle">
           <div class="left">
-            <div class="icon" @click="changeColor(index,item.goods_id)" :class="[ Listids[index] ? 'active' : '',{active:allcheck}]"></div>
+            <div class="icon" @click="changeColor(index,item.productId)" :class="[ Listids[index] ? 'active' : '',{active:allcheck}]"></div>
             <div class="img">
               <img :src="item.image" alt="">
             </div>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-  import {get,post,login} from "@/utils/request";
+  import {get,post,put,del} from "@/utils/request";
   import {SH_API} from "@/api/api";
 
   export default {
@@ -183,29 +183,31 @@
         }
         var goodsId = newgoodsid.join(",");
         //提交（新增）订单
-        const data = await post("/order/submitAction", {
-          goodsId: goodsId,
-          allPrise: this.allPrise
-        });
-        if (data) {
-          wx.navigateTo({
+        // const data = await post(SH_API+"/order", {
+        //   orderItemDtoList: goodsId,
+        //   allPrise: this.allPrise
+        // });
+        // if (data) {
+        //   wx.navigateTo({
+        //     url: "/pages/usedMarket/order/main"
+        //   });
+        // }
+        wx.navigateTo({
             url: "/pages/usedMarket/order/main"
           });
-        }
       },
 
       //删除商品
-      async delGoods(id, index) {
+      delGoods(id, index) {
         var _this = this;
         wx.showModal({
           title: "",
           content: "是否要删除该商品",
           success: function (res) {
             if (res.confirm) {
-
               _this.Listids.splice(index, 1);
               //根据ID删除购物车某条数据
-              const data = get(SH_API+`/cart/${id}`)
+              const data = del(SH_API+`/cart/${id}`)
               .then(() => {
                 _this.getListData();
               });
@@ -236,12 +238,12 @@
         if (this.allcheck) {
           this.allcheck = false;
         } else {
-          console.log("选择全部");
+          // console.log("选择全部");
           this.allcheck = true;
           //循环遍历所有的商品id
           for (let i = 0; i < this.listData.length; i++) {
             const element = this.listData[i];
-            this.Listids.push(element.goods_id);
+            this.Listids.push(element.productId);
           }
         }
       },
@@ -276,7 +278,7 @@
         var Prise = 0;
         for (let i = 0; i < this.Listids.length; i++) {
           if (this.Listids[i]) {
-            Prise = Prise + this.listData[i].price * this.listData[i].number;
+            Prise = Prise + this.listData[i].price * this.listData[i].productNum;
           }
         }
         return Prise;

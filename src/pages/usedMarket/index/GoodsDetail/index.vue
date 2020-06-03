@@ -295,7 +295,7 @@
             });
             //添加成功后
             if (data) {
-              this.allnumber = this.allnumber + this.number;
+              this.allnumber = this.allnumber + 1;
               wx.showToast({
                 title: "添加购物车成功",
                 icon: "success",
@@ -310,9 +310,11 @@
 
       // 跳转--购物车
       toCart() {
-        wx.navigateTo({
-          url: "/pages/usedMarket/cart/main"
-        });
+        if (toLogin()) {
+          wx.navigateTo({
+            url: "/pages/usedMarket/cart/main"
+          });
+        }
       },
 
       //请求--商品详情页
@@ -324,7 +326,8 @@
         this.goods_desc = data.data.productInfo.productDesc;
         // this.brand = data.data.brand;
         // this.collectFlag = data.data.collected;
-        this.allnumber = 6;
+        const data_cart = await get(SH_API+"/cart")
+        this.allnumber = data_cart.data.length;
         this.productList = data.data.productList;
       },
 

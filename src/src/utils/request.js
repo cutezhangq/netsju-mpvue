@@ -48,6 +48,9 @@ export function post(url, data) {
   return request(url, "POST", data);
 }
 
+// export const PUT = (url,data)=>request(url,"PUT",data)
+// export const DELETE = (url,data)=>request(url,"DELETE",data)
+
 //用户登录
 export function login() {
   const userInfo = wx.getStorageSync("userInfo");
