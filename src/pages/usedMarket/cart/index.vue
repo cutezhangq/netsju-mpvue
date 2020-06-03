@@ -193,8 +193,8 @@
         //   });
         // }
         wx.navigateTo({
-            url: "/pages/usedMarket/order/main"
-          });
+          url: "/pages/usedMarket/order/main"
+        });
       },
 
       //删除商品
