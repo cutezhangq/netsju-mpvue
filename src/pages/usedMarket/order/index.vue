@@ -1,6 +1,7 @@
 <template>
   <div class="order">
     <!-- 地址 -->
+      <!-- 选择地址列表 -->
     <div @click="toAddressList" v-if="address.name" class="address">
       <div class="item">
         <div class="list">
@@ -22,7 +23,7 @@
     </div>
     <!-- 没有地址时，选择地址 -->
     <div @click="toAdd" v-else class="seladdress">
-      请选择收货地址
+      还没有默认地址，去设置
     </div>
     <!-- 合计、运费、优惠劵 -->
     <div class="orderbox">
@@ -108,12 +109,12 @@
       },
       toAddressList() {
         wx.navigateTo({
-          url: "/pages/addressSelect/main"
+          url: "/pages/usedMarket/address/main"
         });
       },
       toAdd() {
         wx.navigateTo({
-          url: "/pages/addaddress/main"
+          url: "/pages/usedMarket/address/addAddress/main"
         });
       },
       async getDetail() {
@@ -121,7 +122,6 @@
           addressId: this.addressId
         });
         console.log(data);
-
         if (data) {
           this.allprice = data.allPrise;
           this.listData = data.goodsList;
