@@ -7,24 +7,21 @@
           <div class="addresslist" :style="item.textStyle">
             <!-- 默认地址 -->
             <div>
-              <!-- <span>{{item.name}}</span> -->
-              <span>测试姓名</span>
-              <!-- 是否是默认地址 -->
+              <span>{{item.nickname}}</span>
               <div v-if="item.isDefault" class="moren">
                 默认
               </div>
             </div>
             <!-- 其他地址 -->
             <div @click="selAddress(item.id)" class="info">
-              <!-- <p>{{item.telNumber}}</p> -->
-               <p>测试手机号110</p>
+              <p>{{item.phone}}</p>
               <p>
-                {{item.address+''+item.university+''+item.campus+''+item.dormitory+''+item.room}}
+                {{item.province+' '+item.city+' '+item.area+' '
+                +item.university+' '+item.campus+' '+item.dormitory+' '+item.room}}
               </p>
             </div>
-            <!-- 查看地址详情 -->
+            <!-- 操作-->
             <div @click="toDetail(item.id)"></div>
-            <!-- 删除该地址 -->
             <div @click="toDelete(item.id)"></div>
           </div>
         </div>
@@ -61,7 +58,7 @@ export default {
     //选择地址
     selAddress(id) {
       wx.setStorageSync("addressId", id);
-      // wx.redirectTo({ url: "/pages/order/main?id=" + id });
+      // wx.redirectTo({ url: "/pages/usedMarket/order/main?id=" + id });
       wx.navigateBack({
         delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
       });
@@ -69,7 +66,6 @@ export default {
 
     //查看 选择的地址 详情
     toDetail(id) {
-      // console.log(id);
       wx.navigateTo({
         url: "/pages/usedMarket/address/addAddress/main?id=" + id
       });
@@ -89,7 +85,6 @@ export default {
             this.getAddressList();
           }
         });
-        
       }
     },
 
@@ -97,10 +92,6 @@ export default {
     async getAddressList() {
       var _this = this;
       const data = await get(SH_API+"/address");
-      // for (var i = 0; i < data.data.length; i++) {
-      //   data.data[i].textStyle = "";
-      //   data.data[i].textStyle1 = "";
-      // }
       this.listData = data.data;
     },
 
@@ -115,6 +106,7 @@ export default {
         //一键导入微信地址
         wx.chooseAddress({
           success: function(res) {
+            //转码
             var res = encodeURIComponent(JSON.stringify(res));
             wx.navigateTo({
               url: "/pages/usedMarket/address/addAddress/main?res=" + res

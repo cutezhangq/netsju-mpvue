@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/usedMarket/address/addressSelect/main",
+    
     "pages/usedMarket/order/main",
     "pages/usedMarket/index/main" ,
     "pages/entranceClass/main",
@@ -17,7 +17,7 @@
     
     "pages/usedMarket/boutique/main",
     "pages/usedMarket/address/addAddress/main",
-   
+    "pages/usedMarket/address/addressSelect/main",
     "pages/usedMarket/address/main"
   ],
   "window": {

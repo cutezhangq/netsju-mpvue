@@ -2,19 +2,20 @@
   <div class="order">
     <!-- 地址 -->
       <!-- 选择地址列表 -->
-    <div @click="toAddressList" v-if="address.name" class="address">
+    <div @click="toAddressList" v-if="address.nickname" class="address">
       <div class="item">
         <div class="list">
           <div class="addresslist">
             <div>
-              <span>{{address.name}}</span>
-              <div v-if="address.is_default" class="moren">
+              <span>{{address.nickname}}</span>
+              <div v-if="address.isDefault == 1" class="moren">
                 默认
               </div>
             </div>
             <div class="info">
-              <p>{{address.mobile}}</p>
-              <p>{{address.address+address.address_detail}}</p>
+              <p>{{address.phone}}</p>
+              <p>{{address.province+' '+address.city+' '+address.area+' '
+                +address.university+' '+address.campus+' '+address.dormitory+' '+address.room}}</p>
             </div>
             <div></div>
           </div>
@@ -78,13 +79,18 @@
 
 <script>
   import {get,post} from "@/utils/request";
+  import { SH_API } from "@/api/api";
 
   export default {
     onShow() {
       if (wx.getStorageSync("addressId")) {
         this.addressId = wx.getStorageSync("addressId");
+        this.getChooseAddress();
+      }else{
+        this.getDefaultAddress();
       }
-      this.getDetail();
+      // this.getDetail();
+      
     },
     created() {},
     mounted() {},
@@ -96,7 +102,6 @@
         address: {}
       };
     },
-    components: {},
     methods: {
       pay() {
         wx.showToast({
@@ -107,21 +112,42 @@
           success: res => {}
         });
       },
+
+      //跳转地址列表页
       toAddressList() {
         wx.navigateTo({
-          url: "/pages/usedMarket/address/main"
+          url: "/pages/usedMarket/address/addressSelect/main"
         });
       },
+
+      //没有地址时去添加地址
       toAdd() {
         wx.navigateTo({
           url: "/pages/usedMarket/address/addAddress/main"
         });
       },
+
+      //查询默认地址
+      async getDefaultAddress(){
+        const data = await get(SH_API + "/address/default");
+        if (data.data !== null) {
+          this.address = data.data;
+        }else{
+          this.address = false;
+        }
+      },
+      
+      //查询选择的地址
+      async getChooseAddress(){
+        const data = await get(SH_API+"/address/"+this.addressId);
+        this.address = data.data;
+      },
+
+      //展示地址和订单商品
       async getDetail() {
-        const data = await get("/order/detailAction", {
+        const data = await get(SH_API + "/order/detailAction", {
           addressId: this.addressId
         });
-        console.log(data);
         if (data) {
           this.allprice = data.allPrise;
           this.listData = data.goodsList;
@@ -136,5 +162,4 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "~@/assets/common.styl";
   @import "./style.styl";
-
 </style>
