@@ -10,7 +10,7 @@
         :key="index">
         <div class="con" :style="item.textStyle">
           <div class="left">
-            <div class="icon" @click="changeColor(index,item.productId)" :class="[ Listids[index] ? 'active' : '',{active:allcheck}]"></div>
+            <div class="icon" @click="changeColor(index,item.productId,item)" :class="[ Listids[index] ? 'active' : '',{active:allcheck}]"></div>
             <div class="img">
               <img :src="item.image" alt="">
             </div>
@@ -48,7 +48,7 @@
         <div>
           ￥{{allPrise}}
         </div>
-        <div @click="orderDown">下单</div>
+        <div @click="orderDown">去下单</div>
       </div>
     </div>
   </div>
@@ -77,7 +77,8 @@
         moveEndX: "",
         moveEndY: "",
         X: 0,
-        Y: ""
+        Y: "",
+        chooseProductList:[], //购物车中 选择的商品
       };
     },
     components: {},
@@ -102,7 +103,6 @@
         this.initTextStyle();
         //选择的商品下标
         var index = e.currentTarget.dataset.index;
-        // console.log(index);
         if (this.X <= -100) {
           this.flag = true;
         }
@@ -126,25 +126,14 @@
           this.moveY = e.touches[0].pageY;
           this.X = this.moveX - this.startX;
           this.Y = this.moveX - this.startY;
-
           this.tranX = this.X - 100;
           this.listData[index].textStyle = `transform:translateX(${this.tranX}rpx);`;
-          // transform:'translateX(' + tranX + 'rpx)'
-          //console.log(this.listData[index].textStyle);
-
           if (this.X + -100 > -100) {
             this.flag = false;
           }
           this.tranX1 = -100;
           this.listData[index].textStyle1 = `transform:translateX(-100rpx);`;
-          //console.log(this.listData[index].textStyle1);
-          // this.listData = this.listData;
         }
-        // if (Math.abs(this.X) > Math.abs(this.Y) && this.X > 20) {
-        //   this.scrollflag = false;
-        // } else if (Math.abs(this.X) > Math.abs(this.Y) && this.X < 20) {
-        //   console.log("right 2 left");
-        // }
       },
 
       //手指触摸动作结束
@@ -192,6 +181,10 @@
         //     url: "/pages/usedMarket/order/main"
         //   });
         // }
+        //将购物车列表中指定下标的元素添加组成新数组
+        // this.chooseProductList = listData;
+        wx.setStorageSync("order_productId",goodsId);
+        wx.setStorageSync("order_allPrise",this.allPrise);
         wx.navigateTo({
           url: "/pages/usedMarket/order/main"
         });
@@ -228,7 +221,6 @@
           data.data[i].textStyle1 = "";
         }
         this.listData = data.data;
-        // console.log(this.listData)
       },
 
       //全选
@@ -238,7 +230,7 @@
         if (this.allcheck) {
           this.allcheck = false;
         } else {
-          // console.log("选择全部");
+          // 选择全部
           this.allcheck = true;
           //循环遍历所有的商品id
           for (let i = 0; i < this.listData.length; i++) {
@@ -248,16 +240,24 @@
         }
       },
 
-      // change(e) {},
-
       //选择某种商品，前方icon变色
-      changeColor(index, id) {
-        this.Listids[index]? this.$set(this.Listids, index, false):this.$set(this.Listids, index, id);
+      changeColor(index, id, item) {
+        // this.Listids[index]? this.$set(this.Listids, index, false):this.$set(this.Listids, index, id);
+        if(this.Listids[index]){
+          //取消选择
+          this.$set(this.Listids, index, false);
+          
+        }else{
+          //选中
+          this.$set(this.Listids, index, id);
+          this.chooseProductList.push(item);
+        }
+
       }
     },
 
     computed: {
-      //是否选择
+      //全选 数量
       isCheckedNumber() {
         let number = 0;
         for (let i = 0; i < this.Listids.length; i++) {
@@ -265,6 +265,7 @@
             number++;
           }
         }
+        //是否 全选
         if (number == this.listData.length && number != 0) {
           this.allcheck = true;
         } else {

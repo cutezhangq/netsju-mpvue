@@ -89,6 +89,7 @@
       }else{
         this.getDefaultAddress();
       }
+      allprice = wx.getStorageSync("order_allPrise");
       // this.getDetail();
       
     },

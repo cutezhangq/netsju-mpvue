@@ -65,6 +65,9 @@ export default {
     }
     //从地址列表页跳转过来  id是获取到url中传递的参数
     if (this.$root.$mp.query.id) {
+      wx.setNavigationBarTitle({
+        title: '修改地址'
+      });
       this.id = this.$root.$mp.query.id;
       this.is_first = false;
       this.getDetail();
