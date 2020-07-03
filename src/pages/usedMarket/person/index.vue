@@ -34,13 +34,32 @@
 
     <div class="model">
       <!-- 卖在闲鱼 -->
-      <personModel :perModel="sell_Model">
-        
+      <personModel :perModel="sell_Model.title">
+        <div class="sell">
+          <div class="sellThings" @click="sell_box(index)" v-for="(item,index) in sell_contentModel" :key="index">
+            <img :src="item.sell_goods">
+            <p>{{item.todo}}</p>
+          </div>
+        </div>
       </personModel>
       <!-- 买在闲鱼 -->
-      <personModel :perModel="buy_Model"></personModel>
+      <personModel :perModel="buy_Model.title">
+         <div class="sell">
+          <div class="sellThings" @click="buy_box(index)" v-for="(item,index) in buy_contentModel" :key="index">
+            <img :src="item.sell_goods">
+            <p>{{item.todo}}</p>
+          </div>
+        </div>
+      </personModel>
       <!-- 玩在闲鱼 -->
-      <personModel :perModel="play_Model"></personModel>
+      <personModel :perModel="play_Model.title">
+        <div class="sell">
+          <div class="sellThings" @click="play_box(index)" v-for="(item,index) in play_contentModel" :key="index">
+            <img :src="item.sell_goods">
+            <p>{{item.todo}}</p>
+          </div>
+        </div>
+      </personModel>
     </div>
 
   </div>
@@ -65,6 +84,9 @@
     },
     data() {
       return {
+        sell_contentModel:[],
+        buy_contentModel:[],
+        play_contentModel:[],
         page:2,
         userInfo: {},
         ad:[],
@@ -78,18 +100,15 @@
           title: "卖在校圈",
           content: [{
               sell_goods: img_API + small_icon + "/sell_1.PNG",
-              todo: "我发布的",
-              num: 2
+              todo: "我发布的"
             },
             {
               sell_goods: img_API + small_icon + "/sell_2.PNG",
-              todo: "我卖出的",
-              num: 0
+              todo: "我卖出的"
             },
             {
               sell_goods: img_API + small_icon + "/buy_3.PNG",
-              todo: "我卖店铺",
-              num: 1
+              todo: "我卖店铺"
             }
           ]
         },
@@ -97,23 +116,19 @@
           title: "买在校圈",
           content: [{
               sell_goods: img_API + small_icon + "/play_1.PNG",
-              todo: "我买到的",
-              num: 0
+              todo: "我买到的"
             },
             {
               sell_goods: img_API + small_icon + "/buy_2.PNG",
-              todo: "我收藏的",
-              num: 1
+              todo: "我收藏的"
             },
             {
               sell_goods: img_API + small_icon + "/buy_3.PNG",
-              todo: "购物车",
-              num: 0
+              todo: "购物车"
             },
             {
               sell_goods: img_API + small_icon + "/buy_1.PNG",
-              todo: "订单",
-              num: 10
+              todo: "订单"
             }
           ]
         },
@@ -154,9 +169,6 @@
     beforeMount () {
       this.getAdvertise();
     },
-    created() {
-
-    },
     mounted() {
       //一进页面先获取状态（授权了直接拿到，未授权则获取失败）--进入页面执行一次
       wx.getUserInfo({
@@ -167,7 +179,10 @@
         fail: () => {
           console.log('userInfo 获取失败');
         }
-      })
+      }),
+      this.sell_contentModel = this.sell_Model.content,
+      this.buy_contentModel = this.buy_Model.content,
+      this.play_contentModel = this.play_Model.content
     },
     methods: {
       //用户登录处理
@@ -234,6 +249,8 @@
           });
         }
       },
+
+      //广告
       async getAdvertise(){
         const data = await get(SH_API+`/ad/${this.page}`)
         this.ad = data.data;
@@ -241,7 +258,28 @@
       //删除广告
       delAd(){
         this.del = true;
-      }
+      },
+
+      buy_box(index){
+        switch(index){
+          case 0:
+            break
+          case 1:
+            break
+          case 2:
+            //购物车box
+            wx.navigateTo({
+              url:"/pages/usedMarket/cart/main"
+            });
+            break
+          case 3:
+            //订单列表页
+            wx.navigateTo({
+              url:"/pages/usedMarket/order/orderList/main"
+            });
+            break
+        }
+      },
     }
   }
 

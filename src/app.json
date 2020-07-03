@@ -16,7 +16,9 @@
     "pages/usedMarket/index/newGoods/main",
     "pages/usedMarket/boutique/main",
     "pages/usedMarket/address/addAddress/main",
-    "pages/usedMarket/address/addressSelect/main"
+    "pages/usedMarket/address/addressSelect/main",
+    "pages/usedMarket/order/orderDetail/main",
+    "pages/usedMarket/order/orderList/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
