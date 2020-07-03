@@ -34,7 +34,9 @@
 
     <div class="model">
       <!-- 卖在闲鱼 -->
-      <personModel :perModel="sell_Model"></personModel>
+      <personModel :perModel="sell_Model">
+        
+      </personModel>
       <!-- 买在闲鱼 -->
       <personModel :perModel="buy_Model"></personModel>
       <!-- 玩在闲鱼 -->
@@ -73,7 +75,7 @@
         //广告
         img_advertise: img_API + advertise + "/advertise.png",
         sell_Model: {
-          title: "卖在闲鱼",
+          title: "卖在校圈",
           content: [{
               sell_goods: img_API + small_icon + "/sell_1.PNG",
               todo: "我发布的",
@@ -83,11 +85,16 @@
               sell_goods: img_API + small_icon + "/sell_2.PNG",
               todo: "我卖出的",
               num: 0
+            },
+            {
+              sell_goods: img_API + small_icon + "/buy_3.PNG",
+              todo: "我卖店铺",
+              num: 1
             }
           ]
         },
         buy_Model: {
-          title: "买在闲鱼",
+          title: "买在校圈",
           content: [{
               sell_goods: img_API + small_icon + "/play_1.PNG",
               todo: "我买到的",
@@ -100,20 +107,25 @@
             },
             {
               sell_goods: img_API + small_icon + "/buy_3.PNG",
-              todo: "我租到的",
+              todo: "购物车",
               num: 0
+            },
+            {
+              sell_goods: img_API + small_icon + "/buy_1.PNG",
+              todo: "订单",
+              num: 10
             }
           ]
         },
         play_Model: {
-          title: "玩在闲鱼",
+          title: "玩在校圈",
           content: [{
               sell_goods: img_API + small_icon + "/play_1.PNG",
-              todo: "闲鱼币"
+              todo: "校圈币"
             },
             {
               sell_goods: img_API + small_icon + "/play_2.PNG",
-              todo: "我的鱼塘"
+              todo: "我的校圈"
             },
             {
               sell_goods: img_API + small_icon + "/play_3.PNG",

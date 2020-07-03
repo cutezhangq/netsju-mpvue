@@ -70,18 +70,15 @@
       <!-- <div @click="pay">
         支付
       </div> -->
-      <div @click="confirmOrder" v-if="!isConfirmOrder">
+      <div @click="confirmOrder">
         确认订单
-      </div>
-      <div @click="modifyOrder" v-else>
-        修改订单
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import {get,post} from "@/utils/request";
+  import {get,post,del} from "@/utils/request";
   import { SH_API } from "@/api/api";
   import {mapState} from "vuex";
   
@@ -103,8 +100,7 @@
         addressId: "",
         allprice: "",
         listData: [],
-        address: {},
-        isConfirmOrder:false,
+        address: {}
       };
     },
     methods: {
@@ -117,7 +113,16 @@
           success: res => {}
         });
       },
-
+      //提示
+      tips(){
+         wx.showToast({
+          title: "取消/修改订单见我的-订单", //提示的内容,
+          icon: "none", //图标,
+          duration: 1500, //延迟时间,
+          mask: false, //显示透明蒙层，防止触摸穿透,
+          success: res => {}
+        });
+      },
       //跳转地址列表页
       toAddressList() {
         wx.navigateTo({
@@ -164,44 +169,37 @@
         })
         let orderList = {};
         let addr = this.address;
-        orderList.orderItemDtoList = ItemDtoList;
-        orderList.username = addr.nickname;
-        orderList.phone =  addr.phone;
-        orderList.receiverUniversity =  addr.university;
-        orderList.receiverCampus =  addr.campus;
-        orderList.receiverDormitory =  addr.dormitory;
-        orderList.receiverRoom =  addr.room;
-        orderList.receiverDetail =  addr.comment;
-        // orderList.phone =  addr.phone;
-        // orderList.phone =  addr.phone;
-        // orderList.phone =  addr.phone;
-        // orderList.phone =  addr.phone;
+        var _this = this;
         // console.log('新的数组:',orderList);
-        const data = post(SH_API+"order",{
-          orderDto:orderList
-        });
-        if (data.code == 200) {
-          this.isConfirmOrder = true;
-          var _this = this;
+        const data = post(SH_API+"/order",{
+          orderItemDtoList:ItemDtoList,
+          username:addr.nickname,
+          phone:addr.phone,
+          receiverUniversity:addr.university,
+          receiverCampus:addr.campus,
+          receiverDormitory:addr.dormitory,
+          receiverRoom:addr.room,
+          receiverComment:addr.comment,
+          receiverProvince:addr.province,
+          receiverCity:addr.city,
+          receiverArea:addr.area,
+        }).then(()=>{
           wx.showModal({
             title: "",
             content: "订单已确认，去支付",
             confirmText:"去支付",
+            cancelText:"关闭",
             success: function (res) {
               if (res.confirm) {
-                console.log("用户点击去支付");
                 _this.pay();
               } else if (res.cancel) {
-                console.log("用户点击取消");
+                _this.tips();
               }
             }
           });
-        }
+        })
       },
-      //修改订单---只能修改地址和收货人的相关信息
-      modifyOrder(){
-        
-      },
+      
     },
     computed: {
       //拿到vuex中数据
