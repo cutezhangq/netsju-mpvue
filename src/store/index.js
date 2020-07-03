@@ -7,6 +7,7 @@ const store = new Vuex.Store({
   state: {
     cityName: "定位中..",
     AllCg_curSelectId:[],
+    orderProductList:[],
   },
   mutations: {
     /**
@@ -31,12 +32,20 @@ const store = new Vuex.Store({
         state[item] = config[item]
       })
     },
-    //全部分类页面选择的二级分类数组
+
+    //全部分类页面选择的二级分类数组  AllCg_curSelectId
     category_selected(state, config){
       Object.keys(config).map((item, key) => {
         state[item] = config[item]
       })
-    }
+    },
+
+    //购物车页面中选择下单的商品数组  orderProductList
+    choose_productList(state, config){
+      Object.keys(config).map((item, key) => {
+        state[item] = config[item]
+      })
+    },
   }
 })
 

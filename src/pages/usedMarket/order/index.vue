@@ -47,16 +47,16 @@
         <div class="con">
           <div class="left">
             <div class="img">
-              <img :src="item.list_pic_url" alt="">
+              <img :src="item.image" alt="">
             </div>
             <div class="info">
-              <p>{{item.goods_name}}</p>
-              <p>￥{{item.retail_price}}</p>
+              <p>{{item.name}}</p>
+              <p>￥{{item.price}}</p>
             </div>
           </div>
           <div class="right">
             <div class="num">
-              x{{item.number}}
+              x{{item.productNum}}
             </div>
           </div>
         </div>
@@ -70,8 +70,11 @@
       <!-- <div @click="pay">
         支付
       </div> -->
-      <div @click="pay">
+      <div @click="confirmOrder" v-if="!isConfirmOrder">
         确认订单
+      </div>
+      <div @click="modifyOrder" v-else>
+        修改订单
       </div>
     </div>
   </div>
@@ -80,7 +83,8 @@
 <script>
   import {get,post} from "@/utils/request";
   import { SH_API } from "@/api/api";
-
+  import {mapState} from "vuex";
+  
   export default {
     onShow() {
       if (wx.getStorageSync("addressId")) {
@@ -89,18 +93,18 @@
       }else{
         this.getDefaultAddress();
       }
-      allprice = wx.getStorageSync("order_allPrise");
-      // this.getDetail();
-      
+      this.allprice = wx.getStorageSync("order_allPrise");
     },
-    created() {},
-    mounted() {},
+    mounted(){
+      this.getDetail();
+    },
     data() {
       return {
         addressId: "",
         allprice: "",
         listData: [],
-        address: {}
+        address: {},
+        isConfirmOrder:false,
       };
     },
     methods: {
@@ -143,20 +147,66 @@
         const data = await get(SH_API+"/address/"+this.addressId);
         this.address = data.data;
       },
-
-      //展示地址和订单商品
-      async getDetail() {
-        const data = await get(SH_API + "/order/detailAction", {
-          addressId: this.addressId
+      //展示选择下单的商品
+      getDetail() {
+        this.listData = this.orderProductList;
+      },
+      //下单
+      confirmOrder(){
+        // console.log('选择的商品数组',this.listData);
+        // console.log('选择的地址信息',this.address);
+        //数组对象的某个属性的值提取出来组成新的数组
+        let ItemDtoList = (this.listData).map((item,index)=>{
+          return {
+            productId:item.productId,
+            num:item.productNum
+          }
+        })
+        let orderList = {};
+        let addr = this.address;
+        orderList.orderItemDtoList = ItemDtoList;
+        orderList.username = addr.nickname;
+        orderList.phone =  addr.phone;
+        orderList.receiverUniversity =  addr.university;
+        orderList.receiverCampus =  addr.campus;
+        orderList.receiverDormitory =  addr.dormitory;
+        orderList.receiverRoom =  addr.room;
+        orderList.receiverDetail =  addr.comment;
+        // orderList.phone =  addr.phone;
+        // orderList.phone =  addr.phone;
+        // orderList.phone =  addr.phone;
+        // orderList.phone =  addr.phone;
+        // console.log('新的数组:',orderList);
+        const data = post(SH_API+"order",{
+          orderDto:orderList
         });
-        if (data) {
-          this.allprice = data.allPrise;
-          this.listData = data.goodsList;
-          this.address = data.address;
+        if (data.code == 200) {
+          this.isConfirmOrder = true;
+          var _this = this;
+          wx.showModal({
+            title: "",
+            content: "订单已确认，去支付",
+            confirmText:"去支付",
+            success: function (res) {
+              if (res.confirm) {
+                console.log("用户点击去支付");
+                _this.pay();
+              } else if (res.cancel) {
+                console.log("用户点击取消");
+              }
+            }
+          });
         }
-      }
+      },
+      //修改订单---只能修改地址和收货人的相关信息
+      modifyOrder(){
+        
+      },
     },
-    computed: {}
+    computed: {
+      //拿到vuex中数据
+      ...mapState(["orderProductList"]),
+    },
   };
 
 </script>

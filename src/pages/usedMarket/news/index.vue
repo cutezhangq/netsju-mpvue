@@ -62,7 +62,7 @@ import {
           },
           {
             icon_img:img_API+icon+"/icon_pond_top.png",
-            icon_title:"鱼塘消息",
+            icon_title:"校圈消息",
           },
         ],
         newsList:[

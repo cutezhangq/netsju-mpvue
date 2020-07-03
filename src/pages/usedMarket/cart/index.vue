@@ -3,14 +3,14 @@
     <div class="top">
       <div>30天无忧退货</div>
       <div>48小时快速退款</div>
-      <div>满88元免邮费</div>
+      <div>满30元免邮费</div>
     </div>
     <div class="cartlist">
       <div class="item" @touchstart="startMove" @touchmove="deleteGoods" @touchend="endMove" :data-index="index" v-for="(item,index) in listData"
         :key="index">
         <div class="con" :style="item.textStyle">
           <div class="left">
-            <div class="icon" @click="changeColor(index,item.productId,item)" :class="[ Listids[index] ? 'active' : '',{active:allcheck}]"></div>
+            <div class="icon" @click="changeColor(index,item.productId)" :class="[ Listids[index] ? 'active' : '',{active:allcheck}]"></div>
             <div class="img">
               <img :src="item.image" alt="">
             </div>
@@ -57,6 +57,8 @@
 <script>
   import {get,post,put,del} from "@/utils/request";
   import {SH_API} from "@/api/api";
+  import "@/utils/index";
+  import { mapMutations} from "vuex";
 
   export default {
     onShow() {
@@ -78,10 +80,9 @@
         moveEndY: "",
         X: 0,
         Y: "",
-        chooseProductList:[], //购物车中 选择的商品
+        chooseProductList:[], //购物车中选择下单的商品
       };
     },
-    components: {},
     methods: {
       //滑动之前先初始化数据
       initTextStyle() {
@@ -152,8 +153,11 @@
         }
       },
 
+      ...mapMutations(["choose_productList"]),
+
       //下单
       async orderDown() {
+        this.chooseProductList = [];
         if (this.Listids.length == 0) {
           wx.showToast({
             title: "请选择商品",
@@ -171,18 +175,21 @@
           }
         }
         var goodsId = newgoodsid.join(",");
-        //提交（新增）订单
-        // const data = await post(SH_API+"/order", {
-        //   orderItemDtoList: goodsId,
-        //   allPrise: this.allPrise
-        // });
-        // if (data) {
-        //   wx.navigateTo({
-        //     url: "/pages/usedMarket/order/main"
-        //   });
-        // }
-        //将购物车列表中指定下标的元素添加组成新数组
-        // this.chooseProductList = listData;
+        //选择的商品id数组 去空值
+        var goodsIdArr = this.Listids.notEmpty();
+        var _this = this;
+        //获取选择的商品数组信息
+        this.listData.forEach(function(item,index){
+          goodsIdArr.forEach(function(item2,index2){
+            if(item.productId == item2){
+              _this.chooseProductList.push(_this.listData[index]);
+            }
+          })
+        });
+        //存入vuex
+        this.choose_productList({
+          orderProductList:this.chooseProductList
+        })
         wx.setStorageSync("order_productId",goodsId);
         wx.setStorageSync("order_allPrise",this.allPrise);
         wx.navigateTo({
@@ -241,18 +248,8 @@
       },
 
       //选择某种商品，前方icon变色
-      changeColor(index, id, item) {
-        // this.Listids[index]? this.$set(this.Listids, index, false):this.$set(this.Listids, index, id);
-        if(this.Listids[index]){
-          //取消选择
-          this.$set(this.Listids, index, false);
-          
-        }else{
-          //选中
-          this.$set(this.Listids, index, id);
-          this.chooseProductList.push(item);
-        }
-
+      changeColor(index, id) {
+        this.Listids[index]? this.$set(this.Listids, index, false):this.$set(this.Listids, index, id);
       }
     },
 
