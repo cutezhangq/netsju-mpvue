@@ -1,5 +1,6 @@
 {
   "pages": [
+    
     "pages/usedMarket/person/main",
     "pages/usedMarket/cart/main",
     "pages/usedMarket/index/main" ,
@@ -18,7 +19,8 @@
     "pages/usedMarket/address/addAddress/main",
     "pages/usedMarket/address/addressSelect/main",
     "pages/usedMarket/order/orderDetail/main",
-    "pages/usedMarket/order/orderList/main"
+    "pages/usedMarket/order/orderList/main",
+    "pages/usedMarket/userSet/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

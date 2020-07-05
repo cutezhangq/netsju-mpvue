@@ -4,7 +4,7 @@
     <div class="search">
       <!-- 城市位置 -->
       <div @click="toMappage">{{cityName}}</div>
-      <div @click="toSearch">
+      <div @click="toSearch()">
         <input type="text" placeholder="搜索商品">
         <span class="icon"></span>
       </div>
@@ -62,7 +62,6 @@
 <script>
   import {SH_API} from "@/api/api";
   import {get } from "@/utils/request";
-  import searchBar from "@/components/searchBar";
   import productBar from "@/components/productBar";
   import amapFile from "@/utils/amap-wx";
   import {mapState, mapMutations} from "vuex";
@@ -70,7 +69,6 @@
 
   export default {
     components: {
-      searchBar,
       productBar
       // tabBar
     },

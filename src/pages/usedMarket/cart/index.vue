@@ -14,7 +14,7 @@
             <div class="img">
               <img :src="item.image" alt="">
             </div>
-            <div class="info">
+            <div class="info" @click="togoodsDetail(item.productId)">
               <p>{{item.name}}</p>
               <p>￥{{item.price}}</p>
             </div>
@@ -250,6 +250,12 @@
       //选择某种商品，前方icon变色
       changeColor(index, id) {
         this.Listids[index]? this.$set(this.Listids, index, false):this.$set(this.Listids, index, id);
+      },
+
+      togoodsDetail(id){
+        wx.navigateTo({
+          url: "/pages/usedMarket/index/goodsDetail/main?categoryId="+id
+        });
       }
     },
 

@@ -14,7 +14,7 @@
         <!-- 用户信息 -->
         <div class="user_name">
           <span>昵称：{{userInfo.nickName?userInfo.nickName:'未设置'}}</span>
-          <span class="span">个人中心 ></span>
+          <span class="span" @click="toUserSet()">个人中心 ></span>
         </div>
       </div>
     </div>
@@ -280,6 +280,12 @@
             break
         }
       },
+
+      toUserSet(){
+         wx.navigateTo({
+          url: "/pages/usedMarket/userSet/main"
+        });
+      }
     }
   }
 
