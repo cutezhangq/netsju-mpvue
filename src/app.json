@@ -19,7 +19,9 @@
     "pages/usedMarket/address/addressSelect/main",
     "pages/usedMarket/order/orderDetail/main",
     "pages/usedMarket/order/orderList/main",
-    "pages/usedMarket/userSet/main"
+    "pages/usedMarket/userSet/main",
+    "pages/campusCommunity/index/main",
+    "pages/campusCommunity/test/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

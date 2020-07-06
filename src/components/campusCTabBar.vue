@@ -21,35 +21,17 @@
     data() {
       return {
         navList: [
-         {
-            pagePath: "/pages/usedMarket/index/main",
-            iconPath: "/static/images/icon/ic_tabbar_home_nor.png",
-            selectedIconPath:"/static/images/icon/ic_tabbar_home_sel.png",
+          {
+            pagePath: "/pages/campusCommunity/index/main",
+            iconPath: "/static/images/icon/ic_tabbar_jingpin_nor.png",
+            selectedIconPath: "/static/images/icon/ic_tabbar_jingpin_sel.png",
             text: "首页"
           },
           {
-            pagePath: "/pages/usedMarket/boutique/main",
-            iconPath: "/static/images/icon/ic_tabbar_jingpin_nor.png",
-            selectedIconPath: "/static/images/icon/ic_tabbar_jingpin_sel.png",
-            text: "精品"
-          },
-          {
-            pagePath: "/pages/usedMarket/sell_goods/main",
+            pagePath: "/pages/campusCommunity/test/main",
             iconPath: "/static/images/icon/ic_tabbar_maihuo_nor.png",
             selectedIconPath: "/static/images/icon/ic_tabbar_maihuo_sel.png",
-            text: "卖货"
-          },
-          {
-            pagePath: "/pages/usedMarket/news/main",
-            iconPath: "/static/images/icon/ic_tabbar_message_nor.png",
-            selectedIconPath: "/static/images/icon/ic_tabbar_message_sel.png",
-            text: "消息"
-          },
-          {
-            pagePath: "/pages/usedMarket/person/main",
-            iconPath: "/static/images/icon/ic_tabbar_my_nor.png",
-            selectedIconPath: "/static/images/icon/ic_tabbar_my_sel.png",
-            text: "我的"
+            text: "测试"
           }
         ],
       }
@@ -61,7 +43,6 @@
        * @param index
        */
       selectNavItem(index, pagePath) {
-        // console.log(this.selectNavIndex)
         if (index === this.selectNavIndex) {
           return false;
         }
