@@ -1,32 +1,43 @@
 <template>
-  <div class="bar">
-    <div class="top">
-      <span>—</span>
-      <span>精品商城</span>
-      <span>—</span>
-    </div>
-    <div class="productList">
-      <div @click="goodsDetail(item.pid)" class="product" v-for="(item,index) in productDetail" :key="index">
-        <img :src="item.pimg">
-        <h3>{{item.pname}}</h3>
-        <div class="price">
-          <span>￥</span>
-          <span>{{item.price}}</span>
+  <div>
+    <div class="content">
+      <div class="top">
+        <span>—</span>
+        <span>精品商城</span>
+        <span>—</span>
+      </div>
+      <div class="productList">
+        <div @click="goodsDetail(item.pid)" class="product" v-for="(item,index) in productDetail" :key="index">
+          <img :src="item.pimg">
+          <h3>{{item.pname}}</h3>
+          <div class="price">
+            <span>￥</span>
+            <span>{{item.price}}</span>
+          </div>
         </div>
       </div>
     </div>
+    <!-- tabbar -->
+    <vueTabBar   
+      @fetch-index="clickIndexNav"
+      :selectNavIndex=selectNavIndex
+      >
+    </vueTabBar>
   </div>
 </template>
 
 <script>
-  import {
-    get
-  } from "@/utils/request";
-  import {
-    SH_API
-  } from "@/api/api";
+  import {get} from "@/utils/request";
+  import {SH_API} from "@/api/api";
+  import vueTabBar from "@/components/usedMTabBar";
 
   export default {
+    onShow(){
+      wx.hideTabBar();
+    },
+    components: {
+      vueTabBar
+    },
     //下拉刷新
     onPullDownRefresh() {
       this.page = 1
@@ -53,6 +64,7 @@
     },
     data() {
       return {
+        selectNavIndex:1,
         productId: 1045000,
         productDetail: [],
         page: 1,

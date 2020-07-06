@@ -1,89 +1,94 @@
 <template>
   <div>
-    <div class="top">
-      <div class="userinfo">
-        <!-- 头像 -->
-        <div class="user_avatar">
-          <img :src="userInfo.avatarUrl?userInfo.avatarUrl:'/static/images/news_person/avater/personal.png'" alt="">
-        </div>
-        <!-- 登陆按钮 -->
-        <button v-if="!isLogin" class="btn" open-type="getUserInfo" @getuserinfo="handleGetUserInfo">登录</button>
-        <!-- <button class="btn" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">授权手机号</button> -->
-        <!-- 注销按钮-->
-        <button class="btn" @click="loginOut" v-else>注销</button>
-        <!-- 用户信息 -->
-        <div class="user_name">
-          <span>昵称：{{userInfo.nickName?userInfo.nickName:'未设置'}}</span>
-          <span class="span" @click="toUserSet()">个人中心 ></span>
+    <div class="content">
+      <div class="top">
+        <div class="userinfo">
+          <!-- 头像 -->
+          <div class="user_avatar">
+            <img :src="userInfo.avatarUrl?userInfo.avatarUrl:'/static/images/news_person/avater/personal.png'" alt="">
+          </div>
+          <!-- 登陆按钮 -->
+          <button v-if="!isLogin" class="btn" open-type="getUserInfo" @getuserinfo="handleGetUserInfo">登录</button>
+          <!-- <button class="btn" open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">授权手机号</button> -->
+          <!-- 注销按钮-->
+          <button class="btn" @click="loginOut" v-else>注销</button>
+          <!-- 用户信息 -->
+          <div class="user_name">
+            <span>昵称：{{userInfo.nickName?userInfo.nickName:'未设置'}}</span>
+            <span class="span" @click="toUserSet()">个人中心 ></span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- 赞/粉丝/关注模块 -->
-    <div class="fans">
-      <p>0超赞</p>
-      <p>0关注</p>
-      <p class="none">0粉丝</p>
-    </div>
+      <!-- 赞/粉丝/关注模块 -->
+      <div class="fans">
+        <p>0超赞</p>
+        <p>0关注</p>
+        <p class="none">0粉丝</p>
+      </div>
 
-    <!-- 广告 -->
-    <div :class="[del?'none':'advertise']" v-for="(item,index) in ad" :key="index">
-      <img :src="item.imageUrl">
-      <span @click="delAd()"> X </span>
-    </div>
+      <!-- 广告 -->
+      <div :class="[del?'none':'advertise']" v-for="(item,index) in ad" :key="index">
+        <img :src="item.imageUrl">
+        <span @click="delAd()"> X </span>
+      </div>
 
-    <div class="model">
-      <!-- 卖在闲鱼 -->
-      <personModel :perModel="sell_Model.title">
-        <div class="sell">
-          <div class="sellThings" @click="sell_box(index)" v-for="(item,index) in sell_contentModel" :key="index">
-            <img :src="item.sell_goods">
-            <p>{{item.todo}}</p>
+      <div class="model">
+        <!-- 卖在闲鱼 -->
+        <personModel :perModel="sell_Model.title">
+          <div class="sell">
+            <div class="sellThings" @click="sell_box(index)" v-for="(item,index) in sell_contentModel" :key="index">
+              <img :src="item.sell_goods">
+              <p>{{item.todo}}</p>
+            </div>
           </div>
-        </div>
-      </personModel>
-      <!-- 买在闲鱼 -->
-      <personModel :perModel="buy_Model.title">
-         <div class="sell">
-          <div class="sellThings" @click="buy_box(index)" v-for="(item,index) in buy_contentModel" :key="index">
-            <img :src="item.sell_goods">
-            <p>{{item.todo}}</p>
+        </personModel>
+        <!-- 买在闲鱼 -->
+        <personModel :perModel="buy_Model.title">
+           <div class="sell">
+            <div class="sellThings" @click="buy_box(index)" v-for="(item,index) in buy_contentModel" :key="index">
+              <img :src="item.sell_goods">
+              <p>{{item.todo}}</p>
+            </div>
           </div>
-        </div>
-      </personModel>
-      <!-- 玩在闲鱼 -->
-      <personModel :perModel="play_Model.title">
-        <div class="sell">
-          <div class="sellThings" @click="play_box(index)" v-for="(item,index) in play_contentModel" :key="index">
-            <img :src="item.sell_goods">
-            <p>{{item.todo}}</p>
+        </personModel>
+        <!-- 玩在闲鱼 -->
+        <personModel :perModel="play_Model.title">
+          <div class="sell">
+            <div class="sellThings" @click="play_box(index)" v-for="(item,index) in play_contentModel" :key="index">
+              <img :src="item.sell_goods">
+              <p>{{item.todo}}</p>
+            </div>
           </div>
-        </div>
-      </personModel>
+        </personModel>
+      </div>
     </div>
-
+    <!-- tabbar -->
+    <vueTabBar   
+      @fetch-index="clickIndexNav"
+      :selectNavIndex=selectNavIndex
+      >
+    </vueTabBar>
   </div>
 </template>
 
 <script>
-  import {
-    get,
-    post
-  } from "@/utils/request";
-  import {
-    SH_API,
-    img_API,
-    avater,
-    advertise,
-    small_icon
-  } from "@/api/api";
+  import {get,post} from "@/utils/request";
+  import {SH_API,img_API,avater,advertise,small_icon} from "@/api/api";
   import personModel from "@/components/personModel";
+   import vueTabBar from "@/components/usedMTabBar";
+
   export default {
+    onShow(){
+      wx.hideTabBar();
+    },
     components: {
-      personModel
+      personModel,
+      vueTabBar
     },
     data() {
       return {
+        selectNavIndex:4,
         sell_contentModel:[],
         buy_contentModel:[],
         play_contentModel:[],

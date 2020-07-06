@@ -1,16 +1,17 @@
 <template>
-  <div class="index">
-    <!-- 搜索 -->
-    <div class="search">
-      <!-- 城市位置 -->
-      <div @click="toMappage">{{cityName}}</div>
-      <div @click="toSearch()">
-        <input type="text" placeholder="搜索商品">
-        <span class="icon"></span>
+  <div>
+    <div class="content">
+      <!-- 搜索 -->
+      <div class="search">
+        <!-- 城市位置 -->
+        <div @click="toMappage">{{cityName}}</div>
+        <div @click="toSearch()">
+          <input type="text" placeholder="搜索商品">
+          <span class="icon"></span>
+        </div>
       </div>
-    </div>
-    <!-- 轮播 -->
-    <div class="listContainer">
+      <!-- 轮播 -->
+      <div class="listContainer">
       <swiper class="swiper" indicator-dots indicator-color="#EDEDED" indicator-active-color="#FFD800" autoplay="true"
         interval="3000" circular="true" duration="500">
         <block v-for="(item, index) in banner" :key="index">
@@ -19,9 +20,9 @@
           </swiper-item>
         </block>
       </swiper>
-    </div>
-    <!-- 分类 -->
-    <div class="channel">
+      </div>
+      <!-- 分类 -->
+      <div class="channel">
       <div @click="toCategoryList(index,item.id)" v-for="(item, index) in category" :key="index">
         <img :src="item.iconUrl">
         <p>{{item.name}}</p>
@@ -30,32 +31,33 @@
         <img :src="all_channel.iconUrl">
         <p>{{all_channel.name}}</p>
       </div>
-    </div>
-    <!-- <tabBar></tabBar> -->
-    
-    <!-- 新品首发 -->
-    <div class="bg">
-    <div @click="goodsList('new')" class="newgoods">
+      </div>
+      <!-- 新品首发 -->
+      <div class="bg">
+      <div @click="goodsList('new')" class="newgoods">
       <div class="top">
         <p>新品首发</p>
         <p>查看全部</p>
       </div>
-    </div>
-
-    <!-- 人气推荐 -->
-    <div @click="goodsList('hot')" class="newgoods hotgoods">
+      </div>
+      <!-- 人气推荐 -->
+      <div @click="goodsList('hot')" class="newgoods hotgoods">
       <div class="top">
         <p>人气推荐
           <span></span> 好物精选</p>
         <p>查看全部</p>
       </div>
-    </div>
-    </div>
-    <!-- 商品信息组件 -->
-    <div class="bar">
+      </div>
+      </div>
+      <!-- 商品信息组件 -->
       <productBar :product="product"></productBar>
     </div>
-
+    <!-- tabbar -->
+    <vueTabBar   
+      @fetch-index="clickIndexNav"
+      :selectNavIndex=selectNavIndex
+      >
+    </vueTabBar>
   </div>
 </template>
 
@@ -65,12 +67,15 @@
   import productBar from "@/components/productBar";
   import amapFile from "@/utils/amap-wx";
   import {mapState, mapMutations} from "vuex";
-  // import tabBar from "@/components/tabBar";
+  import vueTabBar from "@/components/usedMTabBar";
 
   export default {
+    onShow(){
+      wx.hideTabBar();
+    },
     components: {
-      productBar
-      // tabBar
+      productBar,
+      vueTabBar
     },
     //下拉刷新
     onPullDownRefresh(){
@@ -95,6 +100,7 @@
     },
     data() {
       return {
+        selectNavIndex:0,
         banner: [],
         page:0,
         product:[],

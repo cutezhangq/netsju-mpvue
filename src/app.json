@@ -1,11 +1,10 @@
 {
   "pages": [
-    
+    "pages/entranceClass/main",
+    "pages/usedMarket/index/main" ,
     "pages/usedMarket/person/main",
     "pages/usedMarket/cart/main",
-    "pages/usedMarket/index/main" ,
     "pages/usedMarket/order/main",
-    "pages/entranceClass/main",
     
     "pages/mapPage/main",   
     "pages/usedMarket/news/main",
