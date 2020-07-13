@@ -1,8 +1,11 @@
 {
   "pages": [
-    "pages/usedMarket/index/main" ,
     "pages/entranceClass/main",
+    "pages/usedMarket/index/main" ,
     "pages/usedMarket/person/main",
+    "pages/usedMarket/cart/main",
+    "pages/usedMarket/order/main",
+    
     "pages/mapPage/main",   
     "pages/usedMarket/news/main",
     "pages/usedMarket/sell_goods/main",
@@ -11,9 +14,14 @@
     "pages/usedMarket/index/categoryList/main",
     "pages/usedMarket/index/allCategory/main",
     "pages/usedMarket/index/newGoods/main",
-    "pages/usedMarket/cart/main",
-    "pages/usedMarket/order/main",
-    "pages/usedMarket/boutique/main"
+    "pages/usedMarket/boutique/main",
+    "pages/usedMarket/address/addAddress/main",
+    "pages/usedMarket/address/addressSelect/main",
+    "pages/usedMarket/order/orderDetail/main",
+    "pages/usedMarket/order/orderList/main",
+    "pages/usedMarket/userSet/main",
+    "pages/campusCommunity/index/main",
+    "pages/campusCommunity/test/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

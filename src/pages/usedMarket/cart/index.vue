@@ -3,7 +3,7 @@
     <div class="top">
       <div>30天无忧退货</div>
       <div>48小时快速退款</div>
-      <div>满88元免邮费</div>
+      <div>满30元免邮费</div>
     </div>
     <div class="cartlist">
       <div class="item" @touchstart="startMove" @touchmove="deleteGoods" @touchend="endMove" :data-index="index" v-for="(item,index) in listData"
@@ -14,7 +14,7 @@
             <div class="img">
               <img :src="item.image" alt="">
             </div>
-            <div class="info">
+            <div class="info" @click="togoodsDetail(item.productId)">
               <p>{{item.name}}</p>
               <p>￥{{item.price}}</p>
             </div>
@@ -48,7 +48,7 @@
         <div>
           ￥{{allPrise}}
         </div>
-        <div @click="orderDown">下单</div>
+        <div @click="orderDown">去下单</div>
       </div>
     </div>
   </div>
@@ -57,6 +57,8 @@
 <script>
   import {get,post,put,del} from "@/utils/request";
   import {SH_API} from "@/api/api";
+  import "@/utils/index";
+  import { mapMutations} from "vuex";
 
   export default {
     onShow() {
@@ -77,10 +79,10 @@
         moveEndX: "",
         moveEndY: "",
         X: 0,
-        Y: ""
+        Y: "",
+        chooseProductList:[], //购物车中选择下单的商品
       };
     },
-    components: {},
     methods: {
       //滑动之前先初始化数据
       initTextStyle() {
@@ -102,7 +104,6 @@
         this.initTextStyle();
         //选择的商品下标
         var index = e.currentTarget.dataset.index;
-        // console.log(index);
         if (this.X <= -100) {
           this.flag = true;
         }
@@ -126,25 +127,14 @@
           this.moveY = e.touches[0].pageY;
           this.X = this.moveX - this.startX;
           this.Y = this.moveX - this.startY;
-
           this.tranX = this.X - 100;
           this.listData[index].textStyle = `transform:translateX(${this.tranX}rpx);`;
-          // transform:'translateX(' + tranX + 'rpx)'
-          //console.log(this.listData[index].textStyle);
-
           if (this.X + -100 > -100) {
             this.flag = false;
           }
           this.tranX1 = -100;
           this.listData[index].textStyle1 = `transform:translateX(-100rpx);`;
-          //console.log(this.listData[index].textStyle1);
-          // this.listData = this.listData;
         }
-        // if (Math.abs(this.X) > Math.abs(this.Y) && this.X > 20) {
-        //   this.scrollflag = false;
-        // } else if (Math.abs(this.X) > Math.abs(this.Y) && this.X < 20) {
-        //   console.log("right 2 left");
-        // }
       },
 
       //手指触摸动作结束
@@ -163,8 +153,11 @@
         }
       },
 
+      ...mapMutations(["choose_productList"]),
+
       //下单
       async orderDown() {
+        this.chooseProductList = [];
         if (this.Listids.length == 0) {
           wx.showToast({
             title: "请选择商品",
@@ -182,16 +175,23 @@
           }
         }
         var goodsId = newgoodsid.join(",");
-        //提交（新增）订单
-        // const data = await post(SH_API+"/order", {
-        //   orderItemDtoList: goodsId,
-        //   allPrise: this.allPrise
-        // });
-        // if (data) {
-        //   wx.navigateTo({
-        //     url: "/pages/usedMarket/order/main"
-        //   });
-        // }
+        //选择的商品id数组 去空值
+        var goodsIdArr = this.Listids.notEmpty();
+        var _this = this;
+        //获取选择的商品数组信息
+        this.listData.forEach(function(item,index){
+          goodsIdArr.forEach(function(item2,index2){
+            if(item.productId == item2){
+              _this.chooseProductList.push(_this.listData[index]);
+            }
+          })
+        });
+        //存入vuex
+        this.choose_productList({
+          orderProductList:this.chooseProductList
+        })
+        wx.setStorageSync("order_productId",goodsId);
+        wx.setStorageSync("order_allPrise",this.allPrise);
         wx.navigateTo({
           url: "/pages/usedMarket/order/main"
         });
@@ -228,7 +228,6 @@
           data.data[i].textStyle1 = "";
         }
         this.listData = data.data;
-        // console.log(this.listData)
       },
 
       //全选
@@ -238,7 +237,7 @@
         if (this.allcheck) {
           this.allcheck = false;
         } else {
-          // console.log("选择全部");
+          // 选择全部
           this.allcheck = true;
           //循环遍历所有的商品id
           for (let i = 0; i < this.listData.length; i++) {
@@ -248,16 +247,20 @@
         }
       },
 
-      // change(e) {},
-
       //选择某种商品，前方icon变色
       changeColor(index, id) {
         this.Listids[index]? this.$set(this.Listids, index, false):this.$set(this.Listids, index, id);
+      },
+
+      togoodsDetail(id){
+        wx.navigateTo({
+          url: "/pages/usedMarket/index/goodsDetail/main?categoryId="+id
+        });
       }
     },
 
     computed: {
-      //是否选择
+      //全选 数量
       isCheckedNumber() {
         let number = 0;
         for (let i = 0; i < this.Listids.length; i++) {
@@ -265,6 +268,7 @@
             number++;
           }
         }
+        //是否 全选
         if (number == this.listData.length && number != 0) {
           this.allcheck = true;
         } else {

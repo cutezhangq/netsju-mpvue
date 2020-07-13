@@ -1,0 +1,109 @@
+ //商品列表
+ .cartlist {
+   margin-bottom: 110rpx;
+   margin-top: 20rpx;
+   .item {
+     padding: 20rpx 0;
+     border-bottom: 1rpx solid #f4f4f4; // height: 166rpx;
+     position: relative;
+     background: #fff;
+     border-radius: 25rpx;
+     margin: 0 20rpx 20rpx 20rpx;
+     overflow: hidden;
+     .m-title{
+       width: 100%;
+       display: inline-block;
+       span:nth-child(1){
+         font-size: 35rpx;
+         font-weight: 500;
+         float: left ;
+         margin-left: 20rpx
+       }
+       span:nth-child(2){
+         float: right ;
+         color: $priceColor;
+         margin-right: 20rpx
+       }
+      }
+     .con {
+       display: flex;
+       align-items: center;
+       justify-content: space-between;
+       transition: all 300ms ease;
+       .left {
+         display: flex;
+         align-items: center;
+         width: 80%;
+         .img {
+           height: 125rpx;
+           width: 125rpx;
+           display: block;
+           background: #f4f4f4;
+           margin-left: 20rpx;
+           img {
+             width: 100%;
+             height: 100%;
+           }
+         }
+         .info {
+           width: 50%;
+           padding: 20rpx;
+           p {
+             line-height: 40rpx;
+           }
+         }
+       }
+       .right {
+         padding-right: 50rpx;
+       }
+     }
+     .order-bottom{
+      //  display: flex;
+      //  align-items: center;
+      //  justify-content: space-between;
+       float: right ;
+       .order-price{
+         margin-right: 20rpx;
+        padding-right: 50rpx;
+        }
+        .order-btn{
+          padding: 0 20rpx;
+          border: 1rpx solid grey;
+          border-radius: 25rpx;
+          margin-right: 20rpx;
+        }
+      }
+   }
+ }
+
+ //tabs选项卡
+ .box {
+   width: 750rpx;
+   font-size: 28rpx;
+ }
+ .nav {
+   display: flex ;
+   display : -webkit-flex ;
+   height: 60rpx ;
+   line-height : 60rpx ;
+   color : #353535 ;
+   border-bottom: 1rpx solid #e5e5e5 ;
+   div {
+     flex: auto ;
+     -webkit-flex: auto;
+   }
+ }
+ .title {
+   text-align: center;
+ }
+ .selected {
+   color: $mainColor;
+    p {
+     width: 70%;
+     margin: 0 15% ;
+     height: 60rpx ;
+     line-height: 60rpx ;
+     border-bottom: 1rpx solid $mainColor;
+   }
+ }
+
