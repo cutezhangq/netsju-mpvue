@@ -226,5 +226,4 @@
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   @import "~@/assets/common.styl";
   @import "./style.styl";
-
 </style>
