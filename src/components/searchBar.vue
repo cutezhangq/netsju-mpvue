@@ -2,19 +2,30 @@
 <template>
   <div class="search">
     <div class="search_goods">
-      <input type="text" placeholder="搜索">
+      <input type="text" v-model="words" placeholder="搜索" maxlength="15"
+      confirm-type="search" focus="true" @input="search" @confirm="searchWords">
       <span class="icon"></span>
     </div>
   </div>
 </template>
 
 <script>
+  import {API} from "@/api/api";
   export default {
     props: {},
     data() {
-      return {}
+      return {
+        words:"",
+      }
     },
-    methods: {}
+    methods: {
+      search(){//键盘输入时触发
+        this.words=this.words.replace(/[^\w\u4E00-\u9FA5\s*]/g, '');
+      },
+      searchWords(){//点击完成按钮时触发
+        
+      },
+    }
   }
 
 </script>
