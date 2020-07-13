@@ -1,10 +1,35 @@
 <template>
  <div class="back">
     <!-- 搜索框 -->
-    <searchBar></searchBar>
+    <div class="search">
+      <div class="search_goods">
+        <input type="text" v-model="words" placeholder="搜索" maxlength="15"
+        confirm-type="search" focus="true" @confirm="searchWords">
+        <span class="icon"></span>
+      </div>
+    </div>
+
+    <div class="searchTips" v-if="words">
+       <div class=productList v-if="tipsData.length!=0">
+        <div @click="goodsDetail(item.pid)" class="product" v-for="(item,index) in tipsData" :key="index">
+          <img :src="item.list_pic_url">
+          <h3>{{item.name}}</h3>
+            <div class="price">
+              <span>￥</span>
+              <span>{{item.retail_price}}</span>
+            </div>
+        </div>
+      </div>
+
+      <div class="noGoods">
+        <p v-if="!confirm && words"> 输入中... </p>
+        <p v-if="confirm && tipsData.length==0"> 数据库暂无此类商品... </p>
+      </div>
+    </div>
+
 
      <!-- 历史记录 -->
-     <div class="record">
+     <div class="record" v-if="!words">
         <div class="record_text">
             <p>历史记录</p><br>
             <!-- <img class="img_fr" src="/static/images/search/delete_box_icon.png"> -->
@@ -15,7 +40,7 @@
      </div>
 
      <!-- 热门搜索 -->
-     <div class="record">
+     <div class="record" v-if="!words">
       <div class="record_text">
           <p>热门搜索</p>
       </div>
@@ -36,6 +61,9 @@ export default {
   },
   data () {
     return {
+      words:"",
+      tipsData:[],
+      confirm:false,
       keyword:[
         { tip:"色织六层纱布夏凉被" },
         { tip:"日式" },
@@ -50,44 +78,24 @@ export default {
       ]
     }
   },
-
-  beforeMount() {
-    //this.sh_keyword();  // 搜索关键词 sh_keyword
-    // this.sh_history();  // 搜索历史  sh_history
-    // this.sh_hotList();  // 热搜 sh_hotList
-    // this.cl_history();  // 清空历史  cl_history
-    // this.cl_pointHistory();  // 删除指定历史记录 cl_pointHistory
-  },
   methods: {
-    //请求---搜索关键词
-    // async sh_keyword(){
-    //   const data = await get (SH_API+"/search/keyword", data);
-    //   this.keyword = data.data;
-    // },
-    //请求---搜索历史
-    // async sh_history(){
-    //   const data = await get (SH_API+"/search/history");
-    //   this.history = data.data;
-    // },
-    // //请求---热搜
-    // async sh_hotList(){
-    //   const data = await get (SH_API+"/search/hotList");
-    //   this.hotList = data.data;
-    // },
-    // //请求---清空历史记录
-    // async cl_history(){
-    //   const data = await get (SH_API+"/search/history/empty");
-    //   this.empty = data.data;
-    // },
-    // //请求---删除指定历史记录
-    // async cl_pointHistory(){
-    //   const data = await get (SH_API+"/search/history/{historyId}");
-    //   this.historyId = data.data;
-    // }
+    async searchWords() {//点击完成按钮时触发
+      const data = await get(API+"/search/helperaction",{
+        keyword:this.words
+      });
+      this.tipsData = data.keywords;
+      this.confirm=true;
+    },
+    goodsDetail(id) {
+      wx.navigateTo({
+        url: "/pages/usedMarket/index/goodsDetail/main?categoryId="+id
+      });
+    }
   }
 }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+  @import "~@/assets/common.styl";
   @import "./style.styl";
 </style>
