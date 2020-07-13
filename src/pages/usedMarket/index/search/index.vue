@@ -36,8 +36,6 @@ export default {
   },
   data () {
     return {
-     // keyword:[],
-    //  history:[]
       keyword:[
         { tip:"色织六层纱布夏凉被" },
         { tip:"日式" },
