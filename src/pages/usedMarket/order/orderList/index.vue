@@ -67,14 +67,8 @@
 
 <script>
   import searchBar from "@/components/searchBar";
-  import {
-    get,
-    post,
-    del
-  } from "@/utils/request";
-  import {
-    SH_API
-  } from "@/api/api";
+  import {get,post,del} from "@/utils/request";
+  import {SH_API} from "@/api/api";
 
   export default {
     components: {
