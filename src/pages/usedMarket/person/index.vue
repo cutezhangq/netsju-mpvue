@@ -112,7 +112,7 @@
               todo: "我卖出的"
             },
             {
-              sell_goods: img_API + small_icon + "/buy_3.PNG",
+              sell_goods: img_API + small_icon + "/play_2.PNG",
               todo: "我卖店铺"
             }
           ]
@@ -124,11 +124,11 @@
               todo: "我买到的"
             },
             {
-              sell_goods: img_API + small_icon + "/buy_2.PNG",
+              sell_goods: img_API + small_icon + "/buy_3.PNG",
               todo: "我收藏的"
             },
             {
-              sell_goods: img_API + small_icon + "/buy_3.PNG",
+              sell_goods: img_API + small_icon + "/buy_2.PNG",
               todo: "购物车"
             },
             {
