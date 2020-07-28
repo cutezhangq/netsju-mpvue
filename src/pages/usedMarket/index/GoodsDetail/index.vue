@@ -96,7 +96,6 @@
         <div class="send" @click="sendTextMsg()"><p>发送</p></div>
      </div>
       
-
       <div class="message" v-if="comment.length!=0">
         <div v-for="(item,index) in comment" :key="index">
           <div class="commenter" v-if="item.isFirst">
