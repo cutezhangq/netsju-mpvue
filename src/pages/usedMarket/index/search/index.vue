@@ -1,13 +1,7 @@
 <template>
  <div class="back">
     <!-- 搜索框 -->
-    <div class="search">
-      <div class="search_goods">
-        <input type="text" v-model="words" placeholder="搜索" maxlength="15"
-        confirm-type="search" focus="true" @confirm="searchWords">
-        <span class="icon"></span>
-      </div>
-    </div>
+    <searchBar v-on:listenToChildEvent="searchWords"></searchBar>
 
     <div class="searchTips" v-if="words">
        <div class=productList v-if="tipsData.length!=0">
@@ -20,6 +14,7 @@
             </div>
         </div>
       </div>
+
 
       <div class="noGoods">
         <p v-if="!confirm && words"> 输入中... </p>
@@ -53,17 +48,20 @@
 
 <script>
 import searchBar from "@/components/searchBar";
+//import productBar from "@/components/productBar";
 import { API,SH_API } from "@/api/api";
 import { get } from "@/utils/request";
 export default {
   components: {
     searchBar,
+    //productBar
   },
   data () {
     return {
       words:"",
       tipsData:[],
       confirm:false,
+      words:false,
       keyword:[
         { tip:"色织六层纱布夏凉被" },
         { tip:"日式" },
@@ -79,12 +77,15 @@ export default {
     }
   },
   methods: {
-    async searchWords() {//点击完成按钮时触发
+    async searchWords(val) {//点击完成按钮时触发
+      console.log(val)
       const data = await get(API+"/search/helperaction",{
-        keyword:this.words
+        keyword:val
       });
       this.tipsData = data.keywords;
+      console.log(this.tipsData)
       this.confirm=true;
+      this.words=true;
     },
     goodsDetail(id) {
       wx.navigateTo({

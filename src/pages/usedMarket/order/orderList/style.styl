@@ -3,7 +3,7 @@
    margin-bottom: 110rpx;
    margin-top: 20rpx;
    .item {
-     padding: 20rpx 0;
+     padding: 20rpx 5rpx;
      border-bottom: 1rpx solid #f4f4f4; // height: 166rpx;
      position: relative;
      background: #fff;
@@ -13,8 +13,9 @@
      .m-title{
        width: 100%;
        display: inline-block;
+       padding: 5rpx 0rpx
        span:nth-child(1){
-         font-size: 35rpx;
+         font-size: 32rpx;
          font-weight: 500;
          float: left ;
          margin-left: 20rpx
@@ -62,9 +63,14 @@
       //  align-items: center;
       //  justify-content: space-between;
        float: right ;
-       .order-price{
-         margin-right: 20rpx;
-        padding-right: 50rpx;
+        .order-price{
+          margin-right: 20rpx;
+          font-size:14px;
+          color:grey;
+          span{
+            color:black;
+            font-size: 15px;
+          }
         }
         .order-btn{
           padding: 0 20rpx;

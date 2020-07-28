@@ -14,6 +14,8 @@
           <span>{{item.username}}</span>
           <span>芝麻信用 | 极好</span>
         </div>
+        
+        </div>
       </div>
     </div>
 
@@ -74,12 +76,14 @@
   }
   span {
     float: left;
-    color: $priceColor;
+    /* 临时修改 */
+    color: #F25004;
     font-size: 12px;
     line-height: 18px;
   }
   .fl {
-    color: $priceColor;
+    /* 临时修改 */
+    color: #F25004;
     font-weight: 400;
     font-size: 18px;
     float: left;
