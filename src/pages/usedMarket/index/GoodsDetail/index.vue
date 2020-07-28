@@ -194,22 +194,12 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-  import {
-    API,
-    SH_API
-  } from "@/api/api";
-  import {
-    get,
-    post,
-    del,
-    toLogin,
-    login
-  } from "@/utils/request";
+  import {API,SH_API} from "@/api/api";
+  import {get,post,del,toLogin,login} from "@/utils/request";
   import wxParse from "mpvue-wxparse";
 
   export default {
