@@ -20,11 +20,12 @@
             <!-- 下单商品 -->
             <div class="cartlist">
               <div class="item" v-for="(item,index) in orderList" :key="index">
-                <div v-for="(item2,index2) in item.orderItemDtoList" :key="index2">
                   <div class="m-title">
-                    <span>xxxxx号订单</span>
+                    <span>旗舰店</span>
                     <span>交易成功</span>
                   </div>
+                <div v-for="(item2,index2) in item.orderItemDtoList" :key="index2">
+
                   <div class="con" @click="ordeDetails(item2.orderId)">
                     <div class="left">
                       <div class="img">
@@ -35,6 +36,7 @@
                         <p>单价￥{{item2.price}}</p>
                       </div>
                     </div>
+
                     <div class="right">
                       <div class="num">
                         x{{item2.num}}
@@ -44,12 +46,17 @@
                       </div>
                     </div>
                   </div>
+
                 </div>
                 <div class="order-bottom">
-                  <div class="order-price">总价￥{{item.totalPrice}} 实付款￥{{item.realPayment}}</div>
+                  <div class="order-price">
+                    共{{item.num}}件商品 &nbsp;&nbsp; <span>实付款</span>￥<span>{{item.realPayment}}</span>
+                  </div>
+
                   <span class="order-btn">删除订单</span>
                   <span class="order-btn">修改订单</span>
                 </div>
+
               </div>
             </div>
           </div>
@@ -67,14 +74,8 @@
 
 <script>
   import searchBar from "@/components/searchBar";
-  import {
-    get,
-    post,
-    del
-  } from "@/utils/request";
-  import {
-    SH_API
-  } from "@/api/api";
+  import {get,post,del} from "@/utils/request";
+  import {SH_API} from "@/api/api";
 
   export default {
     components: {

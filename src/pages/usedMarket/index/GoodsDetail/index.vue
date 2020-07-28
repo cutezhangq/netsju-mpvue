@@ -77,9 +77,9 @@
     <!-- 评论_2 -->
     <div class="allMessage">
       <div class="hr"> <h2>全部留言</h2> 
-        <div class="clickInput">
+        <div class="clickInput" v-if="comment.length!=0">
           <img src="/static/images/news_person/avater/personal.png">
-          <input type="text" placeholder="看对眼就留言，问问更多细节~" @click="review1">
+          <input type="text" placeholder="看对眼就留言，问问更多细节~" @click="showInput">
         </div>
       </div>
       <div class="noMessage" v-if="comment.length==0">
@@ -93,24 +93,36 @@
         <open-data type="userAvatarUrl" class="userAvatar"></open-data>
         <input class="input" type="text" focus="auto" v-model="inputMessage" placeholder="看对眼就留言，问问更多细节~" 
          @blur="onHideInput" confirm-type="send" @confirm="sendTextMsg">
-        <div class="send" @click="sendTextMsg"><p>发送</p></div>
+        <div class="send" @click="sendTextMsg()"><p>发送</p></div>
      </div>
       
 
       <div class="message" v-if="comment.length!=0">
-        <div class="commenter" v-for="(item,index) in comment" :key="index">
-          <!-- *****1、判断评论者是谁，自己的话用open-data。别人用这个人的头像和名称***** -->
-          <!-- 能否根据userId,获取到其用户名和头像 -->
-          <img class="userAvatar" :src="userInfo.avatarUrl?userInfo.avatarUrl:'/static/images/news_person/avater/personal.png'" alt="">
-          <div class="user">
-            <p>{{userInfo.nickName?userInfo.nickName:'默认名'}}</p>
-            <p @click="reply(item.id)" @longpress='longPress(index,item.id)'>{{item.content}}</p>
-            <p>{{item.id}}天前</p>
+        <div v-for="(item,index) in comment" :key="index">
+          <div class="commenter" v-if="item.isFirst">
+              <img class="userAvatar" :src="item.headPortrait" alt="">
+              <div class="user">
+                <p>{{item.username}}</p>
+                <p @click="reply(index)" @longpress='longPress(item.id,index)'>{{item.content}}</p>
+                <p>{{item.id}}天前</p>
+              </div>
+
+              <div v-for="(item1,index1) in comment" :key="index1">
+                 <div class="replyer" v-if="item1.replayCommentId==item.id">
+                  <img class="userAvatar" :src="item1.headPortrait" alt="">
+                  <div class="user">
+                    <p>{{item1.username}}</p>
+                    <p @click="reply(index)" @longpress='longPress(item1.id,index1)'>{{item1.content}}</p>
+                    <p>{{item1.id}}天前</p>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
 
-        <!-- 2、回复，把class="commenter"换成class="replyer"即可 -->
-
+        <div class="end">
+          - THE END -
+        </div>
       </div>
 
     </div>
@@ -231,32 +243,35 @@
         userInfo: "",
         goodsId: "",
         showInputBox:false,
-        type:0,
+        type:"",
         inputMessage:"",
         comment:[],
+        items:[],
+        i:0,
+        userId:1,
         review: [{
-        //     uImg: "/static/images/user.png",
-        //     uName: "七***花",
-        //     time: "2020-05-12",
-        //     uReview: "速度非常快，次日中午拿到货。手机很漂亮，很好用。一家人都用vivo手机。手持iqoo来评价",
-        //     goodsImg: "/static/images/sell_goods/1.png",
-        //     reply: "看到您这句话，就知道您是我们最最最可爱的v粉啦，您和您的家人是我们坚强的后盾，。。",
-        //   },
-        //   {
-        //     uImg: "/static/images/user.png",
-        //     uName: "七***花",
-        //     time: "2020-05-23",
-        //     uReview: "速度非常快，次日中午拿到货。手机很漂亮，很好用。一家人都用vivo手机。手持iqoo来评价",
-        //     goodsImg: "/static/images/sell_goods/1.png",
-        //     reply: "看到您这句话，就知道您是我们最最最可爱的v粉啦，您和您的家人是我们坚强的后盾，。。",
-        //   },
-        //   {
-        //     uImg: "/static/images/user.png",
-        //     uName: "七***花",
-        //     time: "2020-05-18",
-        //     uReview: "速度非常快，次日中午拿到货。手机很漂亮，很好用。一家人都用vivo手机。手持iqoo来评价",
-        //     goodsImg: "/static/images/sell_goods/1.png",
-        //     reply: "看到您这句话，就知道您是我们最最最可爱的v粉啦，您和您的家人是我们坚强的后盾，。。",
+          //   uImg: "/static/images/user.png",
+          //   uName: "七***花",
+          //   time: "2020-05-12",
+          //   uReview: "速度非常快，次日中午拿到货。手机很漂亮，很好用。一家人都用vivo手机。手持iqoo来评价",
+          //   goodsImg: "/static/images/sell_goods/1.png",
+          //   reply: "看到您这句话，就知道您是我们最最最可爱的v粉啦，您和您的家人是我们坚强的后盾，。。",
+          // },
+          // {
+          //   uImg: "/static/images/user.png",
+          //   uName: "七***花",
+          //   time: "2020-05-23",
+          //   uReview: "速度非常快，次日中午拿到货。手机很漂亮，很好用。一家人都用vivo手机。手持iqoo来评价",
+          //   goodsImg: "/static/images/sell_goods/1.png",
+          //   reply: "看到您这句话，就知道您是我们最最最可爱的v粉啦，您和您的家人是我们坚强的后盾，。。",
+          // },
+          // {
+          //   uImg: "/static/images/user.png",
+          //   uName: "七***花",
+          //   time: "2020-05-18",
+          //   uReview: "速度非常快，次日中午拿到货。手机很漂亮，很好用。一家人都用vivo手机。手持iqoo来评价",
+          //   goodsImg: "/static/images/sell_goods/1.png",
+          //   reply: "看到您这句话，就知道您是我们最最最可爱的v粉啦，您和您的家人是我们坚强的后盾，。。",
           },
         ]
       };
@@ -387,16 +402,21 @@
         this.comment = data.data;
       },
 
-      //增加评论
-      review1(){
+      //显示输入框 评论
+      showInput() {
+        this.showInputBox = true;
+        this.type="comment";
+      },
+      //回复
+      reply(index){
         this.showInputBox=true;
-        //type默认为0，表示评论；type为1时，表示回复
+        this.i=index;
+        this.type="reply";
       },
       
       //点击发送按钮时触发
       sendTextMsg(){
-        if(this.type==1) this.addReply()//2、*****回复的id怎么传过来*****
-        else this.addComment()
+        this.addComment()
         wx.showToast({
           title: '已留言',
           icon: 'success'
@@ -405,57 +425,46 @@
       },
 
       async addComment(){
+        var index = this.i;
+        //console.log(this.$root)
+        var replyId;
+        if(this.type=="comment"){
+          replyId=null
+        }else if(this.type=="reply"){
+          replyId = this.$root.comment[index].id
+        }
         var obj={
-        "content": this.inputMessage,
-        "productId": this.$root.$mp.query.categoryId
+          "userId":this.userId,
+          "content": this.inputMessage,
+          "productId": this.$root.$mp.query.categoryId,
+          "replayCommentId":replyId
         };
         var myJson=JSON.stringify(obj);
         const data = await post(SH_API + "/comment",myJson);
         this.getComment(this.$root.$mp.query.categoryId);
       },
 
-      //增加留言
-       reply(id){
-        this.showInputBox=true;
-        this.type=1;
-      },
-      async addReply(id){
-        var replyContent={
-          "content": this.inputMessage,
-          "productId": this.$root.$mp.query.categoryId,
-          "replayCommentId":id
-        };
-        var replyJson=JSON.stringify(replyContent)
-        console.log(replyJson,typeof replyJson)
-        const data = await post(SH_API + "/comment",replyJson)
-        //更新数据
-        this.getComment(this.$root.$mp.query.categoryId);
-      },
-
       //长按删除
-      longPress(index,id){
+      longPress(id,index){
+        var that = this;
         wx.showModal({
-        content:'删除留言',
-        success:function(res){
-             if(res.confirm){ 
-                 wx.clearStorageSync();
-             }
-          }
-      })
-      //console.log("长按删除的id",id);
-        this.delComment(id);
-      },
-      //删除留言
-      async delComment(id){
-        const data = await del(SH_API + `comment/${id}`);
-        console.log("传给请求的id",id);//3、*****删除请求有问题，输不出来*****
-        this.getComment(this.$root.$mp.query.categoryId);
-      },
+            title: "",
+            content: "是否要删除该留言",
+            success: function (res) {
+              if (res.confirm) {
+                //根据ID删除评论中的某条数据
+                that.comment.splice(index, 1);
+                const data = del(SH_API + `/comment/${id}`)
+                .then(() => {
+                  this.getComment(that.$root.$mp.query.categoryId);
+                });
+              } else if (res.cancel) {
+                console.log("用户点击取消");
+              }
+            }
+          });
+        },
 
-      //显示输入框
-      showInput() {
-        this.showInputBox = true;
-      },
       //隐藏输入框
       onHideInput(){
         this.showInputBox=false;

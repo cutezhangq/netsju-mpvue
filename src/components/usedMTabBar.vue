@@ -21,10 +21,10 @@
     data() {
       return {
         navList: [
-         {
+          {
             pagePath: "/pages/usedMarket/index/main",
             iconPath: "/static/images/icon/ic_tabbar_home_nor.png",
-            selectedIconPath:"/static/images/icon/ic_tabbar_home_sel.png",
+            selectedIconPath: "/static/images/icon/ic_tabbar_home_sel.png",
             text: "首页"
           },
           {
@@ -54,7 +54,7 @@
         ],
       }
     },
-    created() {},
+    created() { },
     methods: {
       /**
        * 点击导航栏
@@ -98,7 +98,8 @@
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-@import "~@/assets/common.styl";
+  @import "~@/assets/common.styl";
+
   .tabBar-box {
     position: fixed;
     bottom: 0;
@@ -108,27 +109,33 @@
     border-top: 1px solid #eee;
     background-color: #f8f8f8;
   }
+
   .tabBar-nav {
     width: 100%;
     display: flex;
+
     .item {
       flex: 1;
       text-align: center;
     }
+
     .item-text {
       color: #666;
       font-size: 13px;
       transition: .24s linear;
     }
+
     .item-text-active {
       color: $mainColor;
     }
+
     .item-images {
       width: 25px;
       height: 25px;
       margin: 0 auto;
       text-align: center;
       transition: .24s linear;
+
       & img {
         display: inline;
         width: 100%;

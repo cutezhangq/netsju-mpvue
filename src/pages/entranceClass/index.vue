@@ -47,7 +47,7 @@
         })
       },
       goCampusCommunity(){
-         wx.switchTab({
+         wx.navigateTo({
           url: '/pages/campusCommunity/index/main'
         })
       }
