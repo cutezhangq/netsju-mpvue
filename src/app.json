@@ -1,8 +1,6 @@
 {
   "pages": [
     "pages/usedMarket/index/main" ,
-    "pages/entranceClass/main",
-   
     "pages/usedMarket/person/main",
     "pages/usedMarket/cart/main",
     "pages/usedMarket/order/main",
@@ -18,9 +16,7 @@
     "pages/usedMarket/address/addressSelect/main",
     "pages/usedMarket/order/orderDetail/main",
     "pages/usedMarket/order/orderList/main",
-    "pages/usedMarket/userSet/main",
-    "pages/campusCommunity/index/main",
-    "pages/campusCommunity/test/main"
+    "pages/usedMarket/userSet/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
