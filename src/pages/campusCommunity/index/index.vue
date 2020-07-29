@@ -12,6 +12,7 @@
 
 <script>
 import vueTabBar from "@/components/campusCTabBar";
+
 export default {
   onShow(){
      wx.hideTabBar();
