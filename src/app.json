@@ -1,7 +1,9 @@
 {
   "pages": [
-    "pages/entranceClass/main",
     "pages/usedMarket/index/main" ,
+
+    "pages/entranceClass/main",
+    
     "pages/usedMarket/person/main",
     "pages/usedMarket/cart/main",
     "pages/usedMarket/order/main",
