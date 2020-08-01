@@ -18,22 +18,6 @@
 //     formatTime: formatTime
 //   }
 
-  // export function toNowTime(createTime){
-  //   const time1 = new Date(); //当前时间
-  //   const time2 = new Date(createTime); //评论时间
-  //   //let date_value = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
-  //   const dateDiff = time1.getTime() - time2.getTime(); //毫秒数
-  //   const minutes = Math.floor(dateDiff/(1000 * 60)); //分钟数
-  //   const hours = Math.floor(dateDiff/(1000 * 3600)); //小时数
-  //   const days = Math.floor(dateDiff / (24 * 3600 * 1000)); //天数
-  //   const months = Math.floor(dateDiff / (24 * 3600 * 1000 * 30));//月数
-  //   const years = Math.floor(dateDiff / (24 * 3600 * 1000 * 30));//年数
-  //   console.log(months+'月'+days+'天')
-  //   // return days
-  //   return years + '-' + months + '-' + days + ' ' + hours + ':' + minutes;
-  // }
-
-
   //评论：发布评论距离现在的时间。后台返回评论创建时间
   export function timeHandle(dateStr) {
        // dateStr = 2018-09-06 18:47:00"  //测试时间
@@ -93,6 +77,3 @@
                 return Y + '-' + M + '-' + D + ' ' + H + ':' + m;
             }
     }
-    //  module.exports = {
-    //        timeHandle
-    //    }
