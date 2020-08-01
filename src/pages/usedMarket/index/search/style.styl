@@ -3,43 +3,6 @@
     height:100vh;
     background-color: #eeeeee;
 
-.search {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 0 25rpx 0 10rpx;
-    top: 0;
-    z-index: 99;
-    height: 80rpx;
-    display: flex;
-    align-items: center;
-    background: #fff;
-
-  .search_goods {
-    flex: 1;
-    font-size: 32rpx;
-    position: relative;
-
-  input {
-    width: 100%;
-    height: 56rpx;
-    border-radius: 8rpx;
-    background: #ededed;
-    box-sizing: border-box;
-    padding-left: 40rpx;
-  }
-  .icon {
-        position: absolute;
-        top: 15rpx;
-        left: 10rpx;
-        background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png') center no-repeat;
-        background-size: 100%;
-        width: 28rpx;
-        height: 28rpx;
-        margin-right: 10rpx;
-      }
-  }
-}
-
 .searchTips {
     position: absolute;
     width:100%;
@@ -78,16 +41,20 @@
             height:31rpx;
             float:right;}
         }
-    .record_tip{
-        display: inline-block;
-        padding-bottom: 20rpx;
-        .tip{
-            padding:10rpx 17rpx;
-            margin:10rpx;
-            border-radius: 13px;
-            background-color: #f1f1f1;
-            color:gray;}
-        }
+    .cont{
+      width:100%;
+      height:80px;
+      overflow hidden
+      .record_tip{
+          display: inline-block;
+          .tip{
+              padding:10rpx 17rpx;
+              margin:10rpx;
+              border-radius: 13px;
+              background-color: #f1f1f1;
+              color:gray;}
+          }
+      }
 }
 
 .productList{

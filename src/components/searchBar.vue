@@ -2,9 +2,10 @@
 <template>
   <div class="search">
     <div class="search_goods">
-      <input type="text" v-model="words" placeholder="搜索" maxlength=15
-      confirm-type="search" focus="true" @input="search" @confirm="searchWords">
-      <span class="icon"></span>
+      <img src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/search2-2fb94833aa.png" alt="">
+      <input type="text" :value="words" placeholder="搜索" maxlength=15 @focus="auto"
+      confirm-type="search" focus="true" @input="search" @confirm="searchWords($event)">
+      <img @click="clearInput" class="del" src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/clearIpt-f71b83e3c2.png" alt="">
     </div>
   </div>
 </template>
@@ -24,9 +25,13 @@
         this.words=this.words.replace(/[*]/g,'')
         this.words=this.words.replace(/[^\w\u4E00-\u9FA5\s*]/g, '');
       },
-      searchWords(){
-        var words = this.words
-        this.$emit("listenToChildEvent",words)
+      searchWords(e){
+        var word = e.target.value
+        console.log(word)
+        this.$emit("listenToChildEvent",word)
+      },
+      clearInput(){
+        
       }
     }
   }
@@ -35,40 +40,43 @@
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .search {
-    width: 100%;
+    //width: 100%;
     box-sizing: border-box;
-    padding: 0 25rpx 0 10rpx;
+    padding: 0 32rpx;   
     top: 0;
     z-index: 99;
     height: 80rpx;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background: #fff;
-  }
-
-  .search_goods {
-    flex: 1;
-    font-size: 32rpx;
     position: relative;
+  }        
+  .search_goods {
+    font-size: 32rpx;
+    height: 59rpx;
+    display: flex;
+    align-items: center;
+    background: #f4f4f4;
+    border-radius: 8rpx
   }
-
   input {
-    width: 100%;
-    height: 56rpx;
     border-radius: 8rpx;
-    background: #ededed;
-    box-sizing: border-box;
-    padding-left: 40rpx;
+    display: inline-block;
+    width: 560rpx;
+    height: 59rpx;
+    margin-left: 10rpx;
   }
-  .icon {
-        position: absolute;
-        top: 15rpx;
-        left: 10rpx;
-        background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/search2-2fb94833aa.png') center no-repeat;
-        background-size: 100%;
-        width: 28rpx;
-        height: 28rpx;
-        margin-right: 10rpx;
-      }
+  img {
+    display: inline-block;
+    width: 31rpx;
+    height: 31rpx;
+    padding:0 20rpx;
+  }
+  .del {
+    width: 60rpx;
+    height: 60rpx;
+    padding: 0;
+  }
 
 </style>
