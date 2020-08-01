@@ -76,10 +76,12 @@
 
     <!-- 评论_2 -->
     <div class="allMessage">
-      <div class="hr"> <h2>全部留言</h2> 
-        <div class="clickInput" v-if="comment.length!=0">
-          <img src="/static/images/news_person/avater/personal.png">
-          <input type="text" placeholder="看对眼就留言，问问更多细节~" @click="showInput">
+      <div class="hr"> 
+        <div class="left"> <h2>全部留言</h2> </div>
+        <div class="right" @click="showInput" v-if="comment.length!=0">
+          <!-- <i class="iconfont">&#xe738;</i>  -->
+          <img src="/static/images/sell_goods/评论.png" alt="">&nbsp;
+          <p>评论</p>
         </div>
       </div>
       <div class="noMessage" v-if="comment.length==0">
@@ -89,12 +91,12 @@
       </div>
 
         <!-- 输入框 软键盘 -->
-      <div class="put" v-if="showInputBox">
+      <div class="put" v-show="showInputBox">
         <open-data type="userAvatarUrl" class="userAvatar"></open-data>
-        <input class="input" type="text" focus="auto" v-model="inputMessage" placeholder="看对眼就留言，问问更多细节~" 
+        <input class="input" type="text" focus="true" v-model="inputMessage" placeholder="看对眼就留言，问问更多细节~" 
          @blur="onHideInput" confirm-type="send" @confirm="sendTextMsg">
-        <div class="send" @click="sendTextMsg()"><p>发送</p></div>
-     </div>
+        <button class="send" size="mini" @click.stop="sendTextMsg"><p>发送</p></button>
+      </div>
       
 
       <div class="message" v-if="comment.length!=0">
@@ -103,26 +105,25 @@
               <img class="userAvatar" :src="item.headPortrait" alt="">
               <div class="user">
                 <p>{{item.username}}</p>
-                <p @click="reply(index)" @longpress='longPress(item.id,index)'>{{item.content}}</p>
-                <p>{{item.id}}天前</p>
+                <p @click="reply(index)" @longpress='longPress(item.id,index,item.canDelete)'>{{item.content}}</p>
+                <p>{{item.createTime}}</p>
               </div>
+              <!-- <a v-if="comment.length>5 && index===comment.length-1" @click="toMoreComment(item.productId)">查看更多</a> -->
 
               <div v-for="(item1,index1) in comment" :key="index1">
-                 <div class="replyer" v-if="item1.replayCommentId==item.id">
+                 <div class="replyer" v-if="item1.replayCommentId===item.id">
                   <img class="userAvatar" :src="item1.headPortrait" alt="">
                   <div class="user">
                     <p>{{item1.username}}</p>
-                    <p @click="reply(index)" @longpress='longPress(item1.id,index1)'>{{item1.content}}</p>
-                    <p>{{item1.id}}天前</p>
+                    <p @click="reply(index1)" @longpress='longPress(item1.id,index1,item1.canDelete)'>{{item1.content}}</p>
+                    <p>{{item1.createTime}}</p>
                   </div>
+                  <a v-if="index1===comment.length-1" @click="toMoreComment(item1.productId)">查看更多</a>
                 </div>
               </div>
           </div>
         </div>
 
-        <div class="end">
-          - THE END -
-        </div>
       </div>
 
     </div>
@@ -200,18 +201,21 @@
 <script>
   import {API,SH_API} from "@/api/api";
   import {get,post,del,toLogin,login} from "@/utils/request";
+  import {toNowTime,timeHandle} from "@/utils/time";
   import wxParse from "mpvue-wxparse";
 
   export default {
     onShow() {},
     mounted() {
       //判断是否登录获取用户信息
-      if (login()) {
-        this.userInfo = login();
-      }
+      if (login()) { this.userInfo = login() }
       this.goodsDetail(this.$root.$mp.query.categoryId);
       this.getComment(this.$root.$mp.query.categoryId);
     },
+    computed: {
+      
+    },  
+
     //商品转发
     onShareAppMessage() {
       return {
@@ -239,6 +243,7 @@
         items:[],
         i:0,
         userId:1,
+        createTime:Date,
         review: [{
           //   uImg: "/static/images/user.png",
           //   uName: "七***花",
@@ -288,7 +293,7 @@
           return false;
         }
       },
-
+  
       //立即购买
       async buy() {
         if (toLogin()) {
@@ -317,14 +322,6 @@
           }
         }
       },
-      // async collect() {
-      //   if (toLogin()) {
-      //     this.collectFlag = !this.collectFlag;
-      //     const data = await post("/collect/addcollect", {
-      //       goodsId: this.goodsId
-      //     });
-      //   }
-      // },
 
       //加入购物车
       async addCart() {
@@ -389,7 +386,18 @@
       //请求评论即查询留言信息
       async getComment(categoryId){
         const data = await get(SH_API + `/comment/${categoryId}`);
+        data.data.forEach(item =>{
+          let ct = new Date(item.createTime).getTime();
+          item.createTime = timeHandle(ct);
+        })
         this.comment = data.data;
+      },
+
+      //跳转到更多评论页面
+      toMoreComment(id) {
+        wx.navigateTo({
+          url: "/pages/usedMarket/index/goodsDetail/moreComment/main?categoryId=" + id
+        });
       },
 
       //显示输入框 评论
@@ -416,7 +424,6 @@
 
       async addComment(){
         var index = this.i;
-        //console.log(this.$root)
         var replyId;
         if(this.type=="comment"){
           replyId=null
@@ -435,25 +442,28 @@
       },
 
       //长按删除
-      longPress(id,index){
-        var that = this;
-        wx.showModal({
-            title: "",
-            content: "是否要删除该留言",
-            success: function (res) {
-              if (res.confirm) {
-                //根据ID删除评论中的某条数据
-                that.comment.splice(index, 1);
-                const data = del(SH_API + `/comment/${id}`)
-                .then(() => {
-                  this.getComment(that.$root.$mp.query.categoryId);
-                });
-              } else if (res.cancel) {
-                console.log("用户点击取消");
+      longPress(id,index,delComment){
+        if(delComment){
+          var that = this;
+          wx.showModal({
+              title: "",
+              content: "是否要删除该留言",
+              success: function (res) {
+                if (res.confirm) {
+                  //根据ID删除评论中的某条数据
+                  that.comment.splice(index, 1);
+                  const data = del(SH_API + `/comment/${id}`)
+                  //console.log(data)
+                  .then(() => {
+                    this.getComment(that.$root.$mp.query.categoryId);
+                  });
+                } else if (res.cancel) {
+                  console.log("用户点击取消");
+                }
               }
-            }
-          });
-        },
+            });
+        }
+      },
 
       //隐藏输入框
       onHideInput(){

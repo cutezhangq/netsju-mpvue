@@ -5,7 +5,7 @@
 
     <div class="searchTips" v-if="words">
        <div class=productList v-if="tipsData.length!=0">
-        <div @click="goodsDetail(item.pid)" class="product" v-for="(item,index) in tipsData" :key="index">
+        <div @click="goodsDetail(item.id)" class="product" v-for="(item,index) in tipsData" :key="index">
           <img :src="item.list_pic_url">
           <h3>{{item.name}}</h3>
             <div class="price">
@@ -27,10 +27,12 @@
      <div class="record" v-if="!words">
         <div class="record_text">
             <p>历史记录</p><br>
-            <!-- <img class="img_fr" src="/static/images/search/delete_box_icon.png"> -->
+            <img class="img_fr" src="/static/images/search/delete_box_icon.png">
         </div>
-        <div class="record_tip" v-for="(item,index) in keyword" :key="index">
-            <div class="tip">{{item.tip}}</div>
+        <div class="cont">
+          <div class="record_tip" @click="searchWords(item.keyword)" :data-value="item.keyword" v-for="(item,index) in historyData" :key="index">
+              <div class="tip">{{item.keyword}}</div>
+          </div>
         </div>
      </div>
 
@@ -39,8 +41,10 @@
       <div class="record_text">
           <p>热门搜索</p>
       </div>
-      <div class="record_tip" v-for="(item,index) in history" :key="index">
-          <div class="tip">{{item.tip}}</div>
+      <div class="cont">
+        <div class="record_tip" @click="searchWords(item.keyword)" :data-value="item.keyword" v-for="(item,index) in hotData" :key="index">
+            <div class="tip">{{item.keyword}}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -56,37 +60,41 @@ export default {
     searchBar,
     //productBar
   },
+  mounted () {
+    this.openid = wx.getStorageSync("openid") || "";
+    this.getHotData()
+    this.tipsData=[]
+    this.confirm=false;
+    this.words=false;
+  },
   data () {
     return {
       words:"",
       tipsData:[],
       confirm:false,
       words:false,
-      keyword:[
-        { tip:"色织六层纱布夏凉被" },
-        { tip:"日式" },
-        { tip:"kindle电子阅读书" },
-      ],
-      history:[
-      { tip:"520元红包抢先领" },
-      { tip:"单鞋" },
-      { tip:"墨镜" },
-      { tip:"夏凉被" },
-      { tip:"新品上市" }
-      ]
+      historyData: [],
+      hotData: [],
+      openid: "",
     }
   },
   methods: {
     async searchWords(val) {//点击完成按钮时触发
-      console.log(val)
+      //console.log(val)
       const data = await get(API+"/search/helperaction",{
         keyword:val
       });
       this.tipsData = data.keywords;
-      console.log(this.tipsData)
+      //console.log(this.tipsData)
       this.confirm=true;
       this.words=true;
     },
+    async getHotData(first) {
+      const data = await get(API+"/search/indexaction?openId=" + this.openid);
+      this.hotData = data.hotKeywordList;
+      this.historyData = data.historyData;
+    },
+    //跳转到商品详情页
     goodsDetail(id) {
       wx.navigateTo({
         url: "/pages/usedMarket/index/goodsDetail/main?categoryId="+id

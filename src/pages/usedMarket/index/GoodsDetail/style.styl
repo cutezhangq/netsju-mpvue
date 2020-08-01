@@ -207,28 +207,23 @@
   box-sizing: border-box;
   background-color: white;
   .hr{
-    padding:15px 15px 5px 15px;
-    font-weight: 600;
-    border-bottom: 1px solid $background;}
-  .clickInput{
-    height:70rpx;
-    font-size: 12px;
-    margin-top:10px;
-    font-weight: normal;
-    img{
-      width: 9vw;
-      height: 9vw;
-      border-radius: 50%;
-      padding:0 20rpx;
-    }
-    input{
-      width:80%;
-      height:70rpx;
-      text-align: center;
-      border-radius: 15px;
-      color:grey;
-      background-color:$background; 
-      display:inline-block;
+    padding:12px;
+    border-bottom: 1px solid $background;
+    overflow hidden
+    .left{
+      font-weight: 600;
+      float:left;}
+    .right{
+      float:right;
+      display:flex;
+      img{
+        width:8vw;
+        height:8vw;
+        display:inline-block;
+      }
+      p{
+        display:inline-block;
+      }
     }
   }
   .noMessage{
@@ -275,28 +270,32 @@
       border-radius: 5px;
       margin:0 5px;
     }
+    button{
+      z-index: 99;
+    }
     .send{
-      width: 14vw;
-      height:70rpx;
-      display:inline-block;
       vertical-align: bottom;
       background-color: $mainColor;
+      font-size: 12px;
       p{
         height:70rpx;
         line-height: 70rpx;
-        color:#000;
-        padding:0;
       }
     }
   }
   .message{
-    max-height:590rpx;
+    //max-height:590rpx;
     padding:10px 0 0 20px;
     box-sizing: border-box;
-    overflow-x: auto 
-    overflow-y: scroll;
+    // overflow-x: auto 
+    // overflow-y: scroll;
     white-space:nowrap;
-    .commenter {
+    a{
+      font-size: 15px;
+      font-weight: 600;
+      color:#4F4FD9;
+      margin-left: 35%;
+      height:30px;
     }
     .replyer{
       padding:5px 0;
